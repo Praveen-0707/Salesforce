@@ -11,20 +11,19 @@ public class CreateAccount extends SalesforceBase {
 	public void setFileName() {
 		excelFileName = "Accounts";
 		excelSheetName = "CreateAccounts";
+		browser = "chrome";
 	}
 	
 	@Test(dataProvider = "getData", groups= {"Accounts"})
 	public void createNewAccount(String accName) throws InterruptedException
 	{
-		new LoginPage(driver)
+		new LoginPage(driver,prop)
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()
 		.searchApp("Account").clickOnAccount()
 		
 		.clickOnCreateNewAccount().inputAccountName(accName)
-		.selectOwnership("P").clickOnSaveButton();
-		
-		
+		.selectOwnership("Public").clickOnSaveButton().createAccountValidation(accName);
 	}
 }

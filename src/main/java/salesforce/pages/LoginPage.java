@@ -1,28 +1,33 @@
 package salesforce.pages;
 
 import salesforce.base.SalesforceBase;
+
+import java.util.Properties;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class LoginPage extends SalesforceBase {
 	
-	public LoginPage(ChromeDriver driver)
+	public LoginPage(RemoteWebDriver driver, Properties prop)
 	{
 		this.driver = driver;
+		this.prop = prop;
 	}
 	
 	public LoginPage enterUsername()
 	{
-		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("username")))).sendKeys("cypress@testleaf.com");
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("username")))).sendKeys(prop.getProperty("username"));
 		return this;
 	}
 	
 	public LoginPage enterPassword()
 	{
-		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("password")))).sendKeys("Selbootcamp@123");
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("password")))).sendKeys(prop.getProperty("password"));
 		return this;
 	}
 	
@@ -36,11 +41,11 @@ public class LoginPage extends SalesforceBase {
 //			pageLoad.click();
 			
 //			option-2
-			WebElement pageLoad1 = driver.findElementByLinkText("Switch to Lightning Experience");
+			WebElement pageLoad1 = driver.findElementByXPath("//div[@class='linkElements']/a[text()='Switch to Lightning Experience']");
 			boolean isDisplayed = pageLoad1.isDisplayed();
 			if (isDisplayed)
 			{
-				js.executeScript("argument[0].click();", pageLoad1);
+				js.executeScript("arguments[0].click();", pageLoad1);
 //				pageLoad1.click();
 			}
 		} catch (NoSuchElementException e) {

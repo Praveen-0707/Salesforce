@@ -16,6 +16,6 @@ public class LogoutPage extends SalesforceBase {
 	{
 		driver.findElementByXPath("//img[@alt='User' and @title='User']/ancestor::button").click();
 		wait.until(ExpectedConditions.visibilityOf(driver.findElementByLinkText("Log Out"))).click();
-		return new LoginPage(driver);
+		return new LoginPage(driver, prop);
 	}
 }

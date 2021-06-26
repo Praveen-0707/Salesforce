@@ -55,11 +55,11 @@ function toggleAllBoxes() {
 <body>
 <h2 align='center'>Accounts</h2><table border='1' align="center">
 <tr>
-<td>Tests passed/Failed/Skipped:</td><td>6/0/0</td>
+<td>Tests passed/Failed/Skipped:</td><td>3/1/0</td>
 </tr><tr>
-<td>Started on:</td><td>Sat Jun 19 14:39:48 IST 2021</td>
+<td>Started on:</td><td>Mon Jun 21 22:53:48 IST 2021</td>
 </tr>
-<tr><td>Total time:</td><td>367 seconds (367468 ms)</td>
+<tr><td>Total time:</td><td>142 seconds (142954 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -67,6 +67,80 @@ function toggleAllBoxes() {
 </tr>
 </table><p/>
 <small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-failed'>
+<tr><td colspan='4' align='center'><b>FAILED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='salesforce.testcases.SortingAccounts.editAccount()'><b>editAccount</b><br>Test class: salesforce.testcases.SortingAccounts</td>
+<td><div><pre>org.testng.TestNGException: 
+Cannot inject @Test annotated Method [editAccount] with [class java.lang.String, class java.lang.String].
+For more information on native dependency injection please refer to https://testng.org/doc/documentation-main.html#native-dependency-injection
+	at org.testng.internal.Parameters.checkParameterTypes(Parameters.java:437)
+	at org.testng.internal.Parameters.createParametersForMethod(Parameters.java:351)
+	at org.testng.internal.Parameters.createParameters(Parameters.java:708)
+	at org.testng.internal.Parameters.handleParameters(Parameters.java:875)
+	at org.testng.internal.Parameters.handleParameters(Parameters.java:740)
+	at org.testng.internal.ParameterHandler.handleParameters(ParameterHandler.java:59)
+	at org.testng.internal.ParameterHandler.createParameters(ParameterHandler.java:38)
+	at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:789)
+	at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:147)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at org.testng.TestRunner.privateRun(TestRunner.java:764)
+	at org.testng.TestRunner.run(TestRunner.java:585)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:384)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:378)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:337)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:286)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1218)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.runSuites(TestNG.java:1069)
+	at org.testng.TestNG.run(TestNG.java:1037)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+</pre></div><a href='#' onClick='toggleBox("stack-trace1493789542", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1493789542'><pre>org.testng.TestNGException: 
+Cannot inject @Test annotated Method [editAccount] with [class java.lang.String, class java.lang.String].
+For more information on native dependency injection please refer to https://testng.org/doc/documentation-main.html#native-dependency-injection
+	at org.testng.internal.Parameters.checkParameterTypes(Parameters.java:437)
+	at org.testng.internal.Parameters.createParametersForMethod(Parameters.java:351)
+	at org.testng.internal.Parameters.createParameters(Parameters.java:708)
+	at org.testng.internal.Parameters.handleParameters(Parameters.java:875)
+	at org.testng.internal.Parameters.handleParameters(Parameters.java:740)
+	at org.testng.internal.ParameterHandler.handleParameters(ParameterHandler.java:59)
+	at org.testng.internal.ParameterHandler.createParameters(ParameterHandler.java:38)
+	at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:789)
+	at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:147)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at org.testng.TestRunner.privateRun(TestRunner.java:764)
+	at org.testng.TestRunner.run(TestRunner.java:585)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:384)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:378)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:337)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:286)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1218)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.runSuites(TestNG.java:1069)
+	at org.testng.TestNG.run(TestNG.java:1037)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+</pre></div></td>
+<td>0</td>
+<td>salesforce.testcases.SortingAccounts@10e31a9a</td></tr>
+</table><p>
 <table width='100%' border='1' class='invocation-passed'>
 <tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
 <tr><td><b>Test method</b></td>
@@ -75,35 +149,20 @@ function toggleAllBoxes() {
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='salesforce.testcases.CreateAccount.createNewAccount()'><b>createNewAccount</b><br>Test class: salesforce.testcases.CreateAccount<br>Parameters: TestProfile99</td>
+<td title='salesforce.testcases.CreateAccount.createNewAccount()'><b>createNewAccount</b><br>Test class: salesforce.testcases.CreateAccount<br>Parameters: TestProfile30</td>
 <td></td>
-<td>44</td>
-<td>salesforce.testcases.CreateAccount@7e07db1f</td></tr>
+<td>34</td>
+<td>salesforce.testcases.CreateAccount@436813f3</td></tr>
 <tr>
-<td title='salesforce.testcases.CreateAccount.createNewAccount()'><b>createNewAccount</b><br>Test class: salesforce.testcases.CreateAccount<br>Parameters: TestProfile66</td>
+<td title='salesforce.testcases.DeleteAccount.deleteAccount()'><b>deleteAccount</b><br>Test class: salesforce.testcases.DeleteAccount<br>Parameters: TestProfile30</td>
 <td></td>
-<td>49</td>
-<td>salesforce.testcases.CreateAccount@7e07db1f</td></tr>
+<td>34</td>
+<td>salesforce.testcases.DeleteAccount@3febb011</td></tr>
 <tr>
-<td title='salesforce.testcases.DeleteAccount.deleteAccount()'><b>deleteAccount</b><br>Test class: salesforce.testcases.DeleteAccount<br>Parameters: TestProfile99</td>
+<td title='salesforce.testcases.EditAccount.editAccount()'><b>editAccount</b><br>Test class: salesforce.testcases.EditAccount<br>Parameters: TestProfile30, 9125784613</td>
 <td></td>
-<td>51</td>
-<td>salesforce.testcases.DeleteAccount@36bc55de</td></tr>
-<tr>
-<td title='salesforce.testcases.DeleteAccount.deleteAccount()'><b>deleteAccount</b><br>Test class: salesforce.testcases.DeleteAccount<br>Parameters: TestProfile66</td>
-<td></td>
-<td>51</td>
-<td>salesforce.testcases.DeleteAccount@36bc55de</td></tr>
-<tr>
-<td title='salesforce.testcases.EditAccount.editAccount()'><b>editAccount</b><br>Test class: salesforce.testcases.EditAccount<br>Parameters: TestProfile99, 9125784613</td>
-<td></td>
-<td>69</td>
-<td>salesforce.testcases.EditAccount@1189dd52</td></tr>
-<tr>
-<td title='salesforce.testcases.EditAccount.editAccount()'><b>editAccount</b><br>Test class: salesforce.testcases.EditAccount<br>Parameters: TestProfile66, 9125784693</td>
-<td></td>
-<td>66</td>
-<td>salesforce.testcases.EditAccount@1189dd52</td></tr>
+<td>45</td>
+<td>salesforce.testcases.EditAccount@74fe5c40</td></tr>
 </table><p>
 </body>
 </html>

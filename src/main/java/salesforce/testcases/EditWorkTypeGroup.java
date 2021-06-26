@@ -1,8 +1,5 @@
 package salesforce.testcases;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import salesforce.pages.LoginPage;
@@ -15,14 +12,13 @@ public class EditWorkTypeGroup extends SalesforceBase {
 	public void setFileName() {
 		excelFileName = "WorkTypeGroups";
 		excelSheetName = "EditWorkTypeGroup";
+		browser = "chrome";
 	}
 	
 	@Test(dataProvider = "getData", groups= {"WorkTypeGroups"})
 	public void editWorkTypeGroup(String workTypeGroup_Name, String descr) throws InterruptedException {
 
-		WebElement ele;
-		
-		new LoginPage(driver)
+		new LoginPage(driver,prop)
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()
@@ -30,36 +26,9 @@ public class EditWorkTypeGroup extends SalesforceBase {
 		.searchWorkTypeGroup(workTypeGroup_Name);
 
 		WorkTypeGroupsPage WTG = new WorkTypeGroupsPage(driver);
-		
-//		selecting drop down value as edit
-		ele = driver.findElementByXPath("(//a[text()='" + workTypeGroup_Name + "'])[1]//following::td//a[@role='button']");
-		ele.click();
-		
-		ele = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//div[@role='button' and @title='Edit']/..")));
-		ele.click();
-		
-		WTG.inputWorkTypeGroupDescr(descr);
-		WTG.selectGroupType("C").clickOnSaveButton();
-		Thread.sleep(2000);
-		
-//		selecting WorkTypegroup
-		ele = driver.findElementByXPath("(//a[text()='" + workTypeGroup_Name + "'])[1]");
-		ele.click();
-	
-//		output validation - Description field
-		WebElement output = driver.findElement(By.xpath("(//span[text()='Description'])/following::div//span[text()='Description']/following::span[@class='uiOutputTextArea']"));
-		wait.until(ExpectedConditions.visibilityOf(output));
-		String outputValue = output.getText();
-		
-		if (outputValue.contains(descr))
-		{
-			System.out.println("Description updated as: "+descr);
-			System.out.println("Work Type Group - " + outputValue + " was updated successfully" + ", Passed");
-		}
-		else
-		{
-			System.out.println("Unable to update Work Type Group" + ", Failed");
-		}
+		WTG.editWorkTypeGroup(workTypeGroup_Name)
+		.inputWorkTypeGroupDescr(descr).selectGroupType("Capacity").clickOnSaveButton()
+		.searchAndClickOnWorkTypeGroup(workTypeGroup_Name).editWorkTypeGroupValidation(descr);
 	}
 
 }

@@ -1,14 +1,5 @@
 package salesforce.testcases;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.Toolkit;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
-import java.util.List;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
 import salesforce.base.SalesforceBase;
 import salesforce.pages.LoginPage;
@@ -17,112 +8,25 @@ import salesforce.pages.SalesPage;
 public class AttachAndDeleteDocumentFromCampaign extends SalesforceBase {
 	
 	@Test
-	public void uploadNDeleteDocsFromCampaign() throws InterruptedException, AWTException {
+	public void uploadNDeleteDocsFromCampaign() throws InterruptedException {
 
-		WebElement ele;
+		String fileLocation = "C:\\Users\\pravi\\Desktop\\Bike_Insurance.pdf";
 		
-		new LoginPage(driver)
+		new LoginPage(driver,prop)
 		.enterUsername().enterPassword().clickLogin()
 		.clickToggleButton().clickViewAll()
-		.searchApp("Sales").clickOnSales()
-		.clickOnCampaignTab().searchCampaign("BootCamp");
+		.searchApp("Sales").clickOnSales();
+		clickOnTab("Campaigns");
 		
-		SalesPage salesPage = new SalesPage(driver);
+		SalesPage sales = new SalesPage(driver);
 		
-//		click on campaigns tab & on the BootCamp link
-		driver.findElement(By.xpath("//a[@title='BootCamp'][text()='BootCamp']")).click();
-
-//		click on the upload button 
-		salesPage.clickonUploadAttachment();
-				
-//		invoke the Robot class to select the file from local and upload
-		Robot rb = new Robot();
+		sales.searchAndClickOnCampaign("BootCamp")
+		.clickonUploadAttachment();
+		uploadAttachment(fileLocation);
 		
-//		 copying File path to ClipBoard
-		StringSelection up = new StringSelection("C:\\Users\\pravi\\Desktop\\Bike_Insurance.pdf");
-		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(up, null);
-		
-		// press Control+V for pasting the file path
-		rb.keyPress(KeyEvent.VK_CONTROL);
-		rb.keyPress(KeyEvent.VK_V);
-		// release Control+V after pasting the file path
-		rb.keyRelease(KeyEvent.VK_CONTROL);
-		rb.keyRelease(KeyEvent.VK_V);
-		// press and release Enter to complete the file upload
-		rb.keyPress(KeyEvent.VK_ENTER);
-		rb.keyRelease(KeyEvent.VK_ENTER);
-		
-//		click on the Done button to dismiss the alert
-		Thread.sleep(3000);
-		driver.findElement(By.xpath("//button[@type='button']//span[text()='Done']")).click();
-				
-//		To verify if the uploaded file name is a hyperlink
-		String anchorTag = "a";
-		String fileName = "Bike_Insurance";
-		String tagName = driver.findElement(By.xpath("//a[@title='"+fileName+"']")).getTagName();
-		String linkText = driver.findElement(By.xpath("//a[@title='"+fileName+"']")).getText();
-		if((tagName.equals(anchorTag))&&(linkText.contains(fileName)))
-		{
-			System.out.println("It is a hyperlink, since the WebElement begins with anchor tag : <"+tagName+">."
-					+" The file uploaded is :"+linkText+" correct.");
-		}
-
-//		Click on the uploaded file & verify the upload is successful
-		Thread.sleep(2000);
-		driver.findElement(By.xpath("//a[@title='"+fileName+"']")).click();
-		Thread.sleep(3000);
-				
-//		Close File Preview
-		rb.keyPress(KeyEvent.VK_ESCAPE);
-		rb.keyRelease(KeyEvent.VK_ESCAPE);
-		
-		ele = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//span[@class='view-all-label']/span[text()='Attachments']"))));
-		js.executeScript("arguments[0].click();", ele);
-		Thread.sleep(2000);				
-		
-//		Delete Attachment
-		List<WebElement> files = driver.findElements(By.xpath("//table[contains(@class,'uiVirtualDataTable') and not(contains(@class,'slds-no-cell-focus'))]//tbody/tr"));
-		int cnt = files.size();
-		for (int i = 1; i <= cnt; i++)
-		{
-			WebElement listofFiles = driver.findElement(By.xpath("//table[contains(@class,'uiVirtualDataTable') and not(contains(@class,'slds-no-cell-focus'))]//tbody/tr["+i+"]/th//a"));
-			String UploadedFile = listofFiles.getText();
-			if (UploadedFile.contains(fileName))
-			{
-				ele = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//table[contains(@class,'uiVirtualDataTable') and not(contains(@class,'slds-no-cell-focus'))]//tbody/tr["+i+"]/td[5]//a[@role='button']"))));
-				js.executeScript("arguments[0].click();", ele);
-				Thread.sleep(500);
-				ele = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@role='button' and @title='Delete']/.."))));
-				ele.click();
-				
-//				Delete PopUp
-				ele = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[@title='Delete']"))));
-				ele.click();
-				Thread.sleep(2000);
-				break;
-			}
-		}
-		
-//		Search for Deleted File - Output Validation
-		List<WebElement> tb_rows = driver.findElements(By.xpath("//table[contains(@class,'uiVirtualDataTable') and not(contains(@class,'slds-no-cell-focus'))]//tbody/tr"));
-		int size = tb_rows.size();
-		for (int j = 1; j <= size; j++)
-		{
-			WebElement searchDelFile = driver.findElement(By.xpath("//table[contains(@class,'uiVirtualDataTable') and not(contains(@class,'slds-no-cell-focus'))]//tbody/tr["+j+"]/th//a"));
-			String delFile = searchDelFile.getText();
-		
-			if (delFile.equals(fileName))
-			{
-				System.out.println("Unable to Delete Uploaded File, TC-Failed");
-				break;
-			}
-			else
-			{
-				if (j == size)
-				{
-					System.out.println("Delete File was successful, TC-Passed");
-				}
-			}	
-		}			
+		sales.verifyUploadedAttachment("TexFile")
+		.clickOnViewAllAttachments()
+		.deleteAttachedFile("TexFile").verifyDeleteAttachment("TexFile");
+			
 	}
 }
