@@ -118,15 +118,16 @@ public class ServiceConsolePage extends SalesforceBase {
 		try
 		{
 			List<WebElement> listofFiles = driver.findElementsByXPath("//table/tbody/tr");
-			for (int i=0; i<listofFiles.size(); i++)
+			for (int i=1; i<listofFiles.size(); i++)
 			{
 				WebElement file = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//table/tbody/tr["+i+"]/th//a")));
 				String getFileName = file.getText();
-				if (getFileName.equalsIgnoreCase(fileName))
+				if (getFileName.contains(fileName))
 				{
 					wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//table/tbody/tr["+i+"]/th//a/following::td[3]//a[@role='button']"))).click();
-					selectFileOptionAs("View File Details");
+					selectFileOptionAs(fileOption);
 					Thread.sleep(3000);
+					break;
 				}
 			}
 		}
@@ -313,7 +314,6 @@ public class ServiceConsolePage extends SalesforceBase {
 			
 			if (displayMsgValue.contains(msgToValidate1) && displayMsgValue.contains(fileName) && displayMsgValue.contains(msgToValidate2))
 			{
-				System.out.println(displayMsgValue);
 				System.out.println("...File successfully deleted...");
 			}
 		}

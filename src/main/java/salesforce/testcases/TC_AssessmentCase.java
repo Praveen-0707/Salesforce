@@ -53,6 +53,7 @@ public class TC_AssessmentCase extends SalesforceBase {
 		.verifyShareAttachment(fileName, "Integration User").clickOnUploadFiles();
 		
 		uploadAttachment(fileLocation);
+		Thread.sleep(3000);
 		
 		servObj.clickToOpenFile(uploadFile,"View File Details")
 		.verifyUploadedFileDetails(uploadFile, uploadFileExtension);
