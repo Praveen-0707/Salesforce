@@ -12,13 +12,13 @@ public class AttachAndDeleteDocumentFromCampaign extends SalesforceBase {
 
 		String fileLocation = "C:\\Users\\pravi\\Desktop\\Bike_Insurance.pdf";
 		
-		new LoginPage(driver,prop)
+		new LoginPage(driver,prop, node)
 		.enterUsername().enterPassword().clickLogin()
 		.clickToggleButton().clickViewAll()
 		.searchApp("Sales").clickOnSales();
 		clickOnTab("Campaigns");
 		
-		SalesPage sales = new SalesPage(driver);
+		SalesPage sales = new SalesPage(driver, node);
 		
 		sales.searchAndClickOnCampaign("BootCamp")
 		.clickonUploadAttachment();

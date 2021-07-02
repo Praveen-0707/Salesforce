@@ -9,7 +9,7 @@ import salesforce.pages.SalesPage;
 public class CreateNewCaseWithoutMandatoryField extends SalesforceBase {
 	
 	@BeforeTest
-	public void setFileName() {
+	public void setTestDetails() {
 		excelFileName = "Testdata";
 		excelSheetName = "NewCase";
 	}
@@ -17,14 +17,14 @@ public class CreateNewCaseWithoutMandatoryField extends SalesforceBase {
 	@Test(dataProvider = "getData")
 	public void createNewCaseWithoutMandatoryFields(String contactName, String subject, String description, String errMsg) throws InterruptedException {
 
-		new LoginPage(driver,prop)
+		new LoginPage(driver,prop, node)
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()
 		.searchApp("Sales").clickOnSales();
 		
 		clickOnTab("Cases");
-		new SalesPage(driver).clickOnNewCase()
+		new SalesPage(driver, node).clickOnNewCase()
 		.selectContractContactName(contactName).inputSubject(subject).inputCaseDescription(description)
 		.clickonSaveButton().errValidationOnCaseCreation(errMsg);
 

@@ -14,7 +14,7 @@ public class TC_AssessmentCase extends SalesforceBase {
 	public String fileName;
 	
 	@BeforeTest
-	public void setFileName() {
+	public void setTestDetails() {
 //		excelFileName = "Accounts";
 //		excelSheetName = "CreateAccounts";
 		browser = "chrome";
@@ -23,18 +23,24 @@ public class TC_AssessmentCase extends SalesforceBase {
 	@Test
 	public void assessmentTestcase() throws InterruptedException, IOException
 	{		
+//		file to copy from src to dest folder
+		String srcFolder = "C:\\Users\\HP\\Downloads\\";
+		String fileExtension = "pdf";
+		String destFolder = "E:\\Documents\\SeleniumBootcamp\\";
+		
+		// file to upload
 		String fileLocation = "C:\\Users\\HP\\Downloads\\sampleuploadfile.txt";
 		String uploadFile = "sampleuploadfile";
 		String uploadFileExtension = "txt";
 		
-		new LoginPage(driver,prop)
+		new LoginPage(driver,prop, node)
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()
 		.searchApp("Service Console").clickOnServiceConsole()
 		.selectTask("Files").clickOnRecentFiles().clickonLastModifiedFilesColumn();
 		
-		ServiceConsolePage servObj = new ServiceConsolePage(driver);
+		ServiceConsolePage servObj = new ServiceConsolePage(driver, node);
 		fileName = servObj.selectLastModifiedFile();
 		
 		servObj.selectFileOptionAs("Public Link")
@@ -43,7 +49,7 @@ public class TC_AssessmentCase extends SalesforceBase {
 		servObj.selectLastModifiedFile();
 		servObj.selectFileOptionAs("Download");
 		
-		copyFilefromSourceToDestinationFolder(fileName);
+		copyFilefromSourceToDestinationFolder(srcFolder,fileName,fileExtension,destFolder);
 		
 		servObj.selectLastModifiedFile();
 		servObj.selectFileOptionAs("Share")
@@ -53,7 +59,7 @@ public class TC_AssessmentCase extends SalesforceBase {
 		.verifyShareAttachment(fileName, "Integration User").clickOnUploadFiles();
 		
 		uploadAttachment(fileLocation);
-		Thread.sleep(3000);
+		solidWait(3);
 		
 		servObj.clickToOpenFile(uploadFile,"View File Details")
 		.verifyUploadedFileDetails(uploadFile, uploadFileExtension);

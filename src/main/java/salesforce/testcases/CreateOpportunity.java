@@ -11,7 +11,7 @@ public class CreateOpportunity extends SalesforceBase {
 	{
 		String oppName = "TMT Steel";
 		
-		new LoginPage(driver,prop)
+		new LoginPage(driver,prop, node)
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()

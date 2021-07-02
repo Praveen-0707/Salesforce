@@ -9,21 +9,21 @@ import salesforce.pages.WorkTypeGroupsPage;
 public class WorkTypeGroupSortingByName extends SalesforceBase {
 	
 	@BeforeTest
-	public void setFileName() {
+	public void setTestDetails() {
 		browser = "chrome";
 	}
 	
 	@Test(groups= {"WorkTypeGroups"})
 	public void sortWorkTypeGroup() throws InterruptedException {
 
-		new LoginPage(driver,prop)
+		new LoginPage(driver,prop, node)
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()
 		.searchApp("Work Type Groups").clickOnWorkTypeGroups();
-		Thread.sleep(3000);
+		solidWait(3);
 		
-		WorkTypeGroupsPage WTG =new WorkTypeGroupsPage(driver);
+		WorkTypeGroupsPage WTG =new WorkTypeGroupsPage(driver, node);
 		WTG.sortWorkTypeGroups();
 	}
 

@@ -8,7 +8,7 @@ import salesforce.pages.LoginPage;
 public class CreateNewWTGWithoutMandatoryField extends SalesforceBase {
 
 	@BeforeTest
-	public void setFileName() {
+	public void setTestDetails() {
 		excelFileName = "Testdata";
 		excelSheetName = "WTG";
 	}
@@ -16,7 +16,7 @@ public class CreateNewWTGWithoutMandatoryField extends SalesforceBase {
 	@Test(dataProvider = "getData")
 	public void createWorkTypeGroupWithoutMandatoryFields(String descr, String errMsg) throws InterruptedException {
 
-		new LoginPage(driver,prop)
+		new LoginPage(driver,prop, node)
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()

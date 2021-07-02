@@ -1,41 +1,49 @@
 package salesforce.pages;
 
 import salesforce.base.SalesforceBase;
-
 import java.util.Properties;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import com.aventstack.extentreports.ExtentTest;
 
 public class LoginPage extends SalesforceBase {
 	
-	public LoginPage(RemoteWebDriver driver, Properties prop)
+	public LoginPage(RemoteWebDriver driver, Properties prop, ExtentTest node)
 	{
 		this.driver = driver;
 		this.prop = prop;
+		this.node = node;
 	}
 	
 	public LoginPage enterUsername()
 	{
-		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("username")))).sendKeys(prop.getProperty("username"));
+		try {
+			webDriverWait4VisibilityOfEle(driver.findElement(By.id("username"))).sendKeys(prop.getProperty("username"));
+			reportStep("Username entered as: "+prop.getProperty("username"), "Pass", false);
+		} catch (Exception e) {
+			reportStep("Username not entered in Login Page", "Fail");
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public LoginPage enterPassword()
 	{
-		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("password")))).sendKeys(prop.getProperty("password"));
+		try {
+			webDriverWait4VisibilityOfEle(driver.findElement(By.id("password"))).sendKeys(prop.getProperty("password"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public HomePage clickLogin()
 	{
-		wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("Login")))).click();
-		
 		try {
+			webDriverWait4ElementToBeClickable(driver.findElement(By.id("Login"))).click();
 //			option-1
 //			WebElement pageLoad = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//div[@class='linkElements']/a[text()='Switch to Lightning Experience']")));
 //			pageLoad.click();
@@ -55,6 +63,6 @@ public class LoginPage extends SalesforceBase {
 			System.out.println(e.getMessage());
 		}
 		
-		return new HomePage(driver);
+		return new HomePage(driver, node);
 	}
 }

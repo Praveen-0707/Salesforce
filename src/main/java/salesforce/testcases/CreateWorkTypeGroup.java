@@ -8,7 +8,7 @@ import salesforce.pages.LoginPage;
 public class CreateWorkTypeGroup extends SalesforceBase {
 	
 	@BeforeTest
-	public void setFileName() {
+	public void setTestDetails() {
 		excelFileName = "WorkTypeGroups";
 		excelSheetName = "CreateWorkTypeGroup";
 		browser = "chrome";
@@ -17,7 +17,7 @@ public class CreateWorkTypeGroup extends SalesforceBase {
 	@Test(dataProvider = "getData", groups= {"WorkTypeGroups"})
 	public void createWorkTypeGroup(String wtgName, String wtgDescr) throws InterruptedException {
 
-		new LoginPage(driver,prop)
+		new LoginPage(driver,prop, node)
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()

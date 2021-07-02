@@ -1,78 +1,109 @@
 package salesforce.pages;
 
 import salesforce.base.SalesforceBase;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import com.aventstack.extentreports.ExtentTest;
 
 public class HomePage extends SalesforceBase {
 	
-	public HomePage(RemoteWebDriver driver)
+	public HomePage(RemoteWebDriver driver, ExtentTest node)
 	{
 		this.driver = driver;
+		this.node = node;
 	}
 	
 	public HomePage clickToggleButton()
 	{
-		WebElement menuClk = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//div[@class=\"slds-icon-waffle\"]")));
-		menuClk.click();
+		try {
+			WebElement menuClk = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//div[@class=\"slds-icon-waffle\"]"));
+			menuClk.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public HomePage clickViewAll()
 	{
-		WebElement viewALL = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//button[text()='View All' and @class='slds-button']")));
-		viewALL.click();
+		try {
+			WebElement viewALL = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//button[text()='View All' and @class='slds-button']"));
+			viewALL.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public HomePage selectTaskFromNavigationControl(String control) throws InterruptedException
+	public HomePage selectTaskFromNavigationControl(String control)
 	{
-		WebElement dd_tasks = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//button[@title='Show Navigation Menu']")));
-		dd_tasks.click();
-		Thread.sleep(9000);
-		WebElement selectTask = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//a[@title='"+control+"'])[last()]")));
-		scrollToVisibleElement(selectTask);
-		selectTask.click();
-		Thread.sleep(3000);
+		try {
+			WebElement dd_tasks = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//button[@title='Show Navigation Menu']"));
+			dd_tasks.click();
+			solidWait(9);
+			WebElement selectTask = webDriverWait4ElementToBeClickable(driver.findElementByXPath("(//a[@title='"+control+"'])[last()]"));
+			scrollToVisibleElement(selectTask);
+			selectTask.click();
+			solidWait(3);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public HomePage searchApp(String value)
 	{
-		WebElement searchApp = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//input[@type='search' and @placeholder='Search apps or items...']")));
-		searchApp.sendKeys(value);
+		try {
+			WebElement searchApp = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//input[@type='search' and @placeholder='Search apps or items...']"));
+			searchApp.sendKeys(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public AccountsPage clickOnAccount()
 	{
-		WebElement Accounts = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//p//mark[contains(text(),'Account')]")));
-		Accounts.click();
-		return new AccountsPage(driver);
+		try {
+			WebElement Accounts = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//p//mark[contains(text(),'Account')]"));
+			Accounts.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new AccountsPage(driver, node);
 	}
 	
 	public WorkTypeGroupsPage clickOnWorkTypeGroups()
 	{
-		WebElement WTG = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//p/mark[text()='Work Type Groups']")));
-		WTG.click();
-		return new WorkTypeGroupsPage(driver);
+		try {
+			WebElement WTG = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//p/mark[text()='Work Type Groups']"));
+			WTG.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new WorkTypeGroupsPage(driver, node);
 	}
 	
 	public ServiceConsolePage clickOnServiceConsole()
 	{
-		WebElement serviceConsole = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//p/mark[text()='Service Console']")));
-		serviceConsole.click();
-		return new ServiceConsolePage(driver);
+		try {
+			WebElement serviceConsole = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//p/mark[text()='Service Console']"));
+			serviceConsole.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ServiceConsolePage(driver, node);
 	}
 	
 	public SalesPage clickOnSales()
 	{
-		WebElement Sales = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("(//p/mark[text()='Sales'])[last()-1]")));
-		Sales.click();
-		return new SalesPage(driver);
+		try {
+			WebElement Sales = webDriverWait4ElementToBeClickable(driver.findElementByXPath("(//p/mark[text()='Sales'])[last()-1]"));
+			Sales.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new SalesPage(driver, node);
 	}
 }

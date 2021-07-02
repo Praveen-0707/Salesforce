@@ -10,7 +10,7 @@ import salesforce.pages.LoginPage;
 public class EditAccount extends SalesforceBase {
 	
 	@BeforeTest
-	public void setFileName() {
+	public void setTestDetails() {
 		excelFileName = "Accounts";
 		excelSheetName = "EditAccounts";
 		browser = "chrome";
@@ -21,12 +21,12 @@ public class EditAccount extends SalesforceBase {
 	{
 		WebElement ele;
 		
-		new LoginPage(driver,prop)
+		new LoginPage(driver,prop, node)
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll().searchApp("Account").clickOnAccount();
 		
-		AccountsPage accPg = new AccountsPage(driver);
+		AccountsPage accPg = new AccountsPage(driver, node);
 		accPg.searchAccount(accName).editAccount(accName);
 		accPg.inputPhoneNumber(phNum).selectType("Technology Partner").selectIndustry("Healthcare");
 		

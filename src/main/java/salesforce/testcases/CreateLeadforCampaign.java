@@ -9,7 +9,7 @@ import salesforce.pages.SalesPage;
 public class CreateLeadforCampaign extends SalesforceBase {
 	
 	@BeforeTest
-	public void setFileName() {
+	public void setTestDetails() {
 		excelFileName = "Campaign";
 		excelSheetName = "Leads";
 		browser = "chrome";
@@ -20,13 +20,13 @@ public class CreateLeadforCampaign extends SalesforceBase {
 
 		String createLead = "";	// creating New Lead
 		
-		new LoginPage(driver,prop)
+		new LoginPage(driver,prop, node)
 		.enterUsername().enterPassword().clickLogin()
 		.clickToggleButton().clickViewAll()
 		.searchApp("Sales").clickOnSales();
 		
 		clickOnTab("Campaigns");
-		new SalesPage(driver).searchCampaign(campName).ClickOnCampaignName(campName)
+		new SalesPage(driver, node).searchCampaign(campName).ClickOnCampaignName(campName)
 		.clickOnAddLead().selectLead(createLead)
 		.selectSalutation("Mr").inputFirstName(fName).inputLastName(lName).inputCompanyName(compName)
 		.clickonSaveButton().clickonNextButton().clickOnSubmitButton()

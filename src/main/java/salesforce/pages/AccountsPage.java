@@ -1,189 +1,264 @@
 package salesforce.pages;
 
 import salesforce.base.SalesforceBase;
-
 import java.util.Arrays;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import com.aventstack.extentreports.ExtentTest;
 
 public class AccountsPage extends SalesforceBase {
 	
-	public AccountsPage(RemoteWebDriver driver)
+	public AccountsPage(RemoteWebDriver driver, ExtentTest node)
 	{
 		this.driver = driver;
+		this.node = node;
 	}
 	
-	public AccountsPage searchAccount(String value) throws InterruptedException
+	public AccountsPage searchAccount(String value)
 	{
-		WebElement searchAcc = driver.findElementByXPath("//input[@name='Account-search-input']");
-		wait.until(ExpectedConditions.elementToBeClickable(searchAcc));
-		searchAcc.clear();
-		searchAcc.sendKeys(value);
-		searchAcc.sendKeys(Keys.ENTER);
-		Thread.sleep(2000);
+		try {
+			WebElement searchAcc = driver.findElementByXPath("//input[@name='Account-search-input']");
+			webDriverWait4ElementToBeClickable(searchAcc);
+			searchAcc.clear();
+			searchAcc.sendKeys(value);
+			searchAcc.sendKeys(Keys.ENTER);
+			solidWait(2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public AccountsPage clickOnCreateNewAccount()
 	{
-		driver.findElementByXPath("//div[text()='New']").click();
+		try {
+			webDriverWait4ElementToBeClickable(driver.findElementByXPath("//div[text()='New']")).click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public AccountsPage inputAccountName(String value)
 	{
-		driver.findElementByXPath("//input[@name='Name']").sendKeys(value);
+		try {
+			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//input[@name='Name']")).sendKeys(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public AccountsPage inputPhoneNumber(String phoneNumber)
 	{
-		driver.findElementByXPath("//input[@name='Phone']").sendKeys(phoneNumber);
+		try {
+			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//input[@name='Phone']")).sendKeys(phoneNumber);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public AccountsPage inputBillingAddress(String value)
 	{
-		driver.findElementByXPath("//label[text()='Billing Street']/following-sibling::div/textarea").sendKeys(value);
+		try {
+			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//label[text()='Billing Street']/following-sibling::div/textarea")).sendKeys(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public AccountsPage inputShippingAddress(String value)
 	{
-		driver.findElementByXPath("//label[text()='Shipping Street']/following-sibling::div/textarea").sendKeys(value);
+		try {
+			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//label[text()='Shipping Street']/following-sibling::div/textarea")).sendKeys(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public AccountsPage inputDescription(String value)
 	{
-		driver.findElementByXPath("//label[text()='Description']/following-sibling::div/textarea").sendKeys(value);
+		try {
+			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//label[text()='Description']/following-sibling::div/textarea")).sendKeys(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public AccountsPage selectType(String value) throws InterruptedException
+	public AccountsPage selectType(String value)
 	{
-		WebElement dd_type = driver.findElement(By.xpath("//label[text()='Type']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
-		wait.until(ExpectedConditions.elementToBeClickable(dd_type));
-		dd_type.click();
-		Thread.sleep(1000);
-		WebElement ele = driver.findElementByXPath("(//label[text()='Type']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
-		scrollToVisibleElement(ele);
-		ele.click();
+		try {
+			WebElement dd_type = driver.findElement(By.xpath("//label[text()='Type']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
+			webDriverWait4ElementToBeClickable(dd_type);
+			dd_type.click();
+			solidWait(1);
+			WebElement ele = driver.findElementByXPath("(//label[text()='Type']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
+			scrollToVisibleElement(ele);
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 
-	public AccountsPage selectOwnership(String value) throws InterruptedException
+	public AccountsPage selectOwnership(String value)
 	{
-		WebElement dd_ownership = driver.findElement(By.xpath("//label[text()='Ownership']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
-		wait.until(ExpectedConditions.elementToBeClickable(dd_ownership));
-		dd_ownership.click();
-		Thread.sleep(1000);
-		WebElement ele = driver.findElementByXPath("(//label[text()='Ownership']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
-		scrollToVisibleElement(ele);
-		ele.click();
+		try {
+			WebElement dd_ownership = driver.findElement(By.xpath("//label[text()='Ownership']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
+			webDriverWait4ElementToBeClickable(dd_ownership);
+			dd_ownership.click();
+			solidWait(1);
+			WebElement ele = driver.findElementByXPath("(//label[text()='Ownership']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
+			scrollToVisibleElement(ele);
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 
-	public AccountsPage selectIndustry(String value) throws InterruptedException
+	public AccountsPage selectIndustry(String value)
 	{
-		WebElement dd_industry = driver.findElement(By.xpath("//label[text()='Industry']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
-		wait.until(ExpectedConditions.elementToBeClickable(dd_industry));
-		dd_industry.click();
-		Thread.sleep(1000);
-		WebElement ele = driver.findElementByXPath("(//label[text()='Industry']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
-		scrollToVisibleElement(ele);
-		ele.click();
+		try {
+			WebElement dd_industry = driver.findElement(By.xpath("//label[text()='Industry']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
+			webDriverWait4ElementToBeClickable(dd_industry);
+			dd_industry.click();
+			solidWait(1);
+			WebElement ele = driver.findElementByXPath("(//label[text()='Industry']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
+			scrollToVisibleElement(ele);
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 
-	public AccountsPage selectUpsellOpportunity(String value) throws InterruptedException
+	public AccountsPage selectUpsellOpportunity(String value)
 	{
-		WebElement dd_upsellOpp = driver.findElement(By.xpath("//label[text()='Upsell Opportunity']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
-		wait.until(ExpectedConditions.visibilityOf(dd_upsellOpp));
-		dd_upsellOpp.click();
-		Thread.sleep(1000);
-		WebElement ele = driver.findElementByXPath("(//label[text()='Upsell Opportunity']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
-		scrollToVisibleElement(ele);
-		ele.click();
+		try {
+			WebElement dd_upsellOpp = driver.findElement(By.xpath("//label[text()='Upsell Opportunity']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
+			webDriverWait4VisibilityOfEle(dd_upsellOpp);
+			dd_upsellOpp.click();
+			solidWait(1);
+			WebElement ele = driver.findElementByXPath("(//label[text()='Upsell Opportunity']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
+			scrollToVisibleElement(ele);
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 
-	public AccountsPage selectActive(String value) throws InterruptedException
+	public AccountsPage selectActive(String value)
 	{
-		WebElement dd_active = driver.findElement(By.xpath("//label[text()='Active']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
-		wait.until(ExpectedConditions.visibilityOf(dd_active));
-		dd_active.click();
-		Thread.sleep(1000);
-		WebElement ele = driver.findElementByXPath("(//label[text()='Active']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
-		scrollToVisibleElement(ele);
-		ele.click();
+		try {
+			WebElement dd_active = driver.findElement(By.xpath("//label[text()='Active']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
+			webDriverWait4VisibilityOfEle(dd_active);
+			dd_active.click();
+			solidWait(1);
+			WebElement ele = driver.findElementByXPath("(//label[text()='Active']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
+			scrollToVisibleElement(ele);
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 
-	public AccountsPage selectCustomerPriority(String value) throws InterruptedException
+	public AccountsPage selectCustomerPriority(String value)
 	{
-		WebElement dd_CustomerPriority = driver.findElement(By.xpath("//label[text()='Customer Priority']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
-		wait.until(ExpectedConditions.visibilityOf(dd_CustomerPriority));
-		dd_CustomerPriority.click();
-		Thread.sleep(1000);
-		WebElement ele = driver.findElementByXPath("(//label[text()='Customer Priority']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
-		scrollToVisibleElement(ele);
-		ele.click();
+		try {
+			WebElement dd_CustomerPriority = driver.findElement(By.xpath("//label[text()='Customer Priority']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
+			webDriverWait4VisibilityOfEle(dd_CustomerPriority);
+			dd_CustomerPriority.click();
+			solidWait(1);
+			WebElement ele = driver.findElementByXPath("(//label[text()='Customer Priority']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
+			scrollToVisibleElement(ele);
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 
-	public AccountsPage selectSLA(String value) throws InterruptedException
+	public AccountsPage selectSLA(String value)
 	{
-		WebElement dd_SLA = driver.findElement(By.xpath("//label[text()='SLA']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
-		wait.until(ExpectedConditions.visibilityOf(dd_SLA));
-		dd_SLA.click();
-		Thread.sleep(1000);
-		WebElement ele = driver.findElementByXPath("(//label[text()='SLA']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
-		scrollToVisibleElement(ele);
-		ele.click();
+		try {
+			WebElement dd_SLA = driver.findElement(By.xpath("//label[text()='SLA']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
+			webDriverWait4VisibilityOfEle(dd_SLA);
+			dd_SLA.click();
+			solidWait(1);
+			WebElement ele = driver.findElementByXPath("(//label[text()='SLA']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
+			scrollToVisibleElement(ele);
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public AccountsPage clickRefreshButton()
 	{
-		driver.findElementByName("refreshButton");
+		try {
+			webDriverWait4ElementToBeClickable(driver.findElementByName("refreshButton")).click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public AccountsPage clickOnSaveButton()
 	{
-		driver.findElementByXPath("//button[@name='SaveEdit' and text()='Save']").click();
+		try {
+			webDriverWait4ElementToBeClickable(driver.findElementByXPath("//button[@name='SaveEdit' and text()='Save']")).click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public AccountsPage clickOnAccountNameHeader()
 	{
-		WebElement AccountsSorting = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//span[text()='Sort']/following::span[text()='Account Name']/preceding-sibling::span/..")));
-		AccountsSorting.click();
+		try {
+			WebElement AccountsSorting = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[text()='Sort']/following::span[text()='Account Name']/preceding-sibling::span/.."));
+			AccountsSorting.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public AccountsPage editAccount(String accName)
 	{
-		WebElement editAcc = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("(//a[text()='"+accName+"'])[1]//following::td//a[@role='button']")));
-		editAcc.click();
-		editAcc = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//div[@role='button' and @title='Edit']/..")));
-		editAcc.click();
+		try {
+			WebElement editAcc = webDriverWait4VisibilityOfEle(driver.findElementByXPath("(//a[text()='"+accName+"'])[1]//following::td//a[@role='button']"));
+			editAcc.click();
+			editAcc = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[@role='button' and @title='Edit']/.."));
+			editAcc.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public AccountsPage deleteAccount(String accName)
 	{
-		WebElement delAcc = driver.findElementByXPath("(//a[text()='" + accName + "'])[1]//following::td//a[@role='button']");
-		delAcc.click();
-		delAcc = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//div[@role='button' and @title='Delete']/..")));
-		delAcc.click();
+		try {
+			WebElement delAcc = webDriverWait4VisibilityOfEle(driver.findElementByXPath("(//a[text()='" + accName + "'])[1]//following::td//a[@role='button']"));
+			delAcc.click();
+			delAcc = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[@role='button' and @title='Delete']/.."));
+			delAcc.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
@@ -192,7 +267,7 @@ public class AccountsPage extends SalesforceBase {
 		try
 		{
 			WebElement output = driver.findElement(By.xpath("//span[contains(text(),'Account')]//a"));
-			wait.until(ExpectedConditions.visibilityOf(output));
+			webDriverWait4VisibilityOfEle(output);
 			String outputValue = output.getText();
 			
 			if (outputValue.contains(accName))
@@ -215,19 +290,18 @@ public class AccountsPage extends SalesforceBase {
 	{
 		String outputValueSplit = null;
 		String outputphno = null;
-		WebElement output = driver.findElement(By.xpath("//span[contains(text(),'Account') and contains(@class,'toastMessage')]"));
-		wait.until(ExpectedConditions.visibilityOf(output));
-		String outputValue = output.getText();
-
+		
 		try
 		{
+			WebElement output = driver.findElement(By.xpath("//span[contains(text(),'Account') and contains(@class,'toastMessage')]"));
+			webDriverWait4VisibilityOfEle(output);
+			String outputValue = output.getText();
 			if (outputValue.contains(accName))
 			{
 				System.out.println(outputValue);
-				Thread.sleep(3000);
-				WebElement editedVal = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("(//a[text()='"+accName+"'])[1]//following::td[2]//span[contains(@class,'forceOutputPhone')]")));
+				solidWait(3);
+				WebElement editedVal = webDriverWait4VisibilityOfEle(driver.findElementByXPath("(//a[text()='"+accName+"'])[1]//following::td[2]//span[contains(@class,'forceOutputPhone')]"));
 				String editedValue = editedVal.getText();
-	//			System.out.println(editedValue);
 				outputphno = editedValue;
 				if (editedValue.contains("-"))
 				{
@@ -262,12 +336,11 @@ public class AccountsPage extends SalesforceBase {
 	
 	public AccountsPage deleteAccountValidation(String accName)
 	{
-		WebElement output = driver.findElement(By.xpath("//span[contains(text(),'Account') and contains(@class,'toastMessage')]"));
-		wait.until(ExpectedConditions.visibilityOf(output));
-		String outputValue = output.getText();
-
 		try
 		{
+			WebElement output = driver.findElement(By.xpath("//span[contains(text(),'Account') and contains(@class,'toastMessage')]"));
+			webDriverWait4VisibilityOfEle(output);
+			String outputValue = output.getText();
 			if (outputValue.contains(accName))
 			{
 				outputValue = outputValue.split("\\.")[0];
@@ -292,11 +365,10 @@ public class AccountsPage extends SalesforceBase {
 		
 		try
 		{
-			WebElement AccountsSorting = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//span[text()='Sort']/following::span[text()='Account Name']/preceding-sibling::span/..")));
+			WebElement AccountsSorting = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[text()='Sort']/following::span[text()='Account Name']/preceding-sibling::span/.."));
 			AccountsSorting.click();
-			Thread.sleep(3000);
-			WebElement AccountsSort = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//span[@aria-live='assertive' and contains(text(),'Sorted')]")));
-//			wait.until(ExpectedConditions.visibilityOf(AccountsSort));
+			solidWait(3);
+			WebElement AccountsSort = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[@aria-live='assertive' and contains(text(),'Sorted')]"));
 			sortMsg = AccountsSort.getText();
 			if (sortMsg.contains("Sorted Ascending"))
 			{
@@ -306,7 +378,7 @@ public class AccountsPage extends SalesforceBase {
 			else
 			{
 				driver.findElementByXPath("//span[text()='Sort']/following::span[text()='Account Name']/preceding-sibling::span/..").click();
-				wait.until(ExpectedConditions.visibilityOf(AccountsSort));
+				webDriverWait4VisibilityOfEle(AccountsSort);
 				sortMsg = AccountsSort.getText();
 				if (sortMsg.contains("Sorted Ascending"))
 				{

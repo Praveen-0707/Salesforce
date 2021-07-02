@@ -2,107 +2,78 @@ package salesforce.pages;
 
 import salesforce.base.SalesforceBase;
 
-import java.awt.Toolkit;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.asserts.SoftAssert;
+
+import com.aventstack.extentreports.ExtentTest;
 
 public class SalesPage extends SalesforceBase {
 	
-	public SalesPage(RemoteWebDriver driver)
+	public SalesPage(RemoteWebDriver driver, ExtentTest node)
 	{
 		this.driver = driver;
+		this.node = node;
 	}
 	
-//	public SalesPage clickOnCampaignTab()
-//	{
-//		WebElement ele = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//a[@title='Campaigns']")));
-//		js.executeScript("arguments[0].click();", ele);
-//		return this;
-//	}
-//	
-//	public SalesPage clickOnCasesTab()
-//	{
-//		WebElement cases = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//a[@title='Cases']")));
-//		js.executeScript("arguments[0].click();", cases);
-//		return this;
-//	}
-//	
-//	public SalesPage clickOnLeadsTab()
-//	{
-//		WebElement ele = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//a[@title='Leads']")));
-//		js.executeScript("arguments[0].click();", ele);
-//		return this;
-//	}
-	
-	public SalesPage clickOnNewCase() throws InterruptedException
+	public SalesPage clickOnNewCase()
 	{
-		WebElement newCase = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//a[@title='New' and @role='button']")));
-		newCase.click();
-		Thread.sleep(3000);
+		try {
+			WebElement newCase = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//a[@title='New' and @role='button']"));
+			newCase.click();
+			solidWait(3);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public SalesPage searchCampaign(String value) throws InterruptedException
+	public SalesPage searchCampaign(String value)
 	{
-		WebElement searchCampaign = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//input[contains(@placeholder,'Search this list')]")));
-		searchCampaign.clear();
-		searchCampaign.sendKeys(value);
-		searchCampaign.sendKeys(Keys.ENTER);
-		Thread.sleep(2000);
+		try {
+			WebElement searchCampaign = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//input[contains(@placeholder,'Search this list')]"));
+			searchCampaign.clear();
+			searchCampaign.sendKeys(value);
+			searchCampaign.sendKeys(Keys.ENTER);
+			solidWait(2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public SalesPage searchAndClickOnCampaign(String value) throws InterruptedException
+	public SalesPage searchAndClickOnCampaign(String value)
 	{
-		searchCampaign(value);
-		WebElement searchWTG = driver.findElementByXPath("(//a[text()='" + value + "'])[1]");
-		searchWTG.click();
+		try {
+			searchCampaign(value);
+			WebElement searchWTG = driver.findElementByXPath("(//a[text()='" + value + "'])[1]");
+			searchWTG.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public SalesPage clickAndViewAllCampaignMembers() throws InterruptedException
+	public SalesPage clickAndViewAllCampaignMembers()
 	{
-		WebElement ele = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//span[@title='Campaign Members']/../../../../../following-sibling::div//span[text()='View All']")));
-		ele.click();
+		try {
+			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[@title='Campaign Members']/../../../../../following-sibling::div//span[text()='View All']"));
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-//	public SalesPage uploadAttachmentToCampaign(String fileLocation) throws InterruptedException
-//	{
-//		StringSelection up = new StringSelection(fileLocation);
-//		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(up, null);
-//		
-//		robot.keyPress(KeyEvent.VK_CONTROL);
-//		robot.keyPress(KeyEvent.VK_V);
-//
-//		robot.keyRelease(KeyEvent.VK_CONTROL);
-//		robot.keyRelease(KeyEvent.VK_V);
-//
-//		robot.keyPress(KeyEvent.VK_ENTER);
-//		robot.keyRelease(KeyEvent.VK_ENTER);
-//		Thread.sleep(3000);
-//		
-////		click on the Done button to dismiss the alert
-//		WebElement ele = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//button[@type='button']//span[text()='Done']"))));
-//		ele.click();
-//		return this;
-//	}
-	
-	public SalesPage verifyUploadedAttachment(String fileName) throws InterruptedException
+	public SalesPage verifyUploadedAttachment(String fileName)
 	{
 		try
 		{
 			String anchorTag = "a";
-//			String fileName = "Bike_Insurance";
 			String tagName = driver.findElement(By.xpath("//a[@title='"+fileName+"']")).getTagName();
 			String linkText = driver.findElement(By.xpath("//a[@title='"+fileName+"']")).getText();
 			if((tagName.equals(anchorTag))&&(linkText.contains(fileName)))
@@ -112,9 +83,9 @@ public class SalesPage extends SalesforceBase {
 			}
 
 //			Click on the uploaded file
-			Thread.sleep(2000);
+			solidWait(2);
 			driver.findElement(By.xpath("//a[@title='"+fileName+"']")).click();
-			Thread.sleep(3000);
+			solidWait(3);
 					
 //			Close File Preview
 			robot.keyPress(KeyEvent.VK_ESCAPE);
@@ -127,15 +98,19 @@ public class SalesPage extends SalesforceBase {
 		return this;
 	}
 	
-	public SalesPage clickOnViewAllAttachments() throws InterruptedException
+	public SalesPage clickOnViewAllAttachments()
 	{
-		WebElement ele = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//span[@class='view-all-label']/span[text()='Attachments']"))));
-		js.executeScript("arguments[0].click();", ele);
-		Thread.sleep(2000);
+		try {
+			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElement(By.xpath("//span[@class='view-all-label']/span[text()='Attachments']")));
+			js.executeScript("arguments[0].click();", ele);
+			solidWait(2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public SalesPage deleteAttachedFile(String fileName) throws InterruptedException
+	public SalesPage deleteAttachedFile(String fileName)
 	{
 		try
 		{
@@ -147,16 +122,16 @@ public class SalesPage extends SalesforceBase {
 				String UploadedFile = listofFiles.getText();
 				if (UploadedFile.contains(fileName))
 				{
-					WebElement ele = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//table[contains(@class,'uiVirtualDataTable') and not(contains(@class,'slds-no-cell-focus'))]//tbody/tr["+i+"]/td[5]//a[@role='button']"))));
+					WebElement ele = webDriverWait4VisibilityOfEle(driver.findElement(By.xpath("//table[contains(@class,'uiVirtualDataTable') and not(contains(@class,'slds-no-cell-focus'))]//tbody/tr["+i+"]/td[5]//a[@role='button']")));
 					js.executeScript("arguments[0].click();", ele);
-					Thread.sleep(500);
-					ele = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@role='button' and @title='Delete']/.."))));
+					solidWait(1);
+					ele = webDriverWait4VisibilityOfEle(driver.findElement(By.xpath("//div[@role='button' and @title='Delete']/..")));
 					ele.click();
 					
 //					Delete PopUp
-					ele = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[@title='Delete']"))));
+					ele = webDriverWait4ElementToBeClickable(driver.findElement(By.xpath("//button[@title='Delete']")));
 					ele.click();
-					Thread.sleep(2000);
+					solidWait(2);
 					break;
 				}
 			}
@@ -168,7 +143,7 @@ public class SalesPage extends SalesforceBase {
 		return this;
 	}
 	
-	public SalesPage verifyDeleteAttachment(String fileName) throws InterruptedException
+	public SalesPage verifyDeleteAttachment(String fileName)
 	{
 		try
 		{
@@ -200,265 +175,377 @@ public class SalesPage extends SalesforceBase {
 		return this;
 	}
 	
-	public SalesPage clickOnViewAllKeyDeals() throws InterruptedException
+	public SalesPage clickOnViewAllKeyDeals()
 	{
-		WebElement allDeals = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//a/span[text()='View All Key Deals']")));
-		allDeals.click();
-		Thread.sleep(2000);
+		try {
+			WebElement allDeals = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//a/span[text()='View All Key Deals']"));
+			allDeals.click();
+			solidWait(2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	
-	public SalesPage clickOnOpportunityMenu() throws InterruptedException
+	public SalesPage clickOnOpportunityMenu()
 	{
-		WebElement ele = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//a[@title='Opportunities']/following::div")));
-		ele.click();
-		Thread.sleep(3000);
+		try {
+			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//a[@title='Opportunities']/following::div"));
+			ele.click();
+			solidWait(3);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	 
-	public SalesPage clickOnCreateNewOpportunity() throws InterruptedException
+	public SalesPage clickOnCreateNewOpportunity()
 	{
-		WebElement ele = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//div[text()='New']")));
-		ele.click();
-		Thread.sleep(2000);
-		return this;
-	}
-	
-	public SalesPage selectAllOpportunities() throws InterruptedException
-	{
-		WebElement ele = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//span[text()='All Opportunities']/ancestor::a[@role='menuitem']")));
-		js.executeScript("arguments[0].click();", ele);
-		Thread.sleep(2000);
-		return this;
-	}
-	
-	public SalesPage searchLead(String value) throws InterruptedException
-	{
-		WebElement searchLead = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//input[contains(@placeholder,'Search this list')]")));
-		searchLead.clear();
-		searchLead.sendKeys(value);
-		searchLead.sendKeys(Keys.ENTER);
-		Thread.sleep(2000);
-		return this;
-	}
-	
-	public SalesPage selectLead(String value) throws InterruptedException
-	{
-		
-		WebElement dd_lead = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//input[@title='Search Leads']")));		
-		Thread.sleep(2000);
-		int length = value.length();
-		if (length < 2)
-		{
-			WebElement dd_leadsearch = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//lightning-icon[contains(@class,'inputLookupIcon')]")));
-			actions.moveToElement(dd_leadsearch).click().perform();
-			Thread.sleep(2000);
-			WebElement ele = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//span[@title='New Lead']")));
+		try {
+			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[text()='New']"));
 			ele.click();
-			Thread.sleep(2000);
+			solidWait(2);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		else
-		{
-			dd_lead.sendKeys(value);
-			dd_lead.sendKeys(Keys.ENTER);
-			Thread.sleep(2000);
+		return this;
+	}
+	
+	public SalesPage selectAllOpportunities()
+	{
+		try {
+			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[text()='All Opportunities']/ancestor::a[@role='menuitem']"));
+			js.executeScript("arguments[0].click();", ele);
+			solidWait(2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return this;
+	}
+	
+	public SalesPage searchLead(String value)
+	{
+		try {
+			WebElement searchLead = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//input[contains(@placeholder,'Search this list')]"));
+			searchLead.clear();
+			searchLead.sendKeys(value);
+			searchLead.sendKeys(Keys.ENTER);
+			solidWait(2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return this;
+	}
+	
+	public SalesPage selectLead(String value)
+	{
+		
+		try {
+			WebElement dd_lead = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//input[@title='Search Leads']"));		
+			solidWait(2);
+			int length = value.length();
+			if (length < 2)
+			{
+				WebElement dd_leadsearch = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//lightning-icon[contains(@class,'inputLookupIcon')]"));
+				actions.moveToElement(dd_leadsearch).click().perform();
+				solidWait(2);
+				WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[@title='New Lead']"));
+				ele.click();
+				solidWait(2);
+			}
+			else
+			{
+				dd_lead.sendKeys(value);
+				dd_lead.sendKeys(Keys.ENTER);
+				solidWait(2);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		return this;
 	}
 	
-	public SalesPage selectSalutation(String value) throws InterruptedException
+	public SalesPage selectSalutation(String value)
 	{
-		WebElement dd_salutation = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("(//span[text()='Salutation']/following::div/a[contains(text(),'None')])[1]")));
-		dd_salutation.click();
-		Thread.sleep(1000);
-		WebElement ele = driver.findElementByXPath("(//div[@class='select-options' and @role='menu']/ul//a[contains(@title,'"+value+"')])[1]");
-		scrollToVisibleElement(ele);
-		ele.click();
+		try {
+			WebElement dd_salutation = webDriverWait4ElementToBeClickable(driver.findElementByXPath("(//span[text()='Salutation']/following::div/a[contains(text(),'None')])[1]"));
+			dd_salutation.click();
+			solidWait(1);
+			WebElement ele = driver.findElementByXPath("(//div[@class='select-options' and @role='menu']/ul//a[contains(@title,'"+value+"')])[1]");
+			scrollToVisibleElement(ele);
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public SalesPage selectContractContactName(String value) throws InterruptedException
+	public SalesPage selectContractContactName(String value)
 	{
-		WebElement dd_contract = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//input[@title='Search Contacts']")));
-		dd_contract.click();
-		Thread.sleep(1000);
-		WebElement ele = driver.findElementByXPath("(//input[@title='Search Contacts']/following-sibling::div//div[@class='listContent']/ul/li/a//div[contains(@title,'"+value+"')])[1]");
-		scrollToVisibleElement(ele);
-		ele.click();
+		try {
+			WebElement dd_contract = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//input[@title='Search Contacts']"));
+			dd_contract.click();
+			solidWait(1);
+			WebElement ele = driver.findElementByXPath("(//input[@title='Search Contacts']/following-sibling::div//div[@class='listContent']/ul/li/a//div[contains(@title,'"+value+"')])[1]");
+			scrollToVisibleElement(ele);
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public SalesPage inputFirstName(String value)
 	{
-		WebElement firstName = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//label/span[text()='First Name']/following::input[contains(@class,'firstName')]")));
-		firstName.clear();
-		firstName.sendKeys(value);
+		try {
+			WebElement firstName = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//label/span[text()='First Name']/following::input[contains(@class,'firstName')]"));
+			firstName.clear();
+			firstName.sendKeys(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public SalesPage inputLastName(String value)
 	{
-		WebElement lastName = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//label/span[text()='Last Name']/following::input[contains(@class,'lastName')]")));
-		lastName.clear();
-		lastName.sendKeys(value);
+		try {
+			WebElement lastName = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//label/span[text()='Last Name']/following::input[contains(@class,'lastName')]"));
+			lastName.clear();
+			lastName.sendKeys(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public SalesPage inputSubject(String value)
 	{
-		WebElement ele = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//span[text()='Subject']/parent::label/following-sibling::input")));
-		ele.clear();
-		ele.sendKeys(value);
+		try {
+			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[text()='Subject']/parent::label/following-sibling::input"));
+			ele.clear();
+			ele.sendKeys(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public SalesPage inputCaseDescription(String value)
 	{
-		WebElement ele = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//span[text()='Description']/parent::label/following-sibling::textarea")));
-		ele.clear();
-		ele.sendKeys(value);
+		try {
+			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[text()='Description']/parent::label/following-sibling::textarea"));
+			ele.clear();
+			ele.sendKeys(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public SalesPage inputCompanyName(String value)
 	{
-		WebElement compName = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("(//label/span[text()='Company']/following::input[contains(@class,'input')])[1]")));
-		compName.clear();
-		compName.sendKeys(value);
+		try {
+			WebElement compName = webDriverWait4ElementToBeClickable(driver.findElementByXPath("(//label/span[text()='Company']/following::input[contains(@class,'input')])[1]"));
+			compName.clear();
+			compName.sendKeys(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public SalesPage inputCloseDate(String value)
 	{
-		WebElement closeDate = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//label[text()='Close Date']/following-sibling::div//input[@name ='CloseDate']")));
-		closeDate.clear();
-		closeDate.sendKeys(value);
+		try {
+			WebElement closeDate = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//label[text()='Close Date']/following-sibling::div//input[@name ='CloseDate']"));
+			closeDate.clear();
+			closeDate.sendKeys(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public SalesPage selectType(String value) throws InterruptedException
+	public SalesPage selectType(String value)
 	{
-		WebElement dd_type = driver.findElement(By.xpath("//label[text()='Type']/following-sibling::div//input[@type ='text']"));
-		wait.until(ExpectedConditions.elementToBeClickable(dd_type));
-		dd_type.click();
-		Thread.sleep(1000);
-		WebElement ele = driver.findElementByXPath("(//label[text()='Type']/following-sibling::div//input[@type ='text']/parent::div/following-sibling::div//lightning-base-combobox-item//span[contains(text(),'"+value+"')])[1]");
-		scrollToVisibleElement(ele);
-		ele.click();
+		try {
+			WebElement dd_type = driver.findElement(By.xpath("//label[text()='Type']/following-sibling::div//input[@type ='text']"));
+			webDriverWait4ElementToBeClickable(dd_type);
+			dd_type.click();
+			solidWait(1);
+			WebElement ele = driver.findElementByXPath("(//label[text()='Type']/following-sibling::div//input[@type ='text']/parent::div/following-sibling::div//lightning-base-combobox-item//span[contains(text(),'"+value+"')])[1]");
+			scrollToVisibleElement(ele);
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public SalesPage selectLeadSource(String value) throws InterruptedException
+	public SalesPage selectLeadSource(String value)
 	{
-		WebElement dd_leadsource = driver.findElement(By.xpath("//label[text()='Lead Source']/following-sibling::div//input[@type ='text']"));
-		wait.until(ExpectedConditions.elementToBeClickable(dd_leadsource));
-		dd_leadsource.click();
-		Thread.sleep(1000);
-		WebElement ele = driver.findElementByXPath("(//label[text()='Lead Source']/following-sibling::div//input[@type ='text']/parent::div/following-sibling::div//lightning-base-combobox-item//span[contains(text(),'"+value+"')])[1]");
-		scrollToVisibleElement(ele);
-		ele.click();
+		try {
+			WebElement dd_leadsource = driver.findElement(By.xpath("//label[text()='Lead Source']/following-sibling::div//input[@type ='text']"));
+			webDriverWait4ElementToBeClickable(dd_leadsource);
+			dd_leadsource.click();
+			solidWait(1);
+			WebElement ele = driver.findElementByXPath("(//label[text()='Lead Source']/following-sibling::div//input[@type ='text']/parent::div/following-sibling::div//lightning-base-combobox-item//span[contains(text(),'"+value+"')])[1]");
+			scrollToVisibleElement(ele);
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public SalesPage selectStage(String value) throws InterruptedException
+	public SalesPage selectStage(String value)
 	{
-		WebElement dd_stage = driver.findElement(By.xpath("//label[text()='Stage']/following-sibling::div//input[@type ='text']"));
-		wait.until(ExpectedConditions.elementToBeClickable(dd_stage));
-		dd_stage.click();
-		Thread.sleep(1000);
-		WebElement ele = driver.findElementByXPath("(//label[text()='Stage']/following-sibling::div//input[@type ='text']/parent::div/following-sibling::div//lightning-base-combobox-item//span[contains(text(),'"+value+"')])[1]");
-		scrollToVisibleElement(ele);
-		ele.click();
+		try {
+			WebElement dd_stage = driver.findElement(By.xpath("//label[text()='Stage']/following-sibling::div//input[@type ='text']"));
+			webDriverWait4ElementToBeClickable(dd_stage);
+			dd_stage.click();
+			solidWait(1);
+			WebElement ele = driver.findElementByXPath("(//label[text()='Stage']/following-sibling::div//input[@type ='text']/parent::div/following-sibling::div//lightning-base-combobox-item//span[contains(text(),'"+value+"')])[1]");
+			scrollToVisibleElement(ele);
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public SalesPage selectPrimaryCampaignSource(String value) throws InterruptedException
+	public SalesPage selectPrimaryCampaignSource(String value)
 	{
-		WebElement dd_PCS = driver.findElement(By.xpath("//label[text()='Primary Campaign Source']/following-sibling::div//input[@type='text']"));
-		wait.until(ExpectedConditions.elementToBeClickable(dd_PCS));
-		dd_PCS.click();
-		Thread.sleep(1000);
-		WebElement ele = driver.findElementByXPath("(//label[text()='Primary Campaign Source']/following-sibling::div//input[@type ='text']/parent::div/following-sibling::div//lightning-base-combobox-item//span[contains(text(),'"+value+"')])[1]");
-		scrollToVisibleElement(ele);
-		ele.click();
+		try {
+			WebElement dd_PCS = driver.findElement(By.xpath("//label[text()='Primary Campaign Source']/following-sibling::div//input[@type='text']"));
+			webDriverWait4ElementToBeClickable(dd_PCS);
+			dd_PCS.click();
+			solidWait(1);
+			WebElement ele = driver.findElementByXPath("(//label[text()='Primary Campaign Source']/following-sibling::div//input[@type ='text']/parent::div/following-sibling::div//lightning-base-combobox-item//span[contains(text(),'"+value+"')])[1]");
+			scrollToVisibleElement(ele);
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 			
 	public SalesPage inputOpportunityName(String value)
 	{
-		WebElement oppName = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//label[text()='Opportunity Name']/following-sibling::div//input[@name ='Name']")));
-		oppName.clear();
-		oppName.sendKeys(value);
+		try {
+			WebElement oppName = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//label[text()='Opportunity Name']/following-sibling::div//input[@name ='Name']"));
+			oppName.clear();
+			oppName.sendKeys(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public SalesPage inputAmount(String value)
 	{
-		WebElement oppAmt = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//label[text()='Amount']/following-sibling::div//input[@name ='Amount']")));
-		oppAmt.clear();
-		oppAmt.sendKeys(value);
+		try {
+			WebElement oppAmt = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//label[text()='Amount']/following-sibling::div//input[@name ='Amount']"));
+			oppAmt.clear();
+			oppAmt.sendKeys(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public SalesPage clickOnAddLead() throws InterruptedException
+	public SalesPage clickOnAddLead()
 	{
-		wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//a[@title='Add Leads']"))).click();
-		Thread.sleep(2000);
+		try {
+			webDriverWait4ElementToBeClickable(driver.findElementByXPath("//a[@title='Add Leads']")).click();
+			solidWait(2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public SalesPage clickOnSubmitButton()
 	{
-		WebElement clkSubmit = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//span[text()='Submit']")));
-		js.executeScript("arguments[0].click();", clkSubmit);
+		try {
+			WebElement clkSubmit = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[text()='Submit']"));
+			js.executeScript("arguments[0].click();", clkSubmit);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public SalesPage clickonSaveButton() throws InterruptedException
+	public SalesPage clickonSaveButton()
 	{
-		wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("(//button/span[text()='Save'])[last()]"))).click();
-		Thread.sleep(1000);
+		try {
+			webDriverWait4ElementToBeClickable(driver.findElementByXPath("(//button/span[text()='Save'])[last()]")).click();
+			solidWait(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public SalesPage clickonSaveOpportunity() throws InterruptedException
+	public SalesPage clickonSaveOpportunity()
 	{
-		wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//button[@name='SaveEdit' and text()='Save']"))).click();
-		Thread.sleep(1000);
+		try {
+			webDriverWait4ElementToBeClickable(driver.findElementByXPath("//button[@name='SaveEdit' and text()='Save']")).click();
+			solidWait(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public SalesPage clickonNextButton() throws InterruptedException
+	public SalesPage clickonNextButton()
 	{
-		WebElement clkNext = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//span[text()='Next']")));
-		js.executeScript("arguments[0].click();", clkNext);
-		Thread.sleep(1000);
+		try {
+			WebElement clkNext = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[text()='Next']"));
+			js.executeScript("arguments[0].click();", clkNext);
+			solidWait(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public SalesPage clickonUploadAttachment()
 	{
-		WebElement clkUpload = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@title='Upload Files']")));
-		clkUpload.click();
+		try {
+			WebElement clkUpload = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//div[@title='Upload Files']"));
+			clkUpload.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public SalesPage ClickOnCampaignName(String campName) throws InterruptedException
+	public SalesPage ClickOnCampaignName(String campName)
 	{
-		WebElement ele = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("(//a[contains(@title,'" + campName + "')])[1]")));
-		ele.click();
+		try {
+			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("(//a[contains(@title,'" + campName + "')])[1]"));
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public SalesPage clickOndeleteLead(String fName, String lName)
 	{
 		String lead = fName + " " + lName;
-		WebElement delLead = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("(//a[text()='" +lead+ "']/following::td//a[@role='button'])[1]")));
-		delLead.click();
-		delLead = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//div[@role='button' and @title='Delete']/..")));
-		delLead.click();
+		try {
+			WebElement delLead = webDriverWait4VisibilityOfEle(driver.findElementByXPath("(//a[text()='" +lead+ "']/following::td//a[@role='button'])[1]"));
+			delLead.click();
+			delLead = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[@role='button' and @title='Delete']/.."));
+			delLead.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
@@ -466,7 +553,7 @@ public class SalesPage extends SalesforceBase {
 	{
 		try
 		{
-			WebElement errTag = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//ul[@class='errorsList']/li")));
+			WebElement errTag = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//ul[@class='errorsList']/li"));
 			String errMsgValue = errTag.getText();
 			System.out.println(errMsgValue);
 			SoftAssert softAssert = new SoftAssert();
@@ -486,13 +573,13 @@ public class SalesPage extends SalesforceBase {
 		try
 		{
 			WebElement output = driver.findElement(By.xpath("//span[contains(text(),'Opportunity')]//a"));
-			wait.until(ExpectedConditions.visibilityOf(output));
+			webDriverWait4VisibilityOfEle(output);
 			String outputValue = output.getText();
 			
 			if (outputValue.contains(oppName))
 			{
 				System.out.println("Stage 1 Passed");
-				WebElement ele = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//div[contains(text(),'Opportunity')]/following-sibling::slot/slot[@slot='primaryField']")));
+				WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[contains(text(),'Opportunity')]/following-sibling::slot/slot[@slot='primaryField']"));
 				String val = ele.getText();
 				if (val.contains(oppName))
 				System.out.println("Opportunity " + outputValue + " was created" + ", Passed");
@@ -516,7 +603,7 @@ public class SalesPage extends SalesforceBase {
 		try
 		{
 			WebElement output = driver.findElement(By.xpath("//div[contains(@class,'toastTitle')]"));
-			wait.until(ExpectedConditions.visibilityOf(output));
+			webDriverWait4VisibilityOfEle(output);
 			String outputValue = output.getText();
 			
 			if (outputValue.contains(campName))
@@ -533,7 +620,7 @@ public class SalesPage extends SalesforceBase {
 			{
 				clickOnTab("Leads");
 				searchLead(leadName);
-				WebElement ele = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("(//a[contains(@class,'forceOutputLookup')])[1]")));
+				WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("(//a[contains(@class,'forceOutputLookup')])[1]"));
 				String val = ele.getText();
 				if (val.contains(leadName))
 				{

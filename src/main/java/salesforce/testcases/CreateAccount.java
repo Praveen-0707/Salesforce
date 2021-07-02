@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 public class CreateAccount extends SalesforceBase {
 	
 	@BeforeTest
-	public void setFileName() {
+	public void setTestDetails() {
 		excelFileName = "Accounts";
 		excelSheetName = "CreateAccounts";
 		browser = "chrome";
@@ -17,7 +17,7 @@ public class CreateAccount extends SalesforceBase {
 	@Test(dataProvider = "getData", groups= {"Accounts"})
 	public void createNewAccount(String accName) throws InterruptedException
 	{
-		new LoginPage(driver,prop)
+		new LoginPage(driver, prop, node)
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()

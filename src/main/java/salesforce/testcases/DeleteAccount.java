@@ -9,7 +9,7 @@ import salesforce.pages.LoginPage;
 public class DeleteAccount extends SalesforceBase {
 	
 	@BeforeTest
-	public void setFileName() {
+	public void setTestDetails() {
 		excelFileName = "Accounts";
 		excelSheetName = "DeleteAccounts";
 		browser = "chrome";
@@ -19,14 +19,14 @@ public class DeleteAccount extends SalesforceBase {
 	public void deleteAccount(String accName) throws InterruptedException
 	{
 	
-		new LoginPage(driver,prop)
+		new LoginPage(driver,prop, node)
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()
 		
 		.searchApp("Account").clickOnAccount();
 		
-		AccountsPage accPg = new AccountsPage(driver);
+		AccountsPage accPg = new AccountsPage(driver, node);
 		accPg.searchAccount(accName).deleteAccount(accName);
 		
 		deletePopUpConfirmation();

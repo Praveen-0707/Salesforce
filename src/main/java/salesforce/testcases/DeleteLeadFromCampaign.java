@@ -9,7 +9,7 @@ import salesforce.pages.SalesPage;
 public class DeleteLeadFromCampaign extends SalesforceBase {
 	
 	@BeforeTest
-	public void setFileName() {
+	public void setTestDetails() {
 		excelFileName = "Campaign";
 		excelSheetName = "CreateCampaign";
 		browser = "chrome";
@@ -19,9 +19,9 @@ public class DeleteLeadFromCampaign extends SalesforceBase {
 	public void deleteLeadFromCampaign(String campName, String fName, String lName) throws InterruptedException {
 
 		String lead = fName + " " + lName;
-		SalesPage salesPage = new SalesPage(driver);
+		SalesPage salesPage = new SalesPage(driver, node);
 		
-		new LoginPage(driver,prop)
+		new LoginPage(driver,prop, node)
 		.enterUsername().enterPassword().clickLogin()
 		.clickToggleButton().clickViewAll()
 		.searchApp("Sales").clickOnSales();

@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 public class TC_WorkoutSubscription extends SalesforceBase {
 	
 	@BeforeTest
-	public void setFileName() {
+	public void setTestDetails() {
 		browser = "chrome";
 	}
 	
@@ -23,9 +23,9 @@ public class TC_WorkoutSubscription extends SalesforceBase {
 		String dashboardName = "Raj_Workout999";
 		String descr = "Testin999";
 		
-		ServiceConsolePage SC = new ServiceConsolePage(driver);
+		ServiceConsolePage SC = new ServiceConsolePage(driver, node);
 
-		new LoginPage(driver, prop)
+		new LoginPage(driver, prop, node)
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()
@@ -36,7 +36,7 @@ public class TC_WorkoutSubscription extends SalesforceBase {
 		.selectTask("Dashboards").clickOnNewDashboard()
 		.inputDashboardName(dashboardName).inputDashboardDescr(descr).clickOnCreateButton();
 		
-		NewDashboardPage framePage = new NewDashboardPage(driver);
+		NewDashboardPage framePage = new NewDashboardPage(driver, node);
 		framePage.clickonDoneButton()
 		
 		.verifyDashboardTitle(dashboardName).clickOnSubscribeButton()

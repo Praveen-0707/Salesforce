@@ -9,7 +9,7 @@ import salesforce.pages.LoginPage;
 public class SalesforceLogin extends SalesforceBase {
 	
 	@BeforeTest
-	public void setFileName() {
+	public void setTestDetails() {
 		excelFileName = "Login";
 		excelSheetName = "Login";
 	}
@@ -17,7 +17,7 @@ public class SalesforceLogin extends SalesforceBase {
 	@Test(dataProvider = "getData")
 	public void login(String userName, String pass)
 	{
-		new LoginPage(driver,prop)
+		new LoginPage(driver,prop, node)
 		.enterUsername()
 		.enterPassword()
 		.clickLogin();

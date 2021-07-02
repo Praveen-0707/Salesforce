@@ -5,91 +5,108 @@ import salesforce.base.SalesforceBase;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.asserts.SoftAssert;
 
+import com.aventstack.extentreports.ExtentTest;
+
 public class WorkTypeGroupsPage extends SalesforceBase {
 	
-	public WorkTypeGroupsPage(RemoteWebDriver driver)
+	public WorkTypeGroupsPage(RemoteWebDriver driver, ExtentTest node)
 	{
 		this.driver = driver;
+		this.node = node;
 	}
 	
-	public WorkTypeGroupsPage searchWorkTypeGroup(String value) throws InterruptedException
+	public WorkTypeGroupsPage searchWorkTypeGroup(String value)
 	{
-		WebElement searchWTG = driver.findElementByXPath("//input[contains(@name,'WorkTypeGroup-search-input')]");
-		wait.until(ExpectedConditions.elementToBeClickable(searchWTG));
-		searchWTG.clear();
-		searchWTG.sendKeys(value);
-		searchWTG.sendKeys(Keys.ENTER);
-		Thread.sleep(2000);
+		try {
+			WebElement searchWTG = driver.findElementByXPath("//input[contains(@name,'WorkTypeGroup-search-input')]");
+			webDriverWait4ElementToBeClickable(searchWTG);
+			searchWTG.clear();
+			searchWTG.sendKeys(value);
+			searchWTG.sendKeys(Keys.ENTER);
+			solidWait(2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
-	
-//	public WorkTypeGroupsPage selectTask(String value) throws InterruptedException
-//	{
-//		HomePage homepage = new HomePage(driver);
-//		try
-//		{
-//			homepage.selectTaskFromNavigationControl(value);
-//		}
-//		catch (Exception e)
-//		{
-//			System.out.println(e.getMessage());
-//			homepage.selectTaskFromNavigationControl(value);
-//		}
-//		return this;
-//	}
-	
+		
 	public WorkTypeGroupsPage clickOnNewWorkTypeGroup()
 	{
-		driver.findElementByXPath("//div[text()='New']").click();
+		try {
+			driver.findElementByXPath("//div[text()='New']").click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public WorkTypeGroupsPage inputWorkTypeGroupDescr(String value)
 	{
-		WebElement worktypeGrpName = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//label/span[text()='Description']/following::textarea")));
-		worktypeGrpName.clear();
-		worktypeGrpName.sendKeys(value);
+		try {
+			WebElement worktypeGrpName = driver.findElementByXPath("//label/span[text()='Description']/following::textarea");
+			webDriverWait4ElementToBeClickable(worktypeGrpName);
+			worktypeGrpName.clear();
+			worktypeGrpName.sendKeys(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public WorkTypeGroupsPage inputWorkTypeGroupName(String value)
 	{
-		WebElement worktypeGrpName = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("(//span[text()='Work Type Group Name'])[2]/../following-sibling::input")));
-		worktypeGrpName.clear();
-		worktypeGrpName.sendKeys(value);
+		try {
+			WebElement worktypeGrpName = driver.findElementByXPath("(//span[text()='Work Type Group Name'])[2]/../following-sibling::input");
+			webDriverWait4VisibilityOfEle(worktypeGrpName);
+			worktypeGrpName.clear();
+			worktypeGrpName.sendKeys(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public WorkTypeGroupsPage selectGroupType(String value) throws InterruptedException
+	public WorkTypeGroupsPage selectGroupType(String value)
 	{
-		WebElement dd_groupType = driver.findElement(By.xpath("//span[text()='Group Type']/following::a[@class='select' and @role='button']"));
-		wait.until(ExpectedConditions.elementToBeClickable(dd_groupType));
-		dd_groupType.click();
-		Thread.sleep(1000);
-		WebElement ele = driver.findElementByXPath("(//div[@class='select-options' and @role='menu']/ul//a[contains(@title,'"+value+"')])[1]");
-		scrollToVisibleElement(ele);
-		ele.click();
+		try {
+			WebElement dd_groupType = driver.findElement(By.xpath("//span[text()='Group Type']/following::a[@class='select' and @role='button']"));
+			webDriverWait4ElementToBeClickable(dd_groupType);
+			dd_groupType.click();
+			solidWait(1);
+			WebElement ele = driver.findElementByXPath("(//div[@class='select-options' and @role='menu']/ul//a[contains(@title,'"+value+"')])[1]");
+			scrollToVisibleElement(ele);
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public WorkTypeGroupsPage clickOnSaveButton()
 	{
-		driver.findElementByXPath("(//button/span[text()='Save'])[last()]").click();
+		try {
+			driver.findElementByXPath("(//button/span[text()='Save'])[last()]").click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public WorkTypeGroupsPage clickRefreshButton()
 	{
-		driver.findElementByName("refreshButton");
+		try {
+			driver.findElementByName("refreshButton").click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
@@ -105,7 +122,7 @@ public class WorkTypeGroupsPage extends SalesforceBase {
 		try
 		{
 			WebElement output = driver.findElement(By.xpath("(//span[text()='Description'])[1]/following::div//span[@class='uiOutputText']"));
-			wait.until(ExpectedConditions.visibilityOf(output));
+			webDriverWait4VisibilityOfEle(output);
 			String outputValue = output.getText();
 			
 			if (outputValue.contains(wtgName))
@@ -126,44 +143,73 @@ public class WorkTypeGroupsPage extends SalesforceBase {
 	
 	public WorkTypeGroupsPage editWorkTypeGroup(String wtgName)
 	{
-		WebElement editWTG = driver.findElementByXPath("(//a[text()='" + wtgName + "'])[1]//following::td//a[@role='button']");
-		editWTG.click();
-		editWTG = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//div[@role='button' and @title='Edit']/..")));
-		editWTG.click();
+		try {
+			WebElement editWTG = driver.findElementByXPath("(//a[text()='" + wtgName + "'])[1]//following::td//a[@role='button']");
+			webDriverWait4VisibilityOfEle(editWTG);
+			editWTG.click();
+			editWTG = driver.findElementByXPath("//div[@role='button' and @title='Edit']/..");
+			webDriverWait4VisibilityOfEle(editWTG);
+			editWTG.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public WorkTypeGroupsPage deleteWorkTypeGroup(String wtgName)
 	{
-		WebElement delWTG = driver.findElementByXPath("(//a[text()='" + wtgName + "'])[1]//following::td//a[@role='button']");
-		delWTG.click();
-		delWTG = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//div[@role='button' and @title='Delete']/..")));
-		delWTG.click();
+		try {
+			WebElement delWTG = driver.findElementByXPath("(//a[text()='" + wtgName + "'])[1]//following::td//a[@role='button']");
+			webDriverWait4VisibilityOfEle(delWTG);
+			delWTG.click();
+			delWTG = driver.findElementByXPath("//div[@role='button' and @title='Delete']/..");
+			webDriverWait4VisibilityOfEle(delWTG);
+			delWTG.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public WorkTypeGroupsPage clickOnWorkTypeGroupsTabOptions() throws InterruptedException
+	public WorkTypeGroupsPage clickOnWorkTypeGroupsTabOptions()
 	{
-		WebElement WTG = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//a[contains(@title,'Work Type Groups')]/following::div[contains(@class,'context-bar')][1]")));
-		js.executeScript("arguments[0].click();", WTG);
-		Thread.sleep(2000);
+		try {
+			WebElement WTG = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//a[contains(@title,'Work Type Groups')]/following::div[contains(@class,'context-bar')][1]")));
+			webDriverWait4ElementToBeClickable(WTG);
+			js.executeScript("arguments[0].click();", WTG);
+			solidWait(2);
+		} catch (JavascriptException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public WorkTypeGroupsPage SelectNewWorkTypeGroup() throws InterruptedException
+	public WorkTypeGroupsPage SelectNewWorkTypeGroup()
 	{
-		WebElement WTG = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//span[text()='New Work Type Group']/ancestor::a[@role='menuitemcheckbox']")));
-		js.executeScript("arguments[0].click();", WTG);
-		Thread.sleep(2000);
+		try {
+			WebElement WTG = driver.findElementByXPath("//span[text()='New Work Type Group']/ancestor::a[@role='menuitemcheckbox']");
+			webDriverWait4ElementToBeClickable(WTG);
+			js.executeScript("arguments[0].click();", WTG);
+			solidWait(2);
+		} catch (JavascriptException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
-	
-	
-	public WorkTypeGroupsPage searchAndClickOnWorkTypeGroup(String wtgName) throws InterruptedException
+		
+	public WorkTypeGroupsPage searchAndClickOnWorkTypeGroup(String wtgName)
 	{
-		searchWorkTypeGroup(wtgName);
-		WebElement searchWTG = driver.findElementByXPath("(//a[text()='" + wtgName + "'])[1]");
-		searchWTG.click();
+		try {
+			searchWorkTypeGroup(wtgName);
+			WebElement searchWTG = driver.findElementByXPath("(//a[text()='" + wtgName + "'])[1]");
+			searchWTG.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
@@ -172,7 +218,7 @@ public class WorkTypeGroupsPage extends SalesforceBase {
 		try
 		{
 			WebElement output = driver.findElement(By.xpath("(//span[text()='Description'])/following::div//span[text()='Description']/following::span[@class='uiOutputTextArea']"));
-			wait.until(ExpectedConditions.visibilityOf(output));
+			webDriverWait4VisibilityOfEle(output);
 			String outputValue = output.getText();
 			
 			if (outputValue.contains(value))
@@ -228,7 +274,7 @@ public class WorkTypeGroupsPage extends SalesforceBase {
 	{
 		try
 		{
-			List<String> namesSet1 = new ArrayList<String>(); 
+			List<String> namesSet1 = new ArrayList<String>();
 			List<WebElement> elements = driver.findElementsByXPath("//table[contains(@class,'slds-table forceRecordLayout')]/tbody/tr");
 			int size = elements.size();
 			for (int i=1; i<=size; i++)
@@ -241,9 +287,10 @@ public class WorkTypeGroupsPage extends SalesforceBase {
 //			System.out.println("Set1 names after sort: " + namesSet1);
 			
 //			clicks on Name Sort
-			WebElement ele = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//span[@title='Work Type Group Name']/parent::a")));
+			WebElement ele = driver.findElementByXPath("//span[@title='Work Type Group Name']/parent::a");
+			webDriverWait4ElementToBeClickable(ele);
 			ele.click();
-			Thread.sleep(3000);
+			solidWait(3);
 			
 			List<String> namesSet2 = new ArrayList<String>(); 
 			List<WebElement> wtgToSort = driver.findElementsByXPath("//table[contains(@class,'slds-table forceRecordLayout')]/tbody/tr");
@@ -278,7 +325,8 @@ public class WorkTypeGroupsPage extends SalesforceBase {
 	{
 		try
 		{
-			WebElement errTag = wait.until(ExpectedConditions.visibilityOf(driver.findElementByClassName("form-element__help")));
+			WebElement errTag = driver.findElementByClassName("form-element__help");
+			webDriverWait4VisibilityOfEle(errTag);
 			String errMsgValue = errTag.getText();
 			System.out.println(errMsgValue);
 			SoftAssert softAssert = new SoftAssert();

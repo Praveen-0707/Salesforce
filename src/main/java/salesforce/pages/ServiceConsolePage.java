@@ -2,52 +2,60 @@ package salesforce.pages;
 
 import salesforce.base.SalesforceBase;
 
-import java.awt.event.KeyEvent;
 import java.util.List;
-
-import org.apache.poi.util.SystemOutLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+
+import com.aventstack.extentreports.ExtentTest;
 
 public class ServiceConsolePage extends SalesforceBase {
 	
-	public ServiceConsolePage(RemoteWebDriver driver)
+	public ServiceConsolePage(RemoteWebDriver driver, ExtentTest node)
 	{
 		this.driver = driver;
+		this.node = node;
 		driver.switchTo().defaultContent();
 	}
 	
 	public NewDashboardPage clickOnNewDashboard()
 	{
-		wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//div[text()='New Dashboard']"))).click();
-		return new NewDashboardPage(driver);
+		try {
+			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[text()='New Dashboard']")).click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new NewDashboardPage(driver, node);
 	}
 		
-	
-	
 	public ServiceConsolePage setSubscriptionFrequencyAs(String value)
 	{
-		WebElement ele = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//legend[text()='Frequency']/following::div//span[text()='"+value+"']")));
-		ele.click();
+		try {
+			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//legend[text()='Frequency']/following::div//span[text()='"+value+"']"));
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public ServiceConsolePage clickOnRecentFiles() throws InterruptedException
+	public ServiceConsolePage clickOnRecentFiles()
 	{
-		WebElement ele = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//a[@title='Recent']")));
-		ele.click();
-		Thread.sleep(2000);
+		try {
+			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//a[@title='Recent']"));
+			ele.click();
+			solidWait(2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public ServiceConsolePage selectTask(String value) throws InterruptedException
 	{
-		HomePage homepage = new HomePage(driver);
+		HomePage homepage = new HomePage(driver, node);
 		try
 		{
 			homepage.selectTaskFromNavigationControl(value);
@@ -62,54 +70,67 @@ public class ServiceConsolePage extends SalesforceBase {
 	
 	public ServiceConsolePage clickonLastModifiedFilesColumn() throws InterruptedException
 	{
-		WebElement col = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//span[@title='Last Modified Date']/parent::a")));
-		col.click();
-		Thread.sleep(2000);
-		WebElement ele = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//span[@title='Last Modified Date']/parent::a/following-sibling::span")));
-		String sort = ele.getText();
-		if (sort.contains("Sorted Ascending"))
-		{
+		try {
+			WebElement col = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[@title='Last Modified Date']/parent::a"));
 			col.click();
-			Thread.sleep(2000);
+			solidWait(2);
+			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[@title='Last Modified Date']/parent::a/following-sibling::span"));
+			String sort = ele.getText();
+			if (sort.contains("Sorted Ascending"))
+			{
+				col.click();
+				solidWait(2);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return this;
 	}
 	
-	public ServiceConsolePage selectTime(String value) throws InterruptedException
+	public ServiceConsolePage selectTime(String value)
 	{
-		WebElement dd_time = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//select[@id='time']")));
-		Select time = new Select(dd_time);
-		time.selectByVisibleText(value);
+		try {
+			WebElement dd_time = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//select[@id='time']"));
+			Select time = new Select(dd_time);
+			time.selectByVisibleText(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public ServiceConsolePage clickonSaveButton()
 	{
-		wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//button[@title='Save']"))).click();
+		try {
+			webDriverWait4ElementToBeClickable(driver.findElementByXPath("//button[@title='Save']")).click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
-
-//	public ServiceConsolePage clickOnPublicLinkFromFileOptions()
-//	{
-//		wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//table/tbody/tr[1]/th//a/following::td[3]//a[@role='button']"))).click();
-//		WebElement clkLink = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//div[@role='button' and @title='Public Link']/..")));
-//		clkLink.click();
-//		return this;
-//	}
 	
 	public String selectLastModifiedFile()
 	{
-		WebElement getFileName = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//table/tbody/tr[1]/th//div//span[@data-aura-class='uiOutputText']")));
-		String downloadedFileName = getFileName.getText();
-		WebElement lastModifiedfile = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//table/tbody/tr[1]/th//a/following::td[3]//a[@role='button']")));
-		lastModifiedfile.click();
+		String downloadedFileName = null;
+		try {
+			WebElement getFileName = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//table/tbody/tr[1]/th//div//span[@data-aura-class='uiOutputText']"));
+			downloadedFileName = getFileName.getText();
+			WebElement lastModifiedfile = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//table/tbody/tr[1]/th//a/following::td[3]//a[@role='button']"));
+			lastModifiedfile.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return downloadedFileName;
 	}
 	
 	public ServiceConsolePage selectFileOptionAs(String value)
 	{
-		WebElement selectoption = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//div[@role='button' and @title='"+value+"']/..")));
-		selectoption.click();
+		try {
+			WebElement selectoption = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[@role='button' and @title='"+value+"']/.."));
+			selectoption.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
@@ -120,13 +141,13 @@ public class ServiceConsolePage extends SalesforceBase {
 			List<WebElement> listofFiles = driver.findElementsByXPath("//table/tbody/tr");
 			for (int i=1; i<listofFiles.size(); i++)
 			{
-				WebElement file = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//table/tbody/tr["+i+"]/th//a")));
+				WebElement file = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//table/tbody/tr["+i+"]/th//a"));
 				String getFileName = file.getText();
 				if (getFileName.contains(fileName))
 				{
-					wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//table/tbody/tr["+i+"]/th//a/following::td[3]//a[@role='button']"))).click();
+					webDriverWait4ElementToBeClickable(driver.findElementByXPath("//table/tbody/tr["+i+"]/th//a/following::td[3]//a[@role='button']")).click();
 					selectFileOptionAs(fileOption);
-					Thread.sleep(3000);
+					solidWait(3);
 					break;
 				}
 			}
@@ -140,24 +161,27 @@ public class ServiceConsolePage extends SalesforceBase {
 	
 	public ServiceConsolePage verifyNewDashboardCreation(String value)
 	{
-		WebElement output = driver.findElement(By.xpath("//span[contains(text(),'subscription')]"));
-		wait.until(ExpectedConditions.visibilityOf(output));
-		String outputValue = output.getText();
-//		System.out.println(outputValue);
-		if (outputValue.contains("You started a dashboard subscription"))
-		{
-			System.out.println("You started a dashboard subscription");
+		try {
+			WebElement output = driver.findElement(By.xpath("//span[contains(text(),'subscription')]"));
+			webDriverWait4VisibilityOfEle(output);
+			String outputValue = output.getText();
+			if (outputValue.contains("You started a dashboard subscription"))
+			{
+				System.out.println("You started a dashboard subscription");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return this;
 	}
 	
-	public ServiceConsolePage verifyUploadedFileDetails(String fileName, String fileExtension) throws InterruptedException
+	public ServiceConsolePage verifyUploadedFileDetails(String fileName, String fileExtension)
 	{
 		try
 		{
-			WebElement TitleElement = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//div[text()='File']/following-sibling::div")));
+			WebElement TitleElement = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[text()='File']/following-sibling::div"));
 			String TitleVerification = TitleElement.getAttribute("title");	
-			WebElement fileExt = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//span[@title='File Extension']/following-sibling::div//span[@class='uiOutputText']")));
+			WebElement fileExt = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[@title='File Extension']/following-sibling::div//span[@class='uiOutputText']"));
 			String getFileExtension = fileExt.getText();
 			if ((TitleVerification.contains(fileName)) && getFileExtension.equals(fileExtension))
 			{
@@ -171,122 +195,144 @@ public class ServiceConsolePage extends SalesforceBase {
 		return this;
 	}
 	
-//	public String clickOnDownloadFromFileOptions()
-//	{
-//		WebElement getFileName = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//table/tbody/tr[1]/th//div//span[@data-aura-class='uiOutputText']")));
-//		String downloadedFileName = getFileName.getText();
-//		wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//table/tbody/tr[1]/th//a/following::td[3]//a[@role='button']"))).click();
-//		WebElement clkLink = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//div[@role='button' and @title='Download']/..")));
-//		clkLink.click();
-//		return downloadedFileName;
-//	}
-	
-//	public ServiceConsolePage clickOnShareFromFileOptions()
-//	{
-//		wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//table/tbody/tr[1]/th//a/following::td[3]//a[@role='button']"))).click();
-//		WebElement clkLink = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//div[@role='button' and @title='Share']/..")));
-//		clkLink.click();
-//		return this;
-//	}
-	
-	public ServiceConsolePage verifyPublicLinkInputFieldIsDisabled() throws InterruptedException
+	public ServiceConsolePage verifyPublicLinkInputFieldIsDisabled()
 	{
-		wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//table/tbody/tr[1]/th//a/following::td[3]//a[@role='button']"))).click();
-		WebElement clkLink = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//input[@name='publicLinkURL']")));
-		if (isDisabled(clkLink) == true)
-		{
-			driver.findElementByXPath("//button[@title='Close this window']").click();
-			System.out.println("Public Link is disabled for inputs");
-			Thread.sleep(2000);
+		try {
+			webDriverWait4ElementToBeClickable(driver.findElementByXPath("//table/tbody/tr[1]/th//a/following::td[3]//a[@role='button']")).click();
+			WebElement clkLink = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//input[@name='publicLinkURL']"));
+			if (isDisabled(clkLink) == true)
+			{
+				driver.findElementByXPath("//button[@title='Close this window']").click();
+				System.out.println("Public Link is disabled for inputs");
+				solidWait(2);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return this;
 	}
 	
 	public ServiceConsolePage clickonPrivateDashboard()
 	{
-		wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("(//a[@title='Private Dashboards'])[1]"))).click();
+		try {
+			webDriverWait4ElementToBeClickable(driver.findElementByXPath("(//a[@title='Private Dashboards'])[1]")).click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public ServiceConsolePage inputShareWithUser(String userName) throws InterruptedException
+	public ServiceConsolePage inputShareWithUser(String userName)
 	{
-		WebElement ele = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//span[text()='Share With']/following::input[@role='combobox']")));
-		Thread.sleep(1000);
-		actions.moveToElement(ele).click().perform();
-		actions.sendKeys(Keys.ARROW_DOWN).perform();
-		Thread.sleep(2000);
-		ele = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//span[text()='Share With']/following::input[@role='combobox']/following::div[@class='listContent']/ul//a//div[contains(@title,'"+userName+"')]")));
-		ele.click();
-		Thread.sleep(2000);
+		try {
+			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[text()='Share With']/following::input[@role='combobox']"));
+			solidWait(1);
+			actions.moveToElement(ele).click().perform();
+			actions.sendKeys(Keys.ARROW_DOWN).perform();
+			Thread.sleep(2000);
+			ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[text()='Share With']/following::input[@role='combobox']/following::div[@class='listContent']/ul//a//div[contains(@title,'"+userName+"')]"));
+			ele.click();
+			solidWait(2);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public ServiceConsolePage clearExistingRecordAndAddNewShareFileWith(String userName) throws InterruptedException
+	public ServiceConsolePage clearExistingRecordAndAddNewShareFileWith(String userName)
 	{
-		wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("(//span[@class='pillText']/following::a)[1]"))).click();
-		inputShareWithUser(userName);
+		try {
+			webDriverWait4ElementToBeClickable(driver.findElementByXPath("(//span[@class='pillText']/following::a)[1]")).click();
+			inputShareWithUser(userName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}		
 	
-	public ServiceConsolePage inputShareAttachmentMessage(String value) throws InterruptedException
+	public ServiceConsolePage inputShareAttachmentMessage(String value)
 	{
-		WebElement ele = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//textArea[@class='textArea textarea']")));
-		ele.sendKeys(value);
+		try {
+			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//textArea[@class='textArea textarea']"));
+			ele.sendKeys(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public ServiceConsolePage clickOnShareAttachment() throws InterruptedException
+	public ServiceConsolePage clickOnShareAttachment()
 	{
-		WebElement ele = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//span[text()='Share']/parent::button")));
-		ele.click();
+		try {
+			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[text()='Share']/parent::button"));
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public ServiceConsolePage verifyErrorMessageInShareScreen()
 	{
-		WebElement ele = driver.findElementByXPath("//ul[contains(@class,'has-error')]/li");
-		String errtext = ele.getText();
-		if (errtext.contains("Can't share file with the file owner"))
-		{
-			System.out.println("Error thrown in SHare Screen: Can't share file with the file owner");
+		try {
+			WebElement ele = driver.findElementByXPath("//ul[contains(@class,'has-error')]/li");
+			String errtext = ele.getText();
+			if (errtext.contains("Can't share file with the file owner"))
+			{
+				System.out.println("Error thrown in SHare Screen: Can't share file with the file owner");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return this;
 	}
 	
-	public ServiceConsolePage searchDashboardName(String value) throws InterruptedException
+	public ServiceConsolePage searchDashboardName(String value)
 	{
-		WebElement searchDashboard = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//input[contains(@class,'search-text')]")));
-		searchDashboard.clear();
-		searchDashboard.sendKeys(value);
-		searchDashboard.sendKeys(Keys.ENTER);
-		Thread.sleep(2000);
+		try {
+			WebElement searchDashboard = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//input[contains(@class,'search-text')]"));
+			searchDashboard.clear();
+			searchDashboard.sendKeys(value);
+			searchDashboard.sendKeys(Keys.ENTER);
+			solidWait(2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public ServiceConsolePage deleteSubscription(String dashboardName) throws InterruptedException
+	public ServiceConsolePage deleteSubscription(String dashboardName)
 	{
-		WebElement ele = driver.findElementByXPath("(//a[@title='"+dashboardName+"'])[1]//following::td[6]//button");
-		wait.until(ExpectedConditions.elementToBeClickable(ele));
-		ele.click();
-		ele = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//span[text()='Delete']/..")));
-		ele.click();
+		try {
+			WebElement ele = driver.findElementByXPath("(//a[@title='"+dashboardName+"'])[1]//following::td[6]//button");
+			webDriverWait4ElementToBeClickable(ele);
+			ele.click();
+			ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[text()='Delete']/.."));
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
-	public ServiceConsolePage clickOnUploadFiles() throws InterruptedException
+	public ServiceConsolePage clickOnUploadFiles()
 	{
-		WebElement ele = driver.findElementByXPath("//a[@title='Upload Files']");
-		wait.until(ExpectedConditions.elementToBeClickable(ele));
-		ele.click();
-		Thread.sleep(3000);
+		try {
+			WebElement ele = driver.findElementByXPath("//a[@title='Upload Files']");
+			webDriverWait4ElementToBeClickable(ele);
+			ele.click();
+			solidWait(3);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 		
-	public ServiceConsolePage verifyShareAttachment(String fileName, String userName) throws InterruptedException
+	public ServiceConsolePage verifyShareAttachment(String fileName, String userName)
 	{
 		try
 		{
-			WebElement displayMsg = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//span[contains(@class,'toastMessage')]"))));
+			WebElement displayMsg = webDriverWait4VisibilityOfEle(driver.findElement(By.xpath("//span[contains(@class,'toastMessage')]")));
 			String displayMsgValue = displayMsg.getText();
 			System.out.println(displayMsgValue);
 			String msgToValidate = "You shared "+ fileName + " with "+ userName;
@@ -302,11 +348,11 @@ public class ServiceConsolePage extends SalesforceBase {
 		return this;
 	}
 	
-	public ServiceConsolePage verifyDeleteAttachment(String fileName) throws InterruptedException
+	public ServiceConsolePage verifyDeleteAttachment(String fileName)
 	{
 		try
 		{
-			WebElement displayMsg = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//span[contains(@class,'toastMessage')]"))));
+			WebElement displayMsg = webDriverWait4VisibilityOfEle(driver.findElement(By.xpath("//span[contains(@class,'toastMessage')]")));
 			String displayMsgValue = displayMsg.getText();
 			System.out.println(displayMsgValue);
 			String msgToValidate1 = "Content Document ";
@@ -324,13 +370,13 @@ public class ServiceConsolePage extends SalesforceBase {
 		return this;
 	}
 	
-	public ServiceConsolePage verifyDeleteSubscription(String dashboardName) throws InterruptedException
+	public ServiceConsolePage verifyDeleteSubscription(String dashboardName)
 	{
 		boolean flag_sort = false, flag_deleteValidation = false;
 		String sortMsg;
 		try
 		{
-			WebElement displayMsg = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//span[contains(@class,'toastMessage')]"))));
+			WebElement displayMsg = webDriverWait4VisibilityOfEle(driver.findElement(By.xpath("//span[contains(@class,'toastMessage')]")));
 			String displayMsgValue = displayMsg.getText();
 			System.out.println(displayMsgValue);
 			
@@ -344,10 +390,10 @@ public class ServiceConsolePage extends SalesforceBase {
 			if (flag_sort)
 			{
 				WebElement clkAccountsSort_1 = driver.findElementByXPath("//span[text()='Created On']/ancestor::a");
-				wait.until(ExpectedConditions.elementToBeClickable(clkAccountsSort_1));
+				webDriverWait4ElementToBeClickable(clkAccountsSort_1);
 				clkAccountsSort_1.click();
 				WebElement AccountsSort = driver.findElementByXPath("//span[text()='Created On']/following::span[@aria-live='assertive' and contains(text(),'Sorted')][1]");
-				wait.until(ExpectedConditions.visibilityOf(AccountsSort));
+				webDriverWait4VisibilityOfEle(AccountsSort);
 				sortMsg = AccountsSort.getText();
 				if (sortMsg.contains("Sorted Descending"))
 				{
@@ -356,10 +402,10 @@ public class ServiceConsolePage extends SalesforceBase {
 				else
 				{
 					WebElement clkAccountsSort_2 = driver.findElementByXPath("//span[text()='Created On']/ancestor::a");
-					wait.until(ExpectedConditions.elementToBeClickable(clkAccountsSort_2));
+					webDriverWait4ElementToBeClickable(clkAccountsSort_2);
 					clkAccountsSort_2.click();
 					WebElement AccountsSort_2 = driver.findElementByXPath("//span[text()='Created On']/following::span[@aria-live='assertive' and contains(text(),'Sorted')][1]");
-					wait.until(ExpectedConditions.visibilityOf(AccountsSort_2));
+					webDriverWait4VisibilityOfEle(AccountsSort_2);
 					sortMsg = AccountsSort_2.getText();
 					if (sortMsg.contains("Sorted Descending"))
 					{
@@ -407,60 +453,86 @@ public class ServiceConsolePage extends SalesforceBase {
 	
 	public ServiceConsolePage clickOnEditGoal()
 	{
-		WebElement ele = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//button[@title='Edit Goal']")));
-		ele.click();
+		try {
+			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//button[@title='Edit Goal']"));
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public ServiceConsolePage setGoalPrice(String value)
 	{
-		WebElement ele = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//span[@id='currencyCode']/following-sibling::input")));
-		ele.clear();
-		ele.sendKeys(value);
+		try {
+			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[@id='currencyCode']/following-sibling::input"));
+			ele.clear();
+			ele.sendKeys(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public ServiceConsolePage clickonSaveGoalPrice()
 	{
-		WebElement ele = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("(//span[text()='Save']/ancestor::button)[last()]")));
-		ele.click();
+		try {
+			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("(//span[text()='Save']/ancestor::button)[last()]"));
+			ele.click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return this;
 	}
 	
 	public ServiceConsolePage validateGoalPrice(String setStrikePrice)
 	{
 		
-		String ClosePrice = getClosePrice();
-		ClosePrice = ClosePrice.replaceAll("\\D", "");
-		int ClosePriceIntValue = Integer.parseInt(ClosePrice);
-		
-		String OpenPrice = getOpenPrice();
-		OpenPrice = OpenPrice.replaceAll("\\D", "");
-		int OpenPriceIntValue = Integer.parseInt(OpenPrice);
-		
-		int chkPrice = Integer.parseInt(setStrikePrice);
-		String strikePrice = String.valueOf(chkPrice);
-		int Price = ClosePriceIntValue + OpenPriceIntValue;
-		if (Price < chkPrice)
-		{
-			clickOnEditGoal()
-			.setGoalPrice(strikePrice)
-			.clickonSaveGoalPrice();
+		try {
+			String ClosePrice = getClosePrice();
+			ClosePrice = ClosePrice.replaceAll("\\D", "");
+			int ClosePriceIntValue = Integer.parseInt(ClosePrice);
+			
+			String OpenPrice = getOpenPrice();
+			OpenPrice = OpenPrice.replaceAll("\\D", "");
+			int OpenPriceIntValue = Integer.parseInt(OpenPrice);
+			
+			int chkPrice = Integer.parseInt(setStrikePrice);
+			String strikePrice = String.valueOf(chkPrice);
+			int Price = ClosePriceIntValue + OpenPriceIntValue;
+			if (Price < chkPrice)
+			{
+				clickOnEditGoal()
+				.setGoalPrice(strikePrice)
+				.clickonSaveGoalPrice();
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
 		}
 		return this;
 	}
 	
 	public String getClosePrice()
 	{
-		WebElement ClosePriceTag = driver.findElementByXPath("//span[text()='Closed']/following-sibling::span[contains(text(),'$')]");
-		String ClosePrice = ClosePriceTag.getText();
+		String ClosePrice = null;
+		try {
+			WebElement ClosePriceTag = driver.findElementByXPath("//span[text()='Closed']/following-sibling::span[contains(text(),'$')]");
+			ClosePrice = ClosePriceTag.getText();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return ClosePrice;
 	}
 	
 	public String getOpenPrice()
 	{
-		WebElement OpenPriceTag = driver.findElementByXPath("//span[contains(text(),'Open')]/following-sibling::span[contains(text(),'$')]");
-		String OpenPrice = OpenPriceTag.getText();
+		String OpenPrice = null;
+		try {
+			WebElement OpenPriceTag = driver.findElementByXPath("//span[contains(text(),'Open')]/following-sibling::span[contains(text(),'$')]");
+			OpenPrice = OpenPriceTag.getText();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return OpenPrice;
 	}
 	
