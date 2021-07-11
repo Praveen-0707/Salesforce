@@ -12,10 +12,9 @@ import com.aventstack.extentreports.ExtentTest;
 
 public class AccountsPage extends SalesforceBase {
 	
-	public AccountsPage(RemoteWebDriver driver, ExtentTest node)
+	public AccountsPage()
 	{
-		this.driver = driver;
-		this.node = node;
+		this.driver = getDriver();
 	}
 	
 	public AccountsPage searchAccount(String value)
@@ -56,7 +55,9 @@ public class AccountsPage extends SalesforceBase {
 	public AccountsPage inputPhoneNumber(String phoneNumber)
 	{
 		try {
-			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//input[@name='Phone']")).sendKeys(phoneNumber);
+			WebElement ele = driver.findElementByXPath("//input[@name='Phone']");
+			webDriverWait4VisibilityOfEle(ele).clear();
+			ele.sendKeys(phoneNumber);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -97,8 +98,8 @@ public class AccountsPage extends SalesforceBase {
 	{
 		try {
 			WebElement dd_type = driver.findElement(By.xpath("//label[text()='Type']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
-			webDriverWait4ElementToBeClickable(dd_type);
-			dd_type.click();
+			webDriverWait4ElementToBeClickable(dd_type).click();
+//			dd_type.click();
 			solidWait(1);
 			WebElement ele = driver.findElementByXPath("(//label[text()='Type']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
 			scrollToVisibleElement(ele);
@@ -178,7 +179,8 @@ public class AccountsPage extends SalesforceBase {
 		try {
 			WebElement dd_CustomerPriority = driver.findElement(By.xpath("//label[text()='Customer Priority']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
 			webDriverWait4VisibilityOfEle(dd_CustomerPriority);
-			dd_CustomerPriority.click();
+//			dd_CustomerPriority.click();
+			actions.moveToElement(dd_CustomerPriority).click().perform();
 			solidWait(1);
 			WebElement ele = driver.findElementByXPath("(//label[text()='Customer Priority']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
 			scrollToVisibleElement(ele);
@@ -194,7 +196,8 @@ public class AccountsPage extends SalesforceBase {
 		try {
 			WebElement dd_SLA = driver.findElement(By.xpath("//label[text()='SLA']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
 			webDriverWait4VisibilityOfEle(dd_SLA);
-			dd_SLA.click();
+//			dd_SLA.click();
+			actions.moveToElement(dd_SLA).click().perform();
 			solidWait(1);
 			WebElement ele = driver.findElementByXPath("(//label[text()='SLA']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
 			scrollToVisibleElement(ele);

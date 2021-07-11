@@ -14,19 +14,21 @@ import com.aventstack.extentreports.ExtentTest;
 
 public class SalesPage extends SalesforceBase {
 	
-	public SalesPage(RemoteWebDriver driver, ExtentTest node)
-	{
-		this.driver = driver;
-		this.node = node;
-	}
+//	public SalesPage(RemoteWebDriver driver, ExtentTest node)
+//	{
+//		this.driver = driver;
+//		this.node = node;
+//	}
 	
 	public SalesPage clickOnNewCase()
 	{
 		try {
 			WebElement newCase = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//a[@title='New' and @role='button']"));
 			newCase.click();
+			reportStep("Clicked on New Case Link", "INFO");
 			solidWait(3);
 		} catch (Exception e) {
+			reportStep("Unable to click on New Case Link", "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -39,8 +41,10 @@ public class SalesPage extends SalesforceBase {
 			searchCampaign.clear();
 			searchCampaign.sendKeys(value);
 			searchCampaign.sendKeys(Keys.ENTER);
+			reportStep("Search for Campaign: "+value, "INFO");
 			solidWait(2);
 		} catch (Exception e) {
+			reportStep("Unable to search for Campaign: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -52,7 +56,9 @@ public class SalesPage extends SalesforceBase {
 			searchCampaign(value);
 			WebElement searchWTG = driver.findElementByXPath("(//a[text()='" + value + "'])[1]");
 			searchWTG.click();
+			reportStep("Search for Campaign: "+value +" and clicked on it", "INFO");
 		} catch (Exception e) {
+			reportStep("Unable to search and click on Campaign: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -63,7 +69,9 @@ public class SalesPage extends SalesforceBase {
 		try {
 			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[@title='Campaign Members']/../../../../../following-sibling::div//span[text()='View All']"));
 			ele.click();
+			reportStep("Click on view all campaign members", "INFO");
 		} catch (Exception e) {
+			reportStep("Unable to click on view all campaign members", "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -80,11 +88,11 @@ public class SalesPage extends SalesforceBase {
 			{
 				System.out.println("It is a hyperlink, since the WebElement begins with anchor tag : <"+tagName+">."
 						+" The file uploaded is :"+linkText+" correct.");
+				reportStep("Upload attachment is successful: "+fileName, "INFO");
+//				Click on the uploaded file
+				solidWait(2);
+				driver.findElement(By.xpath("//a[@title='"+fileName+"']")).click();
 			}
-
-//			Click on the uploaded file
-			solidWait(2);
-			driver.findElement(By.xpath("//a[@title='"+fileName+"']")).click();
 			solidWait(3);
 					
 //			Close File Preview
@@ -93,6 +101,7 @@ public class SalesPage extends SalesforceBase {
 		}
 		catch(Exception e)
 		{
+			reportStep("Unable to verify uploaded attachment: "+fileName, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -129,8 +138,7 @@ public class SalesPage extends SalesforceBase {
 					ele.click();
 					
 //					Delete PopUp
-					ele = webDriverWait4ElementToBeClickable(driver.findElement(By.xpath("//button[@title='Delete']")));
-					ele.click();
+					deletePopUpConfirmation();
 					solidWait(2);
 					break;
 				}

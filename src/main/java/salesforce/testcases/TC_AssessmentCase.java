@@ -3,6 +3,7 @@ package salesforce.testcases;
 import salesforce.base.SalesforceBase;
 import salesforce.pages.LoginPage;
 import salesforce.pages.ServiceConsolePage;
+import salesforce.utils.Logs;
 
 import java.io.IOException;
 
@@ -17,7 +18,14 @@ public class TC_AssessmentCase extends SalesforceBase {
 	public void setTestDetails() {
 //		excelFileName = "Accounts";
 //		excelSheetName = "CreateAccounts";
+		testName = "Assessment Testcase";
+		testDescription = "To perform view, modify, file upload & delete and verify";
+		testAuthor = "Praveen Raj A";
+		testCategory = "Smoke";
 		browser = "chrome";
+		
+		Logs.startTestCase(testName);
+		Logs.info(testDescription);
 	}
 	
 	@Test
@@ -33,14 +41,14 @@ public class TC_AssessmentCase extends SalesforceBase {
 		String uploadFile = "sampleuploadfile";
 		String uploadFileExtension = "txt";
 		
-		new LoginPage(driver,prop, node)
+		new LoginPage(prop)
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()
 		.searchApp("Service Console").clickOnServiceConsole()
 		.selectTask("Files").clickOnRecentFiles().clickonLastModifiedFilesColumn();
 		
-		ServiceConsolePage servObj = new ServiceConsolePage(driver, node);
+		ServiceConsolePage servObj = new ServiceConsolePage();
 		fileName = servObj.selectLastModifiedFile();
 		
 		servObj.selectFileOptionAs("Public Link")

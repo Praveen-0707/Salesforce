@@ -5,6 +5,8 @@ import salesforce.pages.LoginPage;
 import salesforce.pages.NewDashboardPage;
 import salesforce.pages.ServiceConsolePage;
 import salesforce.utils.CustomListener;
+import salesforce.utils.Logs;
+
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -14,7 +16,14 @@ public class TC_WorkoutSubscription extends SalesforceBase {
 	
 	@BeforeTest
 	public void setTestDetails() {
+		testName = "Assessment Testcase";
+		testDescription = "Create New Workout Subscribtion and perform delete and verify";
+		testAuthor = "Praveen Raj A";
+		testCategory = "Smoke";
 		browser = "chrome";
+		
+		Logs.startTestCase(testName);
+		Logs.info(testDescription);
 	}
 	
 	@Test
@@ -23,9 +32,9 @@ public class TC_WorkoutSubscription extends SalesforceBase {
 		String dashboardName = "Raj_Workout999";
 		String descr = "Testin999";
 		
-		ServiceConsolePage SC = new ServiceConsolePage(driver, node);
+		ServiceConsolePage SC = new ServiceConsolePage();
 
-		new LoginPage(driver, prop, node)
+		new LoginPage(prop)
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()
@@ -36,7 +45,7 @@ public class TC_WorkoutSubscription extends SalesforceBase {
 		.selectTask("Dashboards").clickOnNewDashboard()
 		.inputDashboardName(dashboardName).inputDashboardDescr(descr).clickOnCreateButton();
 		
-		NewDashboardPage framePage = new NewDashboardPage(driver, node);
+		NewDashboardPage framePage = new NewDashboardPage();
 		framePage.clickonDoneButton()
 		
 		.verifyDashboardTitle(dashboardName).clickOnSubscribeButton()

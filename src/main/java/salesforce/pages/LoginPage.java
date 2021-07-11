@@ -5,27 +5,24 @@ import java.util.Properties;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
-
-import com.aventstack.extentreports.ExtentTest;
 
 public class LoginPage extends SalesforceBase {
 	
-	public LoginPage(RemoteWebDriver driver, Properties prop, ExtentTest node)
+	public LoginPage(Properties prop)
 	{
-		this.driver = driver;
+		this.driver = getDriver();
 		this.prop = prop;
-		this.node = node;
 	}
 	
 	public LoginPage enterUsername()
 	{
 		try {
 			webDriverWait4VisibilityOfEle(driver.findElement(By.id("username"))).sendKeys(prop.getProperty("username"));
-			reportStep("Username entered as: "+prop.getProperty("username"), "Pass", false);
+			reportStep("Username entered as: "+prop.getProperty("username"), "Pass");
 		} catch (Exception e) {
 			reportStep("Username not entered in Login Page", "Fail");
 			e.printStackTrace();
+			throw new RuntimeException();
 		}
 		return this;
 	}
@@ -34,8 +31,11 @@ public class LoginPage extends SalesforceBase {
 	{
 		try {
 			webDriverWait4VisibilityOfEle(driver.findElement(By.id("password"))).sendKeys(prop.getProperty("password"));
+			reportStep("Password entered as: "+prop.getProperty("password"), "Pass");
 		} catch (Exception e) {
+			reportStep("Password not entered in Login Page", "Fail");
 			e.printStackTrace();
+			throw new RuntimeException();
 		}
 		return this;
 	}
@@ -45,7 +45,7 @@ public class LoginPage extends SalesforceBase {
 		try {
 			webDriverWait4ElementToBeClickable(driver.findElement(By.id("Login"))).click();
 //			option-1
-//			WebElement pageLoad = wait.until(ExpectedConditions.visibilityOf(driver.findElementByXPath("//div[@class='linkElements']/a[text()='Switch to Lightning Experience']")));
+//			WebElement pageLoad = wait.until(ExpectedConditions.visibilityOf(getDriver().findElementByXPath("//div[@class='linkElements']/a[text()='Switch to Lightning Experience']")));
 //			pageLoad.click();
 			
 //			option-2
@@ -54,15 +54,20 @@ public class LoginPage extends SalesforceBase {
 			if (isDisplayed)
 			{
 				js.executeScript("arguments[0].click();", pageLoad1);
+				reportStep("Successfully Logged into Saleforce", "Pass", false);
 //				pageLoad1.click();
 			}
 		} catch (NoSuchElementException e) {
-			System.out.println(e.getMessage());
+			reportStep("Salesforce Classic Login is not displayed", "Info");
+//			System.out.println(e.getMessage());
+//			throw new RuntimeException();
 		}
 		catch (Exception e) {
-			System.out.println(e.getMessage());
+			reportStep("Login into Saleforce application failed", "Fail");
+//			System.out.println(e.getMessage());
+//			throw new RuntimeException();
 		}
 		
-		return new HomePage(driver, node);
+		return new HomePage();
 	}
 }

@@ -13,27 +13,37 @@ import com.aventstack.extentreports.ExtentTest;
 
 public class ServiceConsolePage extends SalesforceBase {
 	
-	public ServiceConsolePage(RemoteWebDriver driver, ExtentTest node)
+	public ServiceConsolePage()
 	{
-		this.driver = driver;
-		this.node = node;
-		driver.switchTo().defaultContent();
+//		this.driver = driver;
+//		this.node = node;
+		getDriver().switchTo().defaultContent();
 	}
 	
 	public NewDashboardPage clickOnNewDashboard()
 	{
 		try {
-			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[text()='New Dashboard']")).click();
+			webDriverWait4VisibilityOfEle(getDriver().findElementByXPath("//div[text()='New Dashboard']")).click();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new NewDashboardPage(driver, node);
+		return new NewDashboardPage();
+	}
+	
+	public ServiceConsolePage clickOnNewButton()
+	{
+		try {
+			webDriverWait4VisibilityOfEle(getDriver().findElementByXPath("//div[text()='New']")).click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ServiceConsolePage();
 	}
 		
 	public ServiceConsolePage setSubscriptionFrequencyAs(String value)
 	{
 		try {
-			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//legend[text()='Frequency']/following::div//span[text()='"+value+"']"));
+			WebElement ele = webDriverWait4VisibilityOfEle(getDriver().findElementByXPath("//legend[text()='Frequency']/following::div//span[text()='"+value+"']"));
 			ele.click();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -44,7 +54,7 @@ public class ServiceConsolePage extends SalesforceBase {
 	public ServiceConsolePage clickOnRecentFiles()
 	{
 		try {
-			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//a[@title='Recent']"));
+			WebElement ele = webDriverWait4VisibilityOfEle(getDriver().findElementByXPath("//a[@title='Recent']"));
 			ele.click();
 			solidWait(2);
 		} catch (Exception e) {
@@ -55,7 +65,7 @@ public class ServiceConsolePage extends SalesforceBase {
 	
 	public ServiceConsolePage selectTask(String value) throws InterruptedException
 	{
-		HomePage homepage = new HomePage(driver, node);
+		HomePage homepage = new HomePage();
 		try
 		{
 			homepage.selectTaskFromNavigationControl(value);
@@ -71,10 +81,10 @@ public class ServiceConsolePage extends SalesforceBase {
 	public ServiceConsolePage clickonLastModifiedFilesColumn() throws InterruptedException
 	{
 		try {
-			WebElement col = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[@title='Last Modified Date']/parent::a"));
+			WebElement col = webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("//span[@title='Last Modified Date']/parent::a"));
 			col.click();
 			solidWait(2);
-			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[@title='Last Modified Date']/parent::a/following-sibling::span"));
+			WebElement ele = webDriverWait4VisibilityOfEle(getDriver().findElementByXPath("//span[@title='Last Modified Date']/parent::a/following-sibling::span"));
 			String sort = ele.getText();
 			if (sort.contains("Sorted Ascending"))
 			{
@@ -90,7 +100,7 @@ public class ServiceConsolePage extends SalesforceBase {
 	public ServiceConsolePage selectTime(String value)
 	{
 		try {
-			WebElement dd_time = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//select[@id='time']"));
+			WebElement dd_time = webDriverWait4VisibilityOfEle(getDriver().findElementByXPath("//select[@id='time']"));
 			Select time = new Select(dd_time);
 			time.selectByVisibleText(value);
 		} catch (Exception e) {
@@ -102,20 +112,37 @@ public class ServiceConsolePage extends SalesforceBase {
 	public ServiceConsolePage clickonSaveButton()
 	{
 		try {
-			webDriverWait4ElementToBeClickable(driver.findElementByXPath("//button[@title='Save']")).click();
+			webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("//button[@title='Save']")).click();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return this;
 	}
 	
+	public String getContactRequestNumber()
+	{
+		String ConReqNum = null;
+		solidWait(3);
+		try {
+			WebElement getConNum = webDriverWait4VisibilityOfEle(getDriver().findElementByXPath("//span[text()='Contact Request Number']/parent::div/following-sibling::div//span[@class='uiOutputText']"));
+			ConReqNum = getConNum.getText();
+			if (!ConReqNum.isEmpty() == true)
+			{
+				System.out.println("Contact Request Number Created: "+ConReqNum);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ConReqNum;
+	}
+	
 	public String selectLastModifiedFile()
 	{
 		String downloadedFileName = null;
 		try {
-			WebElement getFileName = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//table/tbody/tr[1]/th//div//span[@data-aura-class='uiOutputText']"));
+			WebElement getFileName = webDriverWait4VisibilityOfEle(getDriver().findElementByXPath("//table/tbody/tr[1]/th//div//span[@data-aura-class='uiOutputText']"));
 			downloadedFileName = getFileName.getText();
-			WebElement lastModifiedfile = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//table/tbody/tr[1]/th//a/following::td[3]//a[@role='button']"));
+			WebElement lastModifiedfile = webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("//table/tbody/tr[1]/th//a/following::td[3]//a[@role='button']"));
 			lastModifiedfile.click();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -126,7 +153,7 @@ public class ServiceConsolePage extends SalesforceBase {
 	public ServiceConsolePage selectFileOptionAs(String value)
 	{
 		try {
-			WebElement selectoption = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[@role='button' and @title='"+value+"']/.."));
+			WebElement selectoption = webDriverWait4VisibilityOfEle(getDriver().findElementByXPath("//div[@role='button' and @title='"+value+"']/.."));
 			selectoption.click();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -138,14 +165,14 @@ public class ServiceConsolePage extends SalesforceBase {
 	{
 		try
 		{
-			List<WebElement> listofFiles = driver.findElementsByXPath("//table/tbody/tr");
+			List<WebElement> listofFiles = getDriver().findElementsByXPath("//table/tbody/tr");
 			for (int i=1; i<listofFiles.size(); i++)
 			{
-				WebElement file = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//table/tbody/tr["+i+"]/th//a"));
+				WebElement file = webDriverWait4VisibilityOfEle(getDriver().findElementByXPath("//table/tbody/tr["+i+"]/th//a"));
 				String getFileName = file.getText();
 				if (getFileName.contains(fileName))
 				{
-					webDriverWait4ElementToBeClickable(driver.findElementByXPath("//table/tbody/tr["+i+"]/th//a/following::td[3]//a[@role='button']")).click();
+					webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("//table/tbody/tr["+i+"]/th//a/following::td[3]//a[@role='button']")).click();
 					selectFileOptionAs(fileOption);
 					solidWait(3);
 					break;
@@ -162,7 +189,7 @@ public class ServiceConsolePage extends SalesforceBase {
 	public ServiceConsolePage verifyNewDashboardCreation(String value)
 	{
 		try {
-			WebElement output = driver.findElement(By.xpath("//span[contains(text(),'subscription')]"));
+			WebElement output = getDriver().findElement(By.xpath("//span[contains(text(),'subscription')]"));
 			webDriverWait4VisibilityOfEle(output);
 			String outputValue = output.getText();
 			if (outputValue.contains("You started a dashboard subscription"))
@@ -179,9 +206,9 @@ public class ServiceConsolePage extends SalesforceBase {
 	{
 		try
 		{
-			WebElement TitleElement = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[text()='File']/following-sibling::div"));
+			WebElement TitleElement = webDriverWait4VisibilityOfEle(getDriver().findElementByXPath("//div[text()='File']/following-sibling::div"));
 			String TitleVerification = TitleElement.getAttribute("title");	
-			WebElement fileExt = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[@title='File Extension']/following-sibling::div//span[@class='uiOutputText']"));
+			WebElement fileExt = webDriverWait4VisibilityOfEle(getDriver().findElementByXPath("//span[@title='File Extension']/following-sibling::div//span[@class='uiOutputText']"));
 			String getFileExtension = fileExt.getText();
 			if ((TitleVerification.contains(fileName)) && getFileExtension.equals(fileExtension))
 			{
@@ -198,11 +225,11 @@ public class ServiceConsolePage extends SalesforceBase {
 	public ServiceConsolePage verifyPublicLinkInputFieldIsDisabled()
 	{
 		try {
-			webDriverWait4ElementToBeClickable(driver.findElementByXPath("//table/tbody/tr[1]/th//a/following::td[3]//a[@role='button']")).click();
-			WebElement clkLink = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//input[@name='publicLinkURL']"));
+			webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("//table/tbody/tr[1]/th//a/following::td[3]//a[@role='button']")).click();
+			WebElement clkLink = webDriverWait4VisibilityOfEle(getDriver().findElementByXPath("//input[@name='publicLinkURL']"));
 			if (isDisabled(clkLink) == true)
 			{
-				driver.findElementByXPath("//button[@title='Close this window']").click();
+				getDriver().findElementByXPath("//button[@title='Close this window']").click();
 				System.out.println("Public Link is disabled for inputs");
 				solidWait(2);
 			}
@@ -215,7 +242,7 @@ public class ServiceConsolePage extends SalesforceBase {
 	public ServiceConsolePage clickonPrivateDashboard()
 	{
 		try {
-			webDriverWait4ElementToBeClickable(driver.findElementByXPath("(//a[@title='Private Dashboards'])[1]")).click();
+			webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("(//a[@title='Private Dashboards'])[1]")).click();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -225,12 +252,12 @@ public class ServiceConsolePage extends SalesforceBase {
 	public ServiceConsolePage inputShareWithUser(String userName)
 	{
 		try {
-			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[text()='Share With']/following::input[@role='combobox']"));
+			WebElement ele = webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("//span[text()='Share With']/following::input[@role='combobox']"));
 			solidWait(1);
 			actions.moveToElement(ele).click().perform();
 			actions.sendKeys(Keys.ARROW_DOWN).perform();
 			Thread.sleep(2000);
-			ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[text()='Share With']/following::input[@role='combobox']/following::div[@class='listContent']/ul//a//div[contains(@title,'"+userName+"')]"));
+			ele = webDriverWait4VisibilityOfEle(getDriver().findElementByXPath("//span[text()='Share With']/following::input[@role='combobox']/following::div[@class='listContent']/ul//a//div[contains(@title,'"+userName+"')]"));
 			ele.click();
 			solidWait(2);
 		} catch (InterruptedException e) {
@@ -239,10 +266,27 @@ public class ServiceConsolePage extends SalesforceBase {
 		return this;
 	}
 	
+	public ServiceConsolePage clickOnNewContact(String contact)
+	{
+		try {
+			WebElement ele = webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("//input[@title='Search Contacts']"));
+			solidWait(1);
+			actions.moveToElement(ele).click().perform();
+			actions.sendKeys(Keys.ARROW_DOWN).perform();
+			solidWait(2);
+			ele = webDriverWait4VisibilityOfEle(getDriver().findElementByXPath("//input[@title='Search Contacts']/following-sibling::div//span[text()='"+contact+"']"));
+			ele.click();
+			solidWait(2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return this;
+	}
+	
 	public ServiceConsolePage clearExistingRecordAndAddNewShareFileWith(String userName)
 	{
 		try {
-			webDriverWait4ElementToBeClickable(driver.findElementByXPath("(//span[@class='pillText']/following::a)[1]")).click();
+			webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("(//span[@class='pillText']/following::a)[1]")).click();
 			inputShareWithUser(userName);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -250,10 +294,25 @@ public class ServiceConsolePage extends SalesforceBase {
 		return this;
 	}		
 	
+	public ServiceConsolePage verifyContactName(String contactName)
+	{
+		try {
+			WebElement ele = webDriverWait4VisibilityOfEle(getDriver().findElementByXPath("//span[@class='pillText']"));
+			String contact = ele.getText();
+			if (contact.contains(contactName))
+			{
+				System.out.println("Contact Created successfully: "+contact);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return this;
+	}
+	
 	public ServiceConsolePage inputShareAttachmentMessage(String value)
 	{
 		try {
-			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//textArea[@class='textArea textarea']"));
+			WebElement ele = webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("//textArea[@class='textArea textarea']"));
 			ele.sendKeys(value);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -264,7 +323,7 @@ public class ServiceConsolePage extends SalesforceBase {
 	public ServiceConsolePage clickOnShareAttachment()
 	{
 		try {
-			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[text()='Share']/parent::button"));
+			WebElement ele = webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("//span[text()='Share']/parent::button"));
 			ele.click();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -275,7 +334,7 @@ public class ServiceConsolePage extends SalesforceBase {
 	public ServiceConsolePage verifyErrorMessageInShareScreen()
 	{
 		try {
-			WebElement ele = driver.findElementByXPath("//ul[contains(@class,'has-error')]/li");
+			WebElement ele = getDriver().findElementByXPath("//ul[contains(@class,'has-error')]/li");
 			String errtext = ele.getText();
 			if (errtext.contains("Can't share file with the file owner"))
 			{
@@ -290,7 +349,7 @@ public class ServiceConsolePage extends SalesforceBase {
 	public ServiceConsolePage searchDashboardName(String value)
 	{
 		try {
-			WebElement searchDashboard = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//input[contains(@class,'search-text')]"));
+			WebElement searchDashboard = webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("//input[contains(@class,'search-text')]"));
 			searchDashboard.clear();
 			searchDashboard.sendKeys(value);
 			searchDashboard.sendKeys(Keys.ENTER);
@@ -304,10 +363,10 @@ public class ServiceConsolePage extends SalesforceBase {
 	public ServiceConsolePage deleteSubscription(String dashboardName)
 	{
 		try {
-			WebElement ele = driver.findElementByXPath("(//a[@title='"+dashboardName+"'])[1]//following::td[6]//button");
+			WebElement ele = getDriver().findElementByXPath("(//a[@title='"+dashboardName+"'])[1]//following::td[6]//button");
 			webDriverWait4ElementToBeClickable(ele);
 			ele.click();
-			ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[text()='Delete']/.."));
+			ele = webDriverWait4VisibilityOfEle(getDriver().findElementByXPath("//span[text()='Delete']/.."));
 			ele.click();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -318,7 +377,7 @@ public class ServiceConsolePage extends SalesforceBase {
 	public ServiceConsolePage clickOnUploadFiles()
 	{
 		try {
-			WebElement ele = driver.findElementByXPath("//a[@title='Upload Files']");
+			WebElement ele = getDriver().findElementByXPath("//a[@title='Upload Files']");
 			webDriverWait4ElementToBeClickable(ele);
 			ele.click();
 			solidWait(3);
@@ -332,7 +391,7 @@ public class ServiceConsolePage extends SalesforceBase {
 	{
 		try
 		{
-			WebElement displayMsg = webDriverWait4VisibilityOfEle(driver.findElement(By.xpath("//span[contains(@class,'toastMessage')]")));
+			WebElement displayMsg = webDriverWait4VisibilityOfEle(getDriver().findElement(By.xpath("//span[contains(@class,'toastMessage')]")));
 			String displayMsgValue = displayMsg.getText();
 			System.out.println(displayMsgValue);
 			String msgToValidate = "You shared "+ fileName + " with "+ userName;
@@ -352,7 +411,7 @@ public class ServiceConsolePage extends SalesforceBase {
 	{
 		try
 		{
-			WebElement displayMsg = webDriverWait4VisibilityOfEle(driver.findElement(By.xpath("//span[contains(@class,'toastMessage')]")));
+			WebElement displayMsg = webDriverWait4VisibilityOfEle(getDriver().findElement(By.xpath("//span[contains(@class,'toastMessage')]")));
 			String displayMsgValue = displayMsg.getText();
 			System.out.println(displayMsgValue);
 			String msgToValidate1 = "Content Document ";
@@ -376,7 +435,7 @@ public class ServiceConsolePage extends SalesforceBase {
 		String sortMsg;
 		try
 		{
-			WebElement displayMsg = webDriverWait4VisibilityOfEle(driver.findElement(By.xpath("//span[contains(@class,'toastMessage')]")));
+			WebElement displayMsg = webDriverWait4VisibilityOfEle(getDriver().findElement(By.xpath("//span[contains(@class,'toastMessage')]")));
 			String displayMsgValue = displayMsg.getText();
 			System.out.println(displayMsgValue);
 			
@@ -389,10 +448,10 @@ public class ServiceConsolePage extends SalesforceBase {
 //			Sorting the Table records in descending order to get new records
 			if (flag_sort)
 			{
-				WebElement clkAccountsSort_1 = driver.findElementByXPath("//span[text()='Created On']/ancestor::a");
+				WebElement clkAccountsSort_1 = getDriver().findElementByXPath("//span[text()='Created On']/ancestor::a");
 				webDriverWait4ElementToBeClickable(clkAccountsSort_1);
 				clkAccountsSort_1.click();
-				WebElement AccountsSort = driver.findElementByXPath("//span[text()='Created On']/following::span[@aria-live='assertive' and contains(text(),'Sorted')][1]");
+				WebElement AccountsSort = getDriver().findElementByXPath("//span[text()='Created On']/following::span[@aria-live='assertive' and contains(text(),'Sorted')][1]");
 				webDriverWait4VisibilityOfEle(AccountsSort);
 				sortMsg = AccountsSort.getText();
 				if (sortMsg.contains("Sorted Descending"))
@@ -401,10 +460,10 @@ public class ServiceConsolePage extends SalesforceBase {
 				}
 				else
 				{
-					WebElement clkAccountsSort_2 = driver.findElementByXPath("//span[text()='Created On']/ancestor::a");
+					WebElement clkAccountsSort_2 = getDriver().findElementByXPath("//span[text()='Created On']/ancestor::a");
 					webDriverWait4ElementToBeClickable(clkAccountsSort_2);
 					clkAccountsSort_2.click();
-					WebElement AccountsSort_2 = driver.findElementByXPath("//span[text()='Created On']/following::span[@aria-live='assertive' and contains(text(),'Sorted')][1]");
+					WebElement AccountsSort_2 = getDriver().findElementByXPath("//span[text()='Created On']/following::span[@aria-live='assertive' and contains(text(),'Sorted')][1]");
 					webDriverWait4VisibilityOfEle(AccountsSort_2);
 					sortMsg = AccountsSort_2.getText();
 					if (sortMsg.contains("Sorted Descending"))
@@ -421,11 +480,11 @@ public class ServiceConsolePage extends SalesforceBase {
 //			Searching for Deleted Subscription - Output Validation
 			if (flag_deleteValidation)
 			{
-				List<WebElement> rows = driver.findElements(By.xpath("//table[contains(@class,'table_resizable-cols')]/tbody/tr"));
+				List<WebElement> rows = getDriver().findElements(By.xpath("//table[contains(@class,'table_resizable-cols')]/tbody/tr"));
 				int size = rows.size();
 				for (int i = 1; i <= size; i++)
 				{
-					WebElement listofSubscriptions = driver.findElement(By.xpath("//table[contains(@class,'table_resizable-cols')]/tbody/tr["+i+"]/th//a"));
+					WebElement listofSubscriptions = getDriver().findElement(By.xpath("//table[contains(@class,'table_resizable-cols')]/tbody/tr["+i+"]/th//a"));
 					String subscriptionNames = listofSubscriptions.getText();
 				
 					if (subscriptionNames.equals(dashboardName))
@@ -454,7 +513,7 @@ public class ServiceConsolePage extends SalesforceBase {
 	public ServiceConsolePage clickOnEditGoal()
 	{
 		try {
-			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//button[@title='Edit Goal']"));
+			WebElement ele = webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("//button[@title='Edit Goal']"));
 			ele.click();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -465,7 +524,7 @@ public class ServiceConsolePage extends SalesforceBase {
 	public ServiceConsolePage setGoalPrice(String value)
 	{
 		try {
-			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[@id='currencyCode']/following-sibling::input"));
+			WebElement ele = webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("//span[@id='currencyCode']/following-sibling::input"));
 			ele.clear();
 			ele.sendKeys(value);
 		} catch (Exception e) {
@@ -477,7 +536,7 @@ public class ServiceConsolePage extends SalesforceBase {
 	public ServiceConsolePage clickonSaveGoalPrice()
 	{
 		try {
-			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("(//span[text()='Save']/ancestor::button)[last()]"));
+			WebElement ele = webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("(//span[text()='Save']/ancestor::button)[last()]"));
 			ele.click();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -516,7 +575,7 @@ public class ServiceConsolePage extends SalesforceBase {
 	{
 		String ClosePrice = null;
 		try {
-			WebElement ClosePriceTag = driver.findElementByXPath("//span[text()='Closed']/following-sibling::span[contains(text(),'$')]");
+			WebElement ClosePriceTag = getDriver().findElementByXPath("//span[text()='Closed']/following-sibling::span[contains(text(),'$')]");
 			ClosePrice = ClosePriceTag.getText();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -528,7 +587,7 @@ public class ServiceConsolePage extends SalesforceBase {
 	{
 		String OpenPrice = null;
 		try {
-			WebElement OpenPriceTag = driver.findElementByXPath("//span[contains(text(),'Open')]/following-sibling::span[contains(text(),'$')]");
+			WebElement OpenPriceTag = getDriver().findElementByXPath("//span[contains(text(),'Open')]/following-sibling::span[contains(text(),'$')]");
 			OpenPrice = OpenPriceTag.getText();
 		} catch (Exception e) {
 			e.printStackTrace();

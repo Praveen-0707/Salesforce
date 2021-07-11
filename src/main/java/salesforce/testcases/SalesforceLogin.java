@@ -17,7 +17,7 @@ public class SalesforceLogin extends SalesforceBase {
 	@Test(dataProvider = "getData")
 	public void login(String userName, String pass)
 	{
-		new LoginPage(driver,prop, node)
+		new LoginPage(prop)
 		.enterUsername()
 		.enterPassword()
 		.clickLogin();

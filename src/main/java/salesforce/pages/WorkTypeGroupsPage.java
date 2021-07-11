@@ -17,11 +17,11 @@ import com.aventstack.extentreports.ExtentTest;
 
 public class WorkTypeGroupsPage extends SalesforceBase {
 	
-	public WorkTypeGroupsPage(RemoteWebDriver driver, ExtentTest node)
-	{
-		this.driver = driver;
-		this.node = node;
-	}
+//	public WorkTypeGroupsPage(RemoteWebDriver driver, ExtentTest node)
+//	{
+//		this.driver = driver;
+//		this.node = node;
+//	}
 	
 	public WorkTypeGroupsPage searchWorkTypeGroup(String value)
 	{

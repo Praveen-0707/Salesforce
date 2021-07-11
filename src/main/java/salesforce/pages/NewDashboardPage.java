@@ -9,14 +9,14 @@ import com.aventstack.extentreports.ExtentTest;
 
 public class NewDashboardPage extends SalesforceBase {
 	
-	public NewDashboardPage(RemoteWebDriver driver, ExtentTest node)
+	public NewDashboardPage()
 	{
-		this.driver = driver;
-		this.node = node;
+//		this.driver = driver;
+//		this.node = node;
 		try
 		{
 			solidWait(5);
-			WebElement iframe = driver.findElementByXPath("(//iframe[@title='dashboard'])[last()]");
+			WebElement iframe = getDriver().findElementByXPath("(//iframe[@title='dashboard'])[last()]");
 			wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(iframe));
 		}
 		catch(Exception e)
@@ -30,7 +30,7 @@ public class NewDashboardPage extends SalesforceBase {
 	public NewDashboardPage inputDashboardDescr(String value)
 	{
 		try {
-			WebElement dashboardDescr = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//input[@id='dashboardDescriptionInput' and @type='text']"));
+			WebElement dashboardDescr = webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("//input[@id='dashboardDescriptionInput' and @type='text']"));
 			dashboardDescr.clear();
 			dashboardDescr.sendKeys(value);
 		} catch (Exception e) {
@@ -42,7 +42,7 @@ public class NewDashboardPage extends SalesforceBase {
 	public NewDashboardPage inputDashboardName(String value)
 	{
 		try {
-			WebElement dashboardName = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//label[text()='Name']/following::div//input[@id='dashboardNameInput']"));
+			WebElement dashboardName = webDriverWait4VisibilityOfEle(getDriver().findElementByXPath("//label[text()='Name']/following::div//input[@id='dashboardNameInput']"));
 			dashboardName.clear();
 			dashboardName.sendKeys(value);
 		} catch (Exception e) {
@@ -54,9 +54,9 @@ public class NewDashboardPage extends SalesforceBase {
 	public NewDashboardPage clickOnCreateButton()
 	{
 		try {
-			webDriverWait4ElementToBeClickable(driver.findElementByXPath("//button[@id='submitBtn']")).click();
+			webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("//button[@id='submitBtn']")).click();
 			solidWait(3);
-			driver.switchTo().defaultContent();
+			getDriver().switchTo().defaultContent();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -66,7 +66,7 @@ public class NewDashboardPage extends SalesforceBase {
 	public NewDashboardPage clickonDoneButton()
 	{
 		try {
-			WebElement clkDone = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//button[contains(@class,'doneEditing') and text()='Done']"));
+			WebElement clkDone = webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("//button[contains(@class,'doneEditing') and text()='Done']"));
 			highlight(clkDone);
 			clkDone.click();
 		} catch (Exception e) {
@@ -78,17 +78,17 @@ public class NewDashboardPage extends SalesforceBase {
 	public ServiceConsolePage clickOnSubscribeButton()
 	{
 		try {
-			webDriverWait4ElementToBeClickable(driver.findElementByXPath("//button[text()='Subscribe']")).click();
+			webDriverWait4ElementToBeClickable(getDriver().findElementByXPath("//button[text()='Subscribe']")).click();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new ServiceConsolePage(driver, node);
+		return new ServiceConsolePage();
 	}
 	
 	public NewDashboardPage verifyDashboardTitle(String value)
 	{
 		try {
-			WebElement TitleElement = driver.findElementByXPath("//div[@class='slds-page-header__name-title']//span[contains(text(),'Dashboard')]/following-sibling::span");
+			WebElement TitleElement = getDriver().findElementByXPath("//div[@class='slds-page-header__name-title']//span[contains(text(),'Dashboard')]/following-sibling::span");
 			webDriverWait4VisibilityOfEle(TitleElement);
 			solidWait(1);
 			String TitleVerification = TitleElement.getText();					

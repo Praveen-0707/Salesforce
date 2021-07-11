@@ -15,6 +15,7 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.util.SystemOutLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.JavascriptExecutor;
@@ -35,6 +36,8 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
@@ -54,9 +57,10 @@ import salesforce.utils.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 // To access common methods in SalesForce Application
-public class SalesforceBase {
+public class SalesforceBase extends Reporter {
 	
 	public RemoteWebDriver driver;
+//	public EventFiringWebDriver driver;
 	public ChromeOptions chromeOptions;
 	public FirefoxOptions firefoxOptions;
 	public InternetExplorerOptions ieOptions;
@@ -68,89 +72,32 @@ public class SalesforceBase {
 	public String excelFileName;
 	public String excelSheetName;
 	public Properties prop;
-	public static ExtentHtmlReporter reporter;
-	public static ExtentReports extent;
-	public ExtentTest test, node;
-	public String testName, testDescription, testAuthor, testCategory;
-	public static String browser;
+//	public static ExtentHtmlReporter reporter;
+//	public static ExtentReports extent;
+	public ExtentTest testNode;
+//	public String testName, testDescription, testAuthor, testCategory;
+	public String browser;
 	
-	@BeforeSuite
-	public void startReport()
-	{
-		reporter = new ExtentHtmlReporter("./reports/result.html");
-		reporter.setAppendExisting(true);
-		extent = new ExtentReports();
-		extent.attachReporter(reporter);
-	}
-	
-	@AfterSuite(alwaysRun = true)
-	public void endReport()
-	{
-		extent.flush();
-	}
-	
-	@BeforeClass
-	public void testDetailedReport()
-	{
-		test = extent.createTest(testName, testDescription);
-		test.assignAuthor(testAuthor);
-		test.assignCategory(testCategory);
-	}
-	
-	public void reportStep(String message, String status, boolean snap)
-	{
-		MediaEntityModelProvider img = null;
-		try {
-				if (snap && !(status.equalsIgnoreCase("warn")))
-				{
-					int snapNum = 6996;
-					snapNum = takeSnap();
-					img = MediaEntityBuilder.createScreenCaptureFromPath(".././reports/img_"+ snapNum + ".jpg").build();
-				}
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-		if (status.equalsIgnoreCase("pass"))
-		{
-			node.fail(message, img);
-		}
-		if (status.equalsIgnoreCase("fail"))
-		{
-			node.fail(message, img);
-			throw new RuntimeException();
-		}
-	}
-	
-	public void reportStep(String message, String status)
-	{
-		reportStep(message, status, true);
-	}
-	
-	public int takeSnap()
-	{
-		int snapNum = (int)(Math.random() * 6996);
-		File srcFile = driver.getScreenshotAs(OutputType.FILE);
-		File destFile = new File("./snaps/img_"+ snapNum +".png");
-		try {
-			FileUtils.copyFile(srcFile, destFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return snapNum;
-	}
+//	@BeforeMethod(priority = 1)
+//	public void init_testNode()
+//	{
+//		testNode = test.createNode(testName);
+//		setTest(testNode);
+//	}
 	
 	@BeforeMethod
 	public void launchApp()
 	{
 //		killBrowserInstances();
 //		Properties File Load
-		node = test.createNode(testName);
+		testNode = test.createNode(testName);
+		setTest(testNode);
 		try {
 			FileInputStream fis = new FileInputStream("./src/main/resources/config.properties");
 			prop = new Properties();
 			prop.load(fis);
 			
+//			browser = prop.getProperty(browser);
 			if (browser.equalsIgnoreCase("Chrome"))
 			  {
 				  WebDriverManager.chromedriver().setup();
@@ -159,6 +106,9 @@ public class SalesforceBase {
 //				  chromeOptions.addArguments("--headless");
 //				  chromeOptions.setHeadless(true);
 				  driver = new ChromeDriver(chromeOptions);
+//				  driver = new EventFiringWebDriver(webDriver);
+//				  getDriver().register((WebDriverEventListener) this);
+				  setDriver(driver);
 			  }
   
 			  if (browser.equalsIgnoreCase("Firefox"))
@@ -176,6 +126,7 @@ public class SalesforceBase {
 				  firefoxOptions.setProfile(profile);
 				  firefoxOptions.addPreference("dom.webnotifications.enabled", false);
 				  driver = new FirefoxDriver(firefoxOptions);
+				  setDriver(driver);
 			  }
 			  
 			  if (browser.equalsIgnoreCase("InternetExplorer"))
@@ -187,6 +138,7 @@ public class SalesforceBase {
 				  ieOptions.ignoreZoomSettings();
 				  ieOptions.introduceFlakinessByIgnoringSecurityDomains();
 				  driver = new InternetExplorerDriver(ieOptions);
+				  setDriver(driver);
 			  }
   
 			  if (browser.equalsIgnoreCase("Edge"))
@@ -195,20 +147,21 @@ public class SalesforceBase {
 				  edgeOptions = new EdgeOptions();
 				  edgeOptions.addArguments("disable-notifications");
 				  driver = new EdgeDriver(edgeOptions);
+				  setDriver(driver);
 			  }
 			  
-			driver.manage().deleteAllCookies();
-			driver.manage().window().maximize();
-			wait = new WebDriverWait(driver,Duration.ofSeconds(20));
-			driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
-			driver.manage().timeouts().pageLoadTimeout(20,TimeUnit.SECONDS);
+			getDriver().manage().deleteAllCookies();
+			getDriver().manage().window().maximize();
+			wait = new WebDriverWait(getDriver(),Duration.ofSeconds(20));
+			getDriver().manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+			getDriver().manage().timeouts().pageLoadTimeout(20,TimeUnit.SECONDS);
 			
-			actions = new Actions(driver);
+			actions = new Actions(getDriver());
 			robot = new Robot();
-			js = (JavascriptExecutor)driver;
+			js = (JavascriptExecutor)getDriver();
 			
 //			String URL = "https://login.salesforce.com/";
-			driver.get(prop.getProperty("url"));
+			getDriver().get(prop.getProperty("url"));
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -223,7 +176,7 @@ public class SalesforceBase {
 	public void closeBrowser() throws InterruptedException
 	{
 		solidWait(2);
-		driver.close();
+		getDriver().close();
 	}
 	
 	 @DataProvider(name="getData")
@@ -237,7 +190,7 @@ public class SalesforceBase {
 	public void deletePopUpConfirmation()
 	{
 		try {
-			WebElement clkDelete = driver.findElementByXPath("//button//span[text()='Delete']");
+			WebElement clkDelete = getDriver().findElementByXPath("//button//span[text()='Delete']");
 			webDriverWait4ElementToBeClickable(clkDelete);
 			clkDelete.click();
 		} catch (Exception e) {
@@ -340,7 +293,7 @@ public class SalesforceBase {
 	public void closeAnOpenedTab(String value)
 	{
 		try {
-			WebElement ele = driver.findElementByXPath("//button[contains(@title,'"+value+"') and contains(@title,'Close')]");
+			WebElement ele = getDriver().findElementByXPath("//button[contains(@title,'"+value+"') and contains(@title,'Close')]");
 			webDriverWait4ElementToBeClickable(ele);
 			ele.click();
 		} catch (Exception e) {
@@ -404,7 +357,7 @@ public class SalesforceBase {
 	public void clickOnTab(String value)
 	{
 		try {
-			WebElement ele = driver.findElementByXPath("//a[@title='"+value+"']");
+			WebElement ele = getDriver().findElementByXPath("//a[@title='"+value+"']");
 			webDriverWait4ElementToBeClickable(ele);
 			js.executeScript("arguments[0].click();", ele);
 		} catch (JavascriptException e) {
@@ -428,7 +381,7 @@ public class SalesforceBase {
 			robot.keyRelease(KeyEvent.VK_ENTER);
 			solidWait(3);
 //			click on the Done button to dismiss the alert
-			WebElement ele = driver.findElement(By.xpath("//button[@type='button']//span[text()='Done']"));
+			WebElement ele = getDriver().findElement(By.xpath("//button[@type='button']//span[text()='Done']"));
 			webDriverWait4VisibilityOfEle(ele);
 			ele.click();
 		} catch (HeadlessException e) {

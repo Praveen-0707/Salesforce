@@ -1,17 +1,33 @@
 package salesforce.testcases;
 
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import salesforce.base.SalesforceBase;
 import salesforce.pages.LoginPage;
+import salesforce.utils.Logs;
 
 public class CreateOpportunity extends SalesforceBase {
+	
+	@BeforeTest
+	public void setTestDetails() {
+//		excelFileName = "Testdata";
+//		excelSheetName = "WTG";
+		testName = "Create New Opportunity";
+		testDescription = "New Opportunity should be created";
+		testAuthor = "Praveen Raj A";
+		testCategory = "Regression";
+		browser = "chrome";
+		
+		Logs.startTestCase(testName);
+		Logs.info(testDescription);
+	}
 	
 	@Test
 	public void createOpportunity() throws InterruptedException
 	{
 		String oppName = "TMT Steel";
 		
-		new LoginPage(driver,prop, node)
+		new LoginPage(prop)
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()

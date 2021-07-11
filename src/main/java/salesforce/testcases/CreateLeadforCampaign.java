@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import salesforce.base.SalesforceBase;
 import salesforce.pages.LoginPage;
 import salesforce.pages.SalesPage;
+import salesforce.utils.Logs;
 
 public class CreateLeadforCampaign extends SalesforceBase {
 	
@@ -12,7 +13,14 @@ public class CreateLeadforCampaign extends SalesforceBase {
 	public void setTestDetails() {
 		excelFileName = "Campaign";
 		excelSheetName = "Leads";
+		testName = "Create Lead";
+		testDescription = "Create New Lead for Campaign";
+		testAuthor = "Praveen Raj A";
+		testCategory = "Regression";
 		browser = "chrome";
+		
+		Logs.startTestCase(testName);
+		Logs.info(testDescription);
 	}
 	
 	@Test(dataProvider = "getData")
@@ -20,13 +28,13 @@ public class CreateLeadforCampaign extends SalesforceBase {
 
 		String createLead = "";	// creating New Lead
 		
-		new LoginPage(driver,prop, node)
+		new LoginPage(prop)
 		.enterUsername().enterPassword().clickLogin()
 		.clickToggleButton().clickViewAll()
 		.searchApp("Sales").clickOnSales();
 		
 		clickOnTab("Campaigns");
-		new SalesPage(driver, node).searchCampaign(campName).ClickOnCampaignName(campName)
+		new SalesPage().searchCampaign(campName).ClickOnCampaignName(campName)
 		.clickOnAddLead().selectLead(createLead)
 		.selectSalutation("Mr").inputFirstName(fName).inputLastName(lName).inputCompanyName(compName)
 		.clickonSaveButton().clickonNextButton().clickOnSubmitButton()
