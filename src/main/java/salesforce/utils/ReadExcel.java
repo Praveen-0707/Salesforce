@@ -6,12 +6,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ReadExcel {
 		public static String[][] readData(String fileName, String sheetName) throws IOException
-//		public static void main(String[] fileName) throws IOException
 		{
 			System.out.println("Inside Read data: " +fileName);
 			XSSFWorkbook wb = new XSSFWorkbook("./data/" + fileName + ".xlsx");
-//			XSSFWorkbook wb = new XSSFWorkbook("./data/Testdata.xlsx");
-//			XSSFSheet ws = wb.getSheet("Accounts");
 			XSSFSheet ws = wb.getSheet(sheetName);
 			int rowCnt = ws.getLastRowNum();
 			int cellCnt = ws.getRow(0).getLastCellNum();

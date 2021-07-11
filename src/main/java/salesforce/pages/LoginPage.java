@@ -35,7 +35,7 @@ public class LoginPage extends SalesforceBase {
 		} catch (Exception e) {
 			reportStep("Password not entered in Login Page", "Fail");
 			e.printStackTrace();
-			throw new RuntimeException();
+//			throw new RuntimeException();
 		}
 		return this;
 	}

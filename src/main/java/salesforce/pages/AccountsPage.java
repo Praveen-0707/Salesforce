@@ -6,9 +6,6 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
-
-import com.aventstack.extentreports.ExtentTest;
 
 public class AccountsPage extends SalesforceBase {
 	
@@ -26,7 +23,9 @@ public class AccountsPage extends SalesforceBase {
 			searchAcc.sendKeys(value);
 			searchAcc.sendKeys(Keys.ENTER);
 			solidWait(2);
+			reportStep("Search Account: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("unable yo Search Account: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -36,7 +35,9 @@ public class AccountsPage extends SalesforceBase {
 	{
 		try {
 			webDriverWait4ElementToBeClickable(driver.findElementByXPath("//div[text()='New']")).click();
+			reportStep("Clicked on New Account button", "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to clicked on New Account button", "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -46,7 +47,9 @@ public class AccountsPage extends SalesforceBase {
 	{
 		try {
 			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//input[@name='Name']")).sendKeys(value);
+			reportStep("Enter Account Name as: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to Enter Account Name: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -58,7 +61,9 @@ public class AccountsPage extends SalesforceBase {
 			WebElement ele = driver.findElementByXPath("//input[@name='Phone']");
 			webDriverWait4VisibilityOfEle(ele).clear();
 			ele.sendKeys(phoneNumber);
+			reportStep("Enter Phone Number as: "+phoneNumber, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to Enter Phone Number as: "+phoneNumber, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -68,7 +73,9 @@ public class AccountsPage extends SalesforceBase {
 	{
 		try {
 			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//label[text()='Billing Street']/following-sibling::div/textarea")).sendKeys(value);
+			reportStep("Enter Billing Address as: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to Enter Billing Address: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -78,7 +85,9 @@ public class AccountsPage extends SalesforceBase {
 	{
 		try {
 			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//label[text()='Shipping Street']/following-sibling::div/textarea")).sendKeys(value);
+			reportStep("Enter Shipping Address as: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to Enter Shipping Address: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -88,7 +97,9 @@ public class AccountsPage extends SalesforceBase {
 	{
 		try {
 			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//label[text()='Description']/following-sibling::div/textarea")).sendKeys(value);
+			reportStep("Enter Description as: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to Enter Description: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -104,7 +115,9 @@ public class AccountsPage extends SalesforceBase {
 			WebElement ele = driver.findElementByXPath("(//label[text()='Type']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
 			scrollToVisibleElement(ele);
 			ele.click();
+			reportStep("Click on Type dropdown and select value as: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to click on Type dropdown and select value as: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -120,8 +133,10 @@ public class AccountsPage extends SalesforceBase {
 			WebElement ele = driver.findElementByXPath("(//label[text()='Ownership']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
 			scrollToVisibleElement(ele);
 			ele.click();
+			reportStep("Click on Ownership dropdown and select value as: "+value, "Pass");
 		} catch (Exception e) {
 			e.printStackTrace();
+			reportStep("Unable to click on Ownership dropdown and select value as: "+value, "Fail");
 		}
 		return this;
 	}
@@ -136,7 +151,9 @@ public class AccountsPage extends SalesforceBase {
 			WebElement ele = driver.findElementByXPath("(//label[text()='Industry']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
 			scrollToVisibleElement(ele);
 			ele.click();
+			reportStep("Click on Industry dropdown and select value as: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to click on Industry dropdown and select value as: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -152,7 +169,9 @@ public class AccountsPage extends SalesforceBase {
 			WebElement ele = driver.findElementByXPath("(//label[text()='Upsell Opportunity']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
 			scrollToVisibleElement(ele);
 			ele.click();
+			reportStep("Click on UpsellOpportunity dropdown and select value as: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to click on UpsellOpportunity dropdown and select value as: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -168,7 +187,9 @@ public class AccountsPage extends SalesforceBase {
 			WebElement ele = driver.findElementByXPath("(//label[text()='Active']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
 			scrollToVisibleElement(ele);
 			ele.click();
+			reportStep("Click on Active dropdown and select value as: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to click on Active dropdown and select value as: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -185,7 +206,9 @@ public class AccountsPage extends SalesforceBase {
 			WebElement ele = driver.findElementByXPath("(//label[text()='Customer Priority']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
 			scrollToVisibleElement(ele);
 			ele.click();
+			reportStep("Click on CustomerPriority dropdown and select value as: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to click on CustomerPriority dropdown and select value as: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -202,7 +225,9 @@ public class AccountsPage extends SalesforceBase {
 			WebElement ele = driver.findElementByXPath("(//label[text()='SLA']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
 			scrollToVisibleElement(ele);
 			ele.click();
+			reportStep("Click on SLA dropdown and select value as: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to click on SLA dropdown and select value as: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -212,7 +237,9 @@ public class AccountsPage extends SalesforceBase {
 	{
 		try {
 			webDriverWait4ElementToBeClickable(driver.findElementByName("refreshButton")).click();
+			reportStep("Clicked on refresh button", "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to click on refresh button", "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -222,7 +249,9 @@ public class AccountsPage extends SalesforceBase {
 	{
 		try {
 			webDriverWait4ElementToBeClickable(driver.findElementByXPath("//button[@name='SaveEdit' and text()='Save']")).click();
+			reportStep("Clicked on save button", "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to click on save button", "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -233,7 +262,9 @@ public class AccountsPage extends SalesforceBase {
 		try {
 			WebElement AccountsSorting = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[text()='Sort']/following::span[text()='Account Name']/preceding-sibling::span/.."));
 			AccountsSorting.click();
+			reportStep("Clicked on Account Names Header for Sorting", "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to click on Account Names Header", "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -246,7 +277,9 @@ public class AccountsPage extends SalesforceBase {
 			editAcc.click();
 			editAcc = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[@role='button' and @title='Edit']/.."));
 			editAcc.click();
+			reportStep("Clicked Edit Option on Account: "+accName, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to Click Edit Option on Account: "+accName, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -259,7 +292,9 @@ public class AccountsPage extends SalesforceBase {
 			delAcc.click();
 			delAcc = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[@role='button' and @title='Delete']/.."));
 			delAcc.click();
+			reportStep("Clicked Delete Option on Account: "+accName, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to Click Delete Option on Account: "+accName, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -276,14 +311,17 @@ public class AccountsPage extends SalesforceBase {
 			if (outputValue.contains(accName))
 			{
 				System.out.print("Account " + outputValue + " was created" + ", Passed");
+				reportStep("Account Created successfully: "+accName, "Pass");
 			}
 			else
 			{
 				System.out.print("Unable to create Account" + ", Failed");
+				reportStep("Unable to Create Account: "+accName, "Fail");
 			}
 		}
 		catch (Exception ex)
 		{
+			reportStep("Unable to Create Account: "+accName, "Fail");
 			ex.printStackTrace();
 		}
 		return this;
@@ -302,6 +340,7 @@ public class AccountsPage extends SalesforceBase {
 			if (outputValue.contains(accName))
 			{
 				System.out.println(outputValue);
+				reportStep("Account updated: "+accName, "Pass");
 				solidWait(3);
 				WebElement editedVal = webDriverWait4VisibilityOfEle(driver.findElementByXPath("(//a[text()='"+accName+"'])[1]//following::td[2]//span[contains(@class,'forceOutputPhone')]"));
 				String editedValue = editedVal.getText();
@@ -316,23 +355,27 @@ public class AccountsPage extends SalesforceBase {
 					System.out.println(outputphno);
 				}
 				
-				if (phNum.equals(outputphno))
+				else if (phNum.equals(outputphno))
 				{
 					System.out.println("Phone No validated" + ", Passed");
+					reportStep("Phone Number successfully validated for account: "+accName, "Pass");
 				}
 				else
 				{
 					System.out.print("Unable to validate Phone No" + ", Failed");
+					reportStep("Unable to validate Phone Number for Account: "+accName, "Fail");
 				}
 			}
 			else
 			{
 				System.out.print("Unable to edit Account" + ", Failed");
+				reportStep("Unable to validate Phone Number for Account: "+accName, "Fail");
 			}
 		}
 		catch (Exception ex)
 		{
 			ex.printStackTrace();
+			reportStep("Unable to validate Phone Number for Account: "+accName, "Fail");
 		}
 		return this;
 	}
@@ -348,14 +391,17 @@ public class AccountsPage extends SalesforceBase {
 			{
 				outputValue = outputValue.split("\\.")[0];
 				System.out.println(outputValue + ", Passed");
+				reportStep("Account deleted successfully: "+accName, "Pass");
 			}
 			else
 			{
 				System.out.println("Unable to delete Account" + ", Failed");
+				reportStep("Unable to delete Account: "+accName, "Fail");
 			}
 		}
 		catch (Exception ex)
 		{
+			reportStep("Unable to delete Account: "+accName, "Fail");
 			ex.printStackTrace();
 		}
 		return this;
@@ -370,12 +416,14 @@ public class AccountsPage extends SalesforceBase {
 		{
 			WebElement AccountsSorting = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[text()='Sort']/following::span[text()='Account Name']/preceding-sibling::span/.."));
 			AccountsSorting.click();
+			reportStep("Clicked on Accounts Header to sort accounts", "Info");
 			solidWait(3);
 			WebElement AccountsSort = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[@aria-live='assertive' and contains(text(),'Sorted')]"));
 			sortMsg = AccountsSort.getText();
 			if (sortMsg.contains("Sorted Ascending"))
 			{
 				System.out.println("Accounts are sorted" + ", Passed");
+				reportStep("Accounts sorted in Ascending Order", "Info");
 				flag = true;
 			}
 			else
@@ -386,11 +434,13 @@ public class AccountsPage extends SalesforceBase {
 				if (sortMsg.contains("Sorted Ascending"))
 				{
 					System.out.println("Accounts are sorted");
+					reportStep("Accounts sorted in Ascending Order", "Info");
 					flag = true;
 				}
 				else
 				{
 					System.out.println("Accounts are not sorted" + ", Failed");
+					reportStep("Unable to sort Accounts", "Fail");
 				}
 			}
 			
@@ -420,11 +470,13 @@ public class AccountsPage extends SalesforceBase {
 					if (actual_order[j].equals(sorted_order[j]))
 					{
 						if (j==length-1) {
-						System.out.println("Accounts are displayed in ascending order" + ", Passed");}
+						System.out.println("Accounts are displayed in ascending order" + ", Passed");
+						reportStep("Verified sorted accounts displayed in Ascending Order", "Pass");}
 					}
 					else
 					{
 						System.out.println("Unable to sort Accounts" + ", Failed");
+						reportStep("Unable to verify sorted accounts Order", "Fail");
 					}
 				}
 			}
@@ -433,6 +485,7 @@ public class AccountsPage extends SalesforceBase {
 		{
 			System.out.println("TC Failed");
 			System.out.println("Exception Trace...");
+			reportStep("Unable to sort and verify accounts", "Fail");
 			ex.printStackTrace();
 		}
 		return this;
