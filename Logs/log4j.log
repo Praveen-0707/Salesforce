@@ -60,3 +60,10 @@
 2021-07-11 10:59:59 INFO  Logs:22 - Reporter Started in Before Suite
 2021-07-11 10:59:59 INFO  Logs:11 - =====================================Manage Attachments - TEST START=========================================
 2021-07-11 10:59:59 INFO  Logs:22 - Attach and Delete Document from Campaign
+2021-07-11 14:42:33 INFO  Logs:22 - Reporter Started in Before Suite
+2021-07-11 14:42:33 INFO  Logs:11 - =====================================Create Account - TEST START=========================================
+2021-07-11 14:42:33 INFO  Logs:22 - Creates new account in salesforce application
+2021-07-11 14:42:33 INFO  Logs:11 - =====================================Edit Account - TEST START=========================================
+2021-07-11 14:42:33 INFO  Logs:22 - Edit account in salesforce application
+2021-07-11 14:43:59 INFO  Logs:15 - =====================================Create Account - TEST END=========================================
+2021-07-11 14:43:59 INFO  Logs:22 - Reporter ended in After Suite

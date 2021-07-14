@@ -9,11 +9,51 @@
 <table>
 <tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Retried</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
 <tr><th colspan="8">Suite</th></tr>
-<tr><td><a href="#t0">Accounts</a></td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">92,700</td><td></td><td></td></tr>
+<tr><td><a href="#t0">Accounts</a></td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num attn">2</td><td class="num">85,259</td><td></td><td></td></tr>
 </table>
-<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Accounts &#8212; passed</th></tr><tr class="passedeven"><td rowspan="1">salesforce.testcases.CreateAccount</td><td><a href="#m0">createNewAccount</a></td><td rowspan="1">1625947929706</td><td rowspan="1">54145</td></tr><tr class="passedodd"><td rowspan="1">salesforce.testcases.EditAccount</td><td><a href="#m1">editAccount</a></td><td rowspan="1">1625947929745</td><td rowspan="1">81050</td></tr></tbody>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Accounts &#8212; failed</th></tr><tr class="failedeven"><td rowspan="1">salesforce.testcases.CreateAccount</td><td><a href="#m0">createNewAccount</a></td><td rowspan="1">1625994773413</td><td rowspan="1">62530</td></tr><tr class="failedodd"><td rowspan="1">salesforce.testcases.EditAccount</td><td><a href="#m1">editAccount</a></td><td rowspan="1">1625994763647</td><td rowspan="1">52557</td></tr></tbody>
 </table>
-<h2>Accounts</h2><h3 id="m0">salesforce.testcases.CreateAccount#createNewAccount</h3><table class="result"><tr class="param"><th>Parameter #1</th></tr><tr class="param stripe"><td>TestProfile30</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m1">salesforce.testcases.EditAccount#editAccount</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>TestProfile30</td><td>9125784613</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h2>Accounts</h2><h3 id="m0">salesforce.testcases.CreateAccount#createNewAccount</h3><table class="result"><tr class="param"><th>Parameter #1</th></tr><tr class="param stripe"><td>TestProfile30</td></tr><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.RuntimeException
+	at salesforce.utils.Reporter.reportStep(Reporter.java:111)
+	at salesforce.utils.Reporter.reportStep(Reporter.java:121)
+	at salesforce.pages.AccountsPage.inputAccountName(AccountsPage.java:52)
+	at salesforce.testcases.CreateAccount.createNewAccount(CreateAccount.java:35)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:132)
+	at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:599)
+	at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:174)
+	at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
+	at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:822)
+	at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:147)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m1">salesforce.testcases.EditAccount#editAccount</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>TestProfile30</td><td>9125784613</td></tr><tr><th colspan="2">Exception</th></tr><tr><td colspan="2"><div class="stacktrace">java.lang.RuntimeException
+	at salesforce.utils.Reporter.reportStep(Reporter.java:111)
+	at salesforce.utils.Reporter.reportStep(Reporter.java:121)
+	at salesforce.pages.AccountsPage.selectCustomerPriority(AccountsPage.java:211)
+	at salesforce.testcases.EditAccount.editAccount(EditAccount.java:44)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:132)
+	at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:599)
+	at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:174)
+	at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
+	at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:822)
+	at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:147)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 </body>
 </html>

@@ -14,18 +14,17 @@ import com.aventstack.extentreports.ExtentTest;
 
 public class SalesPage extends SalesforceBase {
 	
-//	public SalesPage(RemoteWebDriver driver, ExtentTest node)
-//	{
-//		this.driver = driver;
-//		this.node = node;
-//	}
+	public SalesPage()
+	{
+		this.driver = getDriver();
+	}
 	
 	public SalesPage clickOnNewCase()
 	{
 		try {
 			WebElement newCase = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//a[@title='New' and @role='button']"));
 			newCase.click();
-			reportStep("Clicked on New Case Link", "INFO");
+			reportStep("Clicked on New Case Link", "Pass");
 			solidWait(3);
 		} catch (Exception e) {
 			reportStep("Unable to click on New Case Link", "Fail");
@@ -41,7 +40,7 @@ public class SalesPage extends SalesforceBase {
 			searchCampaign.clear();
 			searchCampaign.sendKeys(value);
 			searchCampaign.sendKeys(Keys.ENTER);
-			reportStep("Search for Campaign: "+value, "INFO");
+			reportStep("Search for Campaign: "+value, "Pass");
 			solidWait(2);
 		} catch (Exception e) {
 			reportStep("Unable to search for Campaign: "+value, "Fail");
@@ -56,7 +55,7 @@ public class SalesPage extends SalesforceBase {
 			searchCampaign(value);
 			WebElement searchWTG = driver.findElementByXPath("(//a[text()='" + value + "'])[1]");
 			searchWTG.click();
-			reportStep("Search for Campaign: "+value +" and clicked on it", "INFO");
+			reportStep("Search for Campaign: "+value +" and clicked on it", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to search and click on Campaign: "+value, "Fail");
 			e.printStackTrace();
@@ -69,7 +68,7 @@ public class SalesPage extends SalesforceBase {
 		try {
 			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[@title='Campaign Members']/../../../../../following-sibling::div//span[text()='View All']"));
 			ele.click();
-			reportStep("Click on view all campaign members", "INFO");
+			reportStep("Click on view all campaign members", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on view all campaign members", "Fail");
 			e.printStackTrace();
@@ -88,10 +87,14 @@ public class SalesPage extends SalesforceBase {
 			{
 				System.out.println("It is a hyperlink, since the WebElement begins with anchor tag : <"+tagName+">."
 						+" The file uploaded is :"+linkText+" correct.");
-				reportStep("Upload attachment is successful: "+fileName, "INFO");
+				reportStep("Upload attachment is successful: "+fileName, "Pass");
 //				Click on the uploaded file
 				solidWait(2);
 				driver.findElement(By.xpath("//a[@title='"+fileName+"']")).click();
+			}
+			else
+			{
+				reportStep("Unable to Upload attachment"+fileName, "Fail");
 			}
 			solidWait(3);
 					
@@ -112,8 +115,10 @@ public class SalesPage extends SalesforceBase {
 		try {
 			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElement(By.xpath("//span[@class='view-all-label']/span[text()='Attachments']")));
 			js.executeScript("arguments[0].click();", ele);
+			reportStep("Clicked on ViewAll Attachment", "Pass");
 			solidWait(2);
 		} catch (Exception e) {
+			reportStep("Unable to click on ViewAll Attachment", "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -136,6 +141,7 @@ public class SalesPage extends SalesforceBase {
 					solidWait(1);
 					ele = webDriverWait4VisibilityOfEle(driver.findElement(By.xpath("//div[@role='button' and @title='Delete']/..")));
 					ele.click();
+					reportStep("Clicked on Delete option on file: "+fileName, "Pass");
 					
 //					Delete PopUp
 					deletePopUpConfirmation();
@@ -146,6 +152,7 @@ public class SalesPage extends SalesforceBase {
 		}
 		catch(Exception e)
 		{
+			reportStep("Unable to click on Delete option on file: "+fileName, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -165,6 +172,7 @@ public class SalesPage extends SalesforceBase {
 				if (delFile.equals(fileName))
 				{
 					System.out.println("Unable to Delete Uploaded File, TC-Failed");
+					reportStep("Unable to Delete file: "+fileName, "Fail");
 					break;
 				}
 				else
@@ -172,12 +180,14 @@ public class SalesPage extends SalesforceBase {
 					if (j == size)
 					{
 						System.out.println("Delete File was successful, TC-Passed");
+						reportStep("File deleted is successful: "+fileName, "Pass");
 					}
 				}	
 			}	
 		}
 		catch(Exception e)
 		{
+			reportStep("Unable to Delete file: "+fileName, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -189,7 +199,9 @@ public class SalesPage extends SalesforceBase {
 			WebElement allDeals = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//a/span[text()='View All Key Deals']"));
 			allDeals.click();
 			solidWait(2);
+			reportStep("Clicked on View All Key Deals Link: ", "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to click on View All Key Deals Link: ", "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -202,7 +214,9 @@ public class SalesPage extends SalesforceBase {
 			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//a[@title='Opportunities']/following::div"));
 			ele.click();
 			solidWait(3);
+			reportStep("Clicked on Opportunity Menu", "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to click on Opportunity Menu", "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -214,7 +228,9 @@ public class SalesPage extends SalesforceBase {
 			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[text()='New']"));
 			ele.click();
 			solidWait(2);
+			reportStep("Clicked on Create Opportunity Button", "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to click on Create Opportunity Button", "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -226,7 +242,9 @@ public class SalesPage extends SalesforceBase {
 			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[text()='All Opportunities']/ancestor::a[@role='menuitem']"));
 			js.executeScript("arguments[0].click();", ele);
 			solidWait(2);
+			reportStep("Clicked on select all Opportunities", "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to click on select all Opportunities", "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -239,8 +257,10 @@ public class SalesPage extends SalesforceBase {
 			searchLead.clear();
 			searchLead.sendKeys(value);
 			searchLead.sendKeys(Keys.ENTER);
+			reportStep("Search for Lead: "+value, "Pass");
 			solidWait(2);
 		} catch (Exception e) {
+			reportStep("Unable to Search for Lead: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -260,18 +280,20 @@ public class SalesPage extends SalesforceBase {
 				solidWait(2);
 				WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[@title='New Lead']"));
 				ele.click();
+				reportStep("Clicked on New Lead", "Pass");
 				solidWait(2);
 			}
 			else
 			{
 				dd_lead.sendKeys(value);
 				dd_lead.sendKeys(Keys.ENTER);
+				reportStep("Search for Lead: "+value, "Pass");
 				solidWait(2);
 			}
 		} catch (Exception e) {
+			reportStep("Unable to search for Lead: "+value, "Fail");
 			e.printStackTrace();
 		}
-		
 		return this;
 	}
 	
@@ -284,7 +306,9 @@ public class SalesPage extends SalesforceBase {
 			WebElement ele = driver.findElementByXPath("(//div[@class='select-options' and @role='menu']/ul//a[contains(@title,'"+value+"')])[1]");
 			scrollToVisibleElement(ele);
 			ele.click();
+			reportStep("Select value from Salutation dropdown: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to select value from Salutation dropdown: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -299,7 +323,9 @@ public class SalesPage extends SalesforceBase {
 			WebElement ele = driver.findElementByXPath("(//input[@title='Search Contacts']/following-sibling::div//div[@class='listContent']/ul/li/a//div[contains(@title,'"+value+"')])[1]");
 			scrollToVisibleElement(ele);
 			ele.click();
+			reportStep("Select value from ContractContactName dropdown: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to select value from ContractContactName dropdown: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -311,7 +337,9 @@ public class SalesPage extends SalesforceBase {
 			WebElement firstName = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//label/span[text()='First Name']/following::input[contains(@class,'firstName')]"));
 			firstName.clear();
 			firstName.sendKeys(value);
+			reportStep("Enter FirstName: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to enter FirstName: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -323,7 +351,9 @@ public class SalesPage extends SalesforceBase {
 			WebElement lastName = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//label/span[text()='Last Name']/following::input[contains(@class,'lastName')]"));
 			lastName.clear();
 			lastName.sendKeys(value);
+			reportStep("Enter Last Name: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to enter Last Name: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -335,7 +365,9 @@ public class SalesPage extends SalesforceBase {
 			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[text()='Subject']/parent::label/following-sibling::input"));
 			ele.clear();
 			ele.sendKeys(value);
+			reportStep("Enter Subject: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to Enter Subject: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -347,7 +379,9 @@ public class SalesPage extends SalesforceBase {
 			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[text()='Description']/parent::label/following-sibling::textarea"));
 			ele.clear();
 			ele.sendKeys(value);
+			reportStep("Enter Case Description: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to Enter Case Description: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -359,7 +393,9 @@ public class SalesPage extends SalesforceBase {
 			WebElement compName = webDriverWait4ElementToBeClickable(driver.findElementByXPath("(//label/span[text()='Company']/following::input[contains(@class,'input')])[1]"));
 			compName.clear();
 			compName.sendKeys(value);
+			reportStep("Enter Company name: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to Enter Company: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -371,7 +407,9 @@ public class SalesPage extends SalesforceBase {
 			WebElement closeDate = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//label[text()='Close Date']/following-sibling::div//input[@name ='CloseDate']"));
 			closeDate.clear();
 			closeDate.sendKeys(value);
+			reportStep("Enter Close date: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to Enter Close date: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -387,7 +425,9 @@ public class SalesPage extends SalesforceBase {
 			WebElement ele = driver.findElementByXPath("(//label[text()='Type']/following-sibling::div//input[@type ='text']/parent::div/following-sibling::div//lightning-base-combobox-item//span[contains(text(),'"+value+"')])[1]");
 			scrollToVisibleElement(ele);
 			ele.click();
+			reportStep("Select dropdown value from Type: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to select dropdown value from Type: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -403,7 +443,9 @@ public class SalesPage extends SalesforceBase {
 			WebElement ele = driver.findElementByXPath("(//label[text()='Lead Source']/following-sibling::div//input[@type ='text']/parent::div/following-sibling::div//lightning-base-combobox-item//span[contains(text(),'"+value+"')])[1]");
 			scrollToVisibleElement(ele);
 			ele.click();
+			reportStep("Select dropdown value from LeadSource: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to select dropdown value from LeadSource: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -419,7 +461,9 @@ public class SalesPage extends SalesforceBase {
 			WebElement ele = driver.findElementByXPath("(//label[text()='Stage']/following-sibling::div//input[@type ='text']/parent::div/following-sibling::div//lightning-base-combobox-item//span[contains(text(),'"+value+"')])[1]");
 			scrollToVisibleElement(ele);
 			ele.click();
+			reportStep("Select dropdown value from Stage: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to select dropdown value from Stage: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;

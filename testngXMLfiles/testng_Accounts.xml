@@ -4,7 +4,7 @@
  		
  <listeners>
     	<listener class-name="salesforce.utils.RetryListener"></listener>
-    	<!-- <listener class-name="salesforce.utils.CustomListener"></listener> -->
+    	<listener class-name="salesforce.utils.CustomListener"></listener>
  </listeners>
  
  <test thread-count="5" name="Accounts" verbose="5" parallel = "classes">

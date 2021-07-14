@@ -48,7 +48,7 @@
 		<ul id='nav-mobile' class='right hide-on-med-and-down nav-right'>
 			<li>
                 <a href='#!'>
-                    <span class='label suite-start-time blue darken-3'>Jul 11, 2021 01:42:04 AM</span>
+                    <span class='label suite-start-time blue darken-3'>Jul 11, 2021 02:42:33 PM</span>
 				</a>
 			</li>
 			<li>
@@ -74,6 +74,7 @@
 				</a>
 				<ul id='tests-toggle' class='dropdown-content'>
 											<li status='pass'><a href='#!'>Pass <i class='material-icons green-text'>check_circle</i></a></li>
+						<li status='fail'><a href='#!'>Fail <i class='material-icons red-text'>cancel</i></a></li>
 					<li class='divider'></li>
 					<li status='clear' clear='true'><a href='#!'>Clear Filters <i class='material-icons'>clear</i></a></li>
 				</ul>
@@ -134,10 +135,10 @@
 					<canvas id='parent-analysis' width='100' height='80'></canvas>
 				</div>
 				<div class='block text-small'>
-					<span class='tooltipped' data-position='top' data-tooltip='100%'><span class='strong'>2</span> test(s) passed</span>
+					<span class='tooltipped' data-position='top' data-tooltip='0%'><span class='strong'>0</span> test(s) passed</span>
 				</div>
 				<div class='block text-small'>
-					<span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> test(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> others
+					<span class='strong tooltipped' data-position='top' data-tooltip='100%'>2</span> test(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> others
 				</div>
 			</div>
 		</div>
@@ -149,10 +150,10 @@
 					<canvas id='child-analysis' width='100' height='80'></canvas>
 				</div>
 				<div class='block text-small'>
-					<span class='tooltipped' data-position='top' data-tooltip='28.571%'><span class='strong'>4</span> step(s) passed</span>
+					<span class='tooltipped' data-position='top' data-tooltip='81.818%'><span class='strong'>18</span> step(s) passed</span>
 				</div>
 				<div class='block text-small'>
-					<span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> step(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='71.429%'>10</span> others
+					<span class='strong tooltipped' data-position='top' data-tooltip='9.091%'>2</span> step(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='9.091%'>2</span> others
 				</div>
 			</div>
 		</div>
@@ -167,103 +168,17 @@
 			<ul id='test-collection' class='test-collection'>
 				
 				
-				<li class='test displayed active has-leaf pass' status='pass' bdd='false' test-id='1'>
-					<div class='test-heading'>
-						<span class='test-name'>Create Account</span>
-						<span class='test-time'>Jul 11, 2021 01:42:04 AM</span>
-						<span class='test-status right pass'>pass</span>
-					</div>
-					<div class='test-content hide'>
-<div class='test-time-info'>
-	<span class='label start-time'>Jul 11, 2021 01:42:04 AM</span>
-	<span class='label end-time'>Jul 11, 2021 01:42:37 AM</span>
-	<span class='label time-taken grey lighten-1 white-text'>0h 0m 32s+962ms</span>
-</div>
-	<div class='test-desc'>Creates new account in salesforce application </div>
-	<div class='test-attributes'>
-			<div class='category-list'>
-				<span class='category label white-text'>Regression</span>
-			</div>
-			<div class='author-list'>
-				<span class='author label white-text'>PraveenRajA</span>
-			</div>
-	</div>
-	<ul class='collapsible node-list' data-collapsible='accordion'>
-		
-				<li class='node level-1 leaf pass' status='pass' test-id='3'>
-					<div class='collapsible-header'>
-						<h5 class='node-name'>Create Account</h5>
-						<span class="node-time label grey lighten-1 white-text">Jul 11, 2021 01:42:37 AM</span>
-						<span class='node-duration label grey lighten-1 white-text'>0h 0m 32s+213ms</span>
-						<span class='test-status right pass'>pass</span>
-					</div>
-						<div class='collapsible-body'>
-								<div class='node-steps'>
-									<table class='bordered table-results'>
-										<thead>
-											<tr>
-												<th>Status</th>
-												<th>Timestamp</th>
-												<th>Details</th>
-											</tr>
-										</thead>
-										<tbody>
-												<tr class='log' status='pass'>
-													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>1:42:10 AM</td>
-													<td class='step-details'>Username entered as: cypress@testleaf.com</td>
-												</tr>
-												<tr class='log' status='pass'>
-													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>1:42:10 AM</td>
-													<td class='step-details'>Password entered as: Selbootcamp@1234</td>
-												</tr>
-												<tr class='log' status='info'>
-													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-													<td class='timestamp'>1:42:33 AM</td>
-													<td class='step-details'>Salesforce Classic Login is not displayed</td>
-												</tr>
-												<tr class='log' status='info'>
-													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-													<td class='timestamp'>1:42:34 AM</td>
-													<td class='step-details'>Clicked on Application Launcher</td>
-												</tr>
-												<tr class='log' status='info'>
-													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-													<td class='timestamp'>1:42:34 AM</td>
-													<td class='step-details'>Clicked on View All from Application Launcher</td>
-												</tr>
-												<tr class='log' status='info'>
-													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-													<td class='timestamp'>1:42:35 AM</td>
-													<td class='step-details'>Search for Account application on HomePage</td>
-												</tr>
-												<tr class='log' status='info'>
-													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-													<td class='timestamp'>1:42:37 AM</td>
-													<td class='step-details'>Clicked on Accounts Link</td>
-												</tr>
-										</tbody>
-									</table>
-								</div>
-						</div>
-				</li>
-	</ul>
-					</div>
-				</li>
-				
-				
-				<li class='test displayed active has-leaf pass' status='pass' bdd='false' test-id='2'>
+				<li class='test displayed active has-leaf fail' status='fail' bdd='false' test-id='1'>
 					<div class='test-heading'>
 						<span class='test-name'>Edit Account</span>
-						<span class='test-time'>Jul 11, 2021 01:42:04 AM</span>
-						<span class='test-status right pass'>pass</span>
+						<span class='test-time'>Jul 11, 2021 02:42:33 PM</span>
+						<span class='test-status right fail'>fail</span>
 					</div>
 					<div class='test-content hide'>
 <div class='test-time-info'>
-	<span class='label start-time'>Jul 11, 2021 01:42:04 AM</span>
-	<span class='label end-time'>Jul 11, 2021 01:42:37 AM</span>
-	<span class='label time-taken grey lighten-1 white-text'>0h 0m 32s+855ms</span>
+	<span class='label start-time'>Jul 11, 2021 02:42:33 PM</span>
+	<span class='label end-time'>Jul 11, 2021 02:43:36 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 1m 2s+220ms</span>
 </div>
 	<div class='test-desc'>Edit account in salesforce application </div>
 	<div class='test-attributes'>
@@ -276,12 +191,12 @@
 	</div>
 	<ul class='collapsible node-list' data-collapsible='accordion'>
 		
-				<li class='node level-1 leaf pass' status='pass' test-id='4'>
+				<li class='node level-1 leaf fail' status='fail' test-id='3'>
 					<div class='collapsible-header'>
 						<h5 class='node-name'>Edit Account</h5>
-						<span class="node-time label grey lighten-1 white-text">Jul 11, 2021 01:42:37 AM</span>
-						<span class='node-duration label grey lighten-1 white-text'>0h 0m 32s+106ms</span>
-						<span class='test-status right pass'>pass</span>
+						<span class="node-time label grey lighten-1 white-text">Jul 11, 2021 02:43:36 PM</span>
+						<span class='node-duration label grey lighten-1 white-text'>0h 1m 0s+749ms</span>
+						<span class='test-status right fail'>fail</span>
 					</div>
 						<div class='collapsible-body'>
 								<div class='node-steps'>
@@ -296,38 +211,164 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>1:42:10 AM</td>
+													<td class='timestamp'>2:42:44 PM</td>
 													<td class='step-details'>Username entered as: cypress@testleaf.com</td>
 												</tr>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>1:42:10 AM</td>
+													<td class='timestamp'>2:42:45 PM</td>
 													<td class='step-details'>Password entered as: Selbootcamp@1234</td>
 												</tr>
 												<tr class='log' status='info'>
 													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-													<td class='timestamp'>1:42:33 AM</td>
+													<td class='timestamp'>2:43:10 PM</td>
 													<td class='step-details'>Salesforce Classic Login is not displayed</td>
 												</tr>
-												<tr class='log' status='info'>
-													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-													<td class='timestamp'>1:42:34 AM</td>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:43:10 PM</td>
 													<td class='step-details'>Clicked on Application Launcher</td>
 												</tr>
-												<tr class='log' status='info'>
-													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-													<td class='timestamp'>1:42:34 AM</td>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:43:12 PM</td>
 													<td class='step-details'>Clicked on View All from Application Launcher</td>
 												</tr>
-												<tr class='log' status='info'>
-													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-													<td class='timestamp'>1:42:35 AM</td>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:43:13 PM</td>
 													<td class='step-details'>Search for Account application on HomePage</td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:43:16 PM</td>
+													<td class='step-details'>Clicked on Accounts Link</td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:43:22 PM</td>
+													<td class='step-details'>Search Account: TestProfile30</td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:43:24 PM</td>
+													<td class='step-details'>Clicked Edit Option on Account: TestProfile30</td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:43:28 PM</td>
+													<td class='step-details'>Enter Phone Number as: 9125784613</td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:43:30 PM</td>
+													<td class='step-details'>Click on Type dropdown and select value as: Technology Partner</td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:43:35 PM</td>
+													<td class='step-details'>Click on Industry dropdown and select value as: Healthcare</td>
+												</tr>
+												<tr class='log' status='fail'>
+													<td class='status fail' title='fail' alt='fail'><i class='material-icons'>cancel</i></td>
+													<td class='timestamp'>2:43:36 PM</td>
+													<td class='step-details'>Unable to click on CustomerPriority dropdown and select value as: Low<img data-featherlight='.././reports/screenshots/img_6725.jpg' width='10%' src='.././reports/screenshots/img_6725.jpg' data-src='.././reports/screenshots/img_6725.jpg'></td>
+												</tr>
+										</tbody>
+									</table>
+								</div>
+						</div>
+				</li>
+	</ul>
+					</div>
+				</li>
+				
+				
+				<li class='test displayed active has-leaf fail' status='fail' bdd='false' test-id='2'>
+					<div class='test-heading'>
+						<span class='test-name'>Create Account</span>
+						<span class='test-time'>Jul 11, 2021 02:42:33 PM</span>
+						<span class='test-status right fail'>fail</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Jul 11, 2021 02:42:33 PM</span>
+	<span class='label end-time'>Jul 11, 2021 02:43:55 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 1m 21s+958ms</span>
+</div>
+	<div class='test-desc'>Creates new account in salesforce application </div>
+	<div class='test-attributes'>
+			<div class='category-list'>
+				<span class='category label white-text'>Regression</span>
+			</div>
+			<div class='author-list'>
+				<span class='author label white-text'>PraveenRajA</span>
+			</div>
+	</div>
+	<ul class='collapsible node-list' data-collapsible='accordion'>
+		
+				<li class='node level-1 leaf fail' status='fail' test-id='4'>
+					<div class='collapsible-header'>
+						<h5 class='node-name'>Create Account</h5>
+						<span class="node-time label grey lighten-1 white-text">Jul 11, 2021 02:43:55 PM</span>
+						<span class='node-duration label grey lighten-1 white-text'>0h 1m 20s+489ms</span>
+						<span class='test-status right fail'>fail</span>
+					</div>
+						<div class='collapsible-body'>
+								<div class='node-steps'>
+									<table class='bordered table-results'>
+										<thead>
+											<tr>
+												<th>Status</th>
+												<th>Timestamp</th>
+												<th>Details</th>
+											</tr>
+										</thead>
+										<tbody>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:42:53 PM</td>
+													<td class='step-details'>Username entered as: cypress@testleaf.com</td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:42:54 PM</td>
+													<td class='step-details'>Password entered as: Selbootcamp@1234</td>
 												</tr>
 												<tr class='log' status='info'>
 													<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-													<td class='timestamp'>1:42:37 AM</td>
+													<td class='timestamp'>2:43:19 PM</td>
+													<td class='step-details'>Salesforce Classic Login is not displayed</td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:43:19 PM</td>
+													<td class='step-details'>Clicked on Application Launcher</td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:43:21 PM</td>
+													<td class='step-details'>Clicked on View All from Application Launcher</td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:43:23 PM</td>
+													<td class='step-details'>Search for Account application on HomePage</td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:43:25 PM</td>
 													<td class='step-details'>Clicked on Accounts Link</td>
+												</tr>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>2:43:31 PM</td>
+													<td class='step-details'>Clicked on New Account button</td>
+												</tr>
+												<tr class='log' status='fail'>
+													<td class='status fail' title='fail' alt='fail'><i class='material-icons'>cancel</i></td>
+													<td class='timestamp'>2:43:55 PM</td>
+													<td class='step-details'>Unable to Enter Account Name: TestProfile30<img data-featherlight='.././reports/screenshots/img_6740.jpg' width='10%' src='.././reports/screenshots/img_6740.jpg' data-src='.././reports/screenshots/img_6740.jpg'></td>
 												</tr>
 										</tbody>
 									</table>
@@ -391,13 +432,13 @@
 					<div class='category-heading'>
 						<span class='category-name'>Regression</span>
 						<span class='category-status right'>
-							<span class='label pass'>2</span>
+							<span class='label fail'>2</span>
 						</span>
 					</div>
 					<div class='category-content hide'>
 						<div class='category-status-counts'>
-							<span class='label green accent-4 white-text'>Passed: 2</span>
 							
+							<span class='label red lighten-1 white-text'>Failed: 2</span>
 							
 						</div>
 					
@@ -412,14 +453,14 @@
 								</thead>
 								<tbody>
 									<tr>
-										<td>Jul 11, 2021 01:42:04 AM</td>
-										<td class='linked' test-id='1'>Create Account</td>
-										<td><span class='test-status pass'>pass</span></td>
+										<td>Jul 11, 2021 02:42:33 PM</td>
+										<td class='linked' test-id='1'>Edit Account</td>
+										<td><span class='test-status fail'>fail</span></td>
 									</tr>
 									<tr>
-										<td>Jul 11, 2021 01:42:04 AM</td>
-										<td class='linked' test-id='2'>Edit Account</td>
-										<td><span class='test-status pass'>pass</span></td>
+										<td>Jul 11, 2021 02:42:33 PM</td>
+										<td class='linked' test-id='2'>Create Account</td>
+										<td><span class='test-status fail'>fail</span></td>
 									</tr>
 								</tbody>
 							</table>
@@ -466,13 +507,13 @@
                             <div class='author-heading'>
                                 <span class='author-name'>PraveenRajA</span>
                                 <span class='author-status right'>
-                                        <span class='label pass'>2</span>
+                                        <span class='label fail'>2</span>
 						        </span>
                             </div>
                             <div class='author-content hide'>
                                 <div class='author-status-counts'>
-                                    <span class='label green accent-4 white-text'>Passed: 2</span>
                                     
+                                    <span class='label red lighten-1 white-text'>Failed: 2</span>
                                     
                                 </div>
 
@@ -487,14 +528,14 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>Jul 11, 2021 01:42:04 AM</td>
-                                                <td class='linked' test-id='1'>Create Account</td>
-                                                <td><span class='test-status pass'>pass</span></td>
+                                                <td>Jul 11, 2021 02:42:33 PM</td>
+                                                <td class='linked' test-id='1'>Edit Account</td>
+                                                <td><span class='test-status fail'>fail</span></td>
                                             </tr>
                                             <tr>
-                                                <td>Jul 11, 2021 01:42:04 AM</td>
-                                                <td class='linked' test-id='2'>Edit Account</td>
-                                                <td><span class='test-status pass'>pass</span></td>
+                                                <td>Jul 11, 2021 02:42:33 PM</td>
+                                                <td class='linked' test-id='2'>Create Account</td>
+                                                <td><span class='test-status fail'>fail</span></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -527,25 +568,25 @@
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Steps
-					<div class='panel-lead'>14</div>
+					<div class='panel-lead'>22</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Start
-					<div class='panel-lead'>Jul 11, 2021 01:42:04 AM</div>
+					<div class='panel-lead'>Jul 11, 2021 02:42:33 PM</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 			 		End
-			 		<div class='panel-lead'>Jul 11, 2021 01:43:36 AM</div>
+			 		<div class='panel-lead'>Jul 11, 2021 02:43:59 PM</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Time Taken
-					<div class='panel-lead'>0h 1m 32s+888ms</div>
+					<div class='panel-lead'>0h 1m 25s+691ms</div>
 				</div>
 			</div>
 			<div class='col s6'>
@@ -562,11 +603,11 @@
 						</tr>
 						<tr>
 							<td>Regression</td>
+							<td>0</td>
 							<td>2</td>
 							<td>0</td>
-							<td>0</td>
 							<td>
-									100%
+									0%
 							</td>
 						</tr>
 					</table>
@@ -582,22 +623,22 @@
 
 		<script>
 			var statusGroup = {
-				passParent: 2,
-				failParent: 0,
+				passParent: 0,
+				failParent: 2,
 				fatalParent: 0,
 				errorParent: 0,
 				warningParent: 0,
 				skipParent: 0,
-				exceptionsParent: 0,
+				exceptionsParent: 2,
 				
-				passChild: 4,
-				failChild: 0,
+				passChild: 18,
+				failChild: 2,
 				fatalChild: 0,
 				errorChild: 0,
 				warningChild: 0,
 				skipChild: 0,
-				infoChild: 10,
-				exceptionsChild: 0,
+				infoChild: 2,
+				exceptionsChild: 2,
 				
 				passGrandChild: 0,
 				failGrandChild: 0,

@@ -7,9 +7,10 @@
         <methods>
           <include name="createNewAccount" invocation-numbers="0"/>
           <include name="endReport"/>
+          <include name="endTestDetails"/>
           <include name="testDetailedReport"/>
-          <include name="startReport"/>
           <include name="launchApp"/>
+          <include name="startReport"/>
           <include name="setTestDetails"/>
           <include name="closeBrowser"/>
         </methods>
@@ -17,9 +18,10 @@
       <class name="salesforce.testcases.EditAccount">
         <methods>
           <include name="endReport"/>
+          <include name="endTestDetails"/>
           <include name="testDetailedReport"/>
-          <include name="startReport"/>
           <include name="launchApp"/>
+          <include name="startReport"/>
           <include name="closeBrowser"/>
           <include name="setTestDetails"/>
           <include name="editAccount" invocation-numbers="0"/>
