@@ -7,5 +7,6 @@ public class AccountDetails extends SalesforceBase {
 	public AccountDetails()
 	{
 		this.driver = getDriver();
+		driver.switchTo().defaultContent();
 	}
 }

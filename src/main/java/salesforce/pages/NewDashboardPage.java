@@ -1,13 +1,8 @@
 package salesforce.pages;
 
 import salesforce.base.SalesforceBase;
-
 import org.openqa.selenium.NoSuchFrameException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import com.aventstack.extentreports.ExtentTest;
 
 public class NewDashboardPage extends SalesforceBase {
 	
@@ -18,14 +13,14 @@ public class NewDashboardPage extends SalesforceBase {
 		{
 			solidWait(5);
 			WebElement iframe = driver.findElementByXPath("(//iframe[@title='dashboard'])[last()]");
-			wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(iframe));
+			webDriverWait4FrameToBeAvailableAndSwitchTo(iframe);
 			reportStep("Switched to Frame", "Pass");
 		}
 		catch(NoSuchFrameException e)
 		{
 			e.printStackTrace();
 			System.out.println("...Exception in Frames...");
-			wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(1));
+			webDriverWait4FrameToBeAvailableAndSwitchTo(1);
 		}
 		catch(Exception e)
 		{

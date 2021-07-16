@@ -12,6 +12,7 @@ public class AccountsPage extends SalesforceBase {
 	public AccountsPage()
 	{
 		this.driver = getDriver();
+		driver.switchTo().defaultContent();
 	}
 	
 	public AccountsPage searchAccount(String value)

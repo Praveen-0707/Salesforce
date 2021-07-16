@@ -20,6 +20,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.NoSuchFrameException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TakesScreenshot;
@@ -152,7 +153,6 @@ public class SalesforceBase extends Reporter {
 			robot = new Robot();
 			js = (JavascriptExecutor)getDriver();
 			
-//			String URL = "https://login.salesforce.com/";
 			getDriver().get(prop.getProperty("url"));
 			
 		} catch (FileNotFoundException e) {
@@ -332,6 +332,36 @@ public class SalesforceBase extends Reporter {
 		return ele;
 	}
 	
+	public WebElement webDriverWait4FrameToBeAvailableAndSwitchTo(WebElement ele){
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(ele));
+		} catch(StaleElementReferenceException e) {
+			e.printStackTrace();
+		} catch (NoSuchFrameException e) {
+			e.printStackTrace();			
+		} catch (TimeoutException e) {
+			e.printStackTrace();			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ele;
+	}
+	
+	public int webDriverWait4FrameToBeAvailableAndSwitchTo(int eleIndex){
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(eleIndex));
+		} catch(StaleElementReferenceException e) {
+			e.printStackTrace();
+		} catch (NoSuchFrameException e) {
+			e.printStackTrace();			
+		} catch (TimeoutException e) {
+			e.printStackTrace();			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return eleIndex;
+	}
+	
 	public String getRandomString(Integer length)
 	{
 		String randomString = "";
@@ -381,5 +411,18 @@ public class SalesforceBase extends Reporter {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public int takeSnap() {
+		int snapNum = (int)(Math.random() * 6996);
+		File srcFile = getDriver().getScreenshotAs(OutputType.FILE);
+		File destFile = new File("./reports/screenshots/img_"+ snapNum +".jpg");
+		try {
+			FileUtils.copyFile(srcFile, destFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return snapNum;
 	}
 }

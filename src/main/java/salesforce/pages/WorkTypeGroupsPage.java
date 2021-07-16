@@ -1,7 +1,6 @@
 package salesforce.pages;
 
 import salesforce.base.SalesforceBase;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,19 +8,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.asserts.SoftAssert;
 
-import com.aventstack.extentreports.ExtentTest;
-
 public class WorkTypeGroupsPage extends SalesforceBase {
 	
-//	public WorkTypeGroupsPage(RemoteWebDriver driver, ExtentTest node)
-//	{
-//		this.driver = driver;
-//		this.node = node;
-//	}
+	public WorkTypeGroupsPage()
+	{
+		this.driver = getDriver();
+		driver.switchTo().defaultContent();
+	}
 	
 	public WorkTypeGroupsPage searchWorkTypeGroup(String value)
 	{

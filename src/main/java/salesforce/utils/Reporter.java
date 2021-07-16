@@ -1,10 +1,7 @@
 package salesforce.utils;
 
-import java.io.File;
 import java.io.IOException;
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.xml.DOMConfigurator;
-import org.openqa.selenium.OutputType;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
@@ -16,7 +13,7 @@ import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.MediaEntityModelProvider;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
-public class Reporter {
+public abstract class Reporter {
 	
 	private static ThreadLocal<RemoteWebDriver> localDriver = new ThreadLocal<RemoteWebDriver>();
 	private static ThreadLocal<ExtentTest> localTest = new ThreadLocal<ExtentTest>();
@@ -69,6 +66,7 @@ public class Reporter {
 	{
 		extent.flush();
 		Logs.info("Reporter ended in After Suite");
+		System.gc();
 	}
 	
 	@BeforeClass
@@ -120,19 +118,19 @@ public class Reporter {
 	{
 		reportStep(message, status, true);
 	}
-	
-	public int takeSnap()
-	{
-		int snapNum = (int)(Math.random() * 6996);
-		File srcFile = getDriver().getScreenshotAs(OutputType.FILE);
-		File destFile = new File("./reports/screenshots/img_"+ snapNum +".jpg");
-		try {
-			FileUtils.copyFile(srcFile, destFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return snapNum;
-	}
+	public abstract int takeSnap();
+//	public int takeSnap()
+//	{
+//		int snapNum = (int)(Math.random() * 6996);
+//		File srcFile = getDriver().getScreenshotAs(OutputType.FILE);
+//		File destFile = new File("./reports/screenshots/img_"+ snapNum +".jpg");
+//		try {
+//			FileUtils.copyFile(srcFile, destFile);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		return snapNum;
+//	}
 	
 	@AfterTest
 	public void endTestDetails()

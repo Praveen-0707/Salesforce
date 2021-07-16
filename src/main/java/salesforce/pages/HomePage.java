@@ -2,15 +2,13 @@ package salesforce.pages;
 
 import salesforce.base.SalesforceBase;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
-
-import com.aventstack.extentreports.ExtentTest;
 
 public class HomePage extends SalesforceBase {
 	
 	public HomePage()
 	{
 		this.driver = getDriver();
+		driver.switchTo().defaultContent();
 	}
 	
 	public HomePage clickToggleButton()

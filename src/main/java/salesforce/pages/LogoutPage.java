@@ -1,8 +1,6 @@
 package salesforce.pages;
 
 import salesforce.base.SalesforceBase;
-
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class LogoutPage extends SalesforceBase {
@@ -10,6 +8,7 @@ public class LogoutPage extends SalesforceBase {
 	public LogoutPage()
 	{
 		this.driver = getDriver();
+		driver.switchTo().defaultContent();
 	}
 	
 	public LoginPage clickLogout()
