@@ -98,3 +98,13 @@
 2021-07-16 23:35:47 INFO  Logs:22 - Edit account in salesforce application
 2021-07-16 23:36:53 INFO  Logs:15 - =====================================Edit Account - TEST END=========================================
 2021-07-16 23:36:53 INFO  Logs:22 - Reporter ended in After Suite
+2021-07-17 00:42:42 INFO  Logs:22 - Reporter Started in Before Suite
+2021-07-17 00:42:42 INFO  Logs:11 - =====================================Edit Account - TEST START=========================================
+2021-07-17 00:42:42 INFO  Logs:22 - Edit account in salesforce application
+2021-07-17 00:43:52 INFO  Logs:15 - =====================================Edit Account - TEST END=========================================
+2021-07-17 00:43:52 INFO  Logs:22 - Reporter ended in After Suite
+2021-07-17 00:45:52 INFO  Logs:22 - Reporter Started in Before Suite
+2021-07-17 00:45:52 INFO  Logs:11 - =====================================Edit Account - TEST START=========================================
+2021-07-17 00:45:52 INFO  Logs:22 - Edit account in salesforce application
+2021-07-17 00:51:07 INFO  Logs:15 - =====================================Edit Account - TEST END=========================================
+2021-07-17 00:51:07 INFO  Logs:22 - Reporter ended in After Suite

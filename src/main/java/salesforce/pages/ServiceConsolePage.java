@@ -19,7 +19,9 @@ public class ServiceConsolePage extends SalesforceBase {
 	{
 		try {
 			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[text()='New Dashboard']")).click();
+			reportStep("click on new Dashboard", "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to click on new Dashboard", "Fail");
 			e.printStackTrace();
 		}
 		return new NewDashboardPage();
@@ -29,7 +31,9 @@ public class ServiceConsolePage extends SalesforceBase {
 	{
 		try {
 			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[text()='New']")).click();
+			reportStep("click on new Button", "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to click on new Button", "Fail");
 			e.printStackTrace();
 		}
 		return new ServiceConsolePage();
@@ -40,7 +44,9 @@ public class ServiceConsolePage extends SalesforceBase {
 		try {
 			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//legend[text()='Frequency']/following::div//span[text()='"+value+"']"));
 			ele.click();
+			reportStep("Set Subscription Frequency as: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to set Subscription Frequency as: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -51,8 +57,10 @@ public class ServiceConsolePage extends SalesforceBase {
 		try {
 			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//a[@title='Recent']"));
 			ele.click();
+			reportStep("click on Recent files", "Pass");
 			solidWait(2);
 		} catch (Exception e) {
+			reportStep("Unable to click on Recent files", "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -64,10 +72,11 @@ public class ServiceConsolePage extends SalesforceBase {
 		try
 		{
 			homepage.selectTaskFromNavigationControl(value);
+			reportStep("select task: "+value, "Pass");
 		}
 		catch (Exception e)
 		{
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 			homepage.selectTaskFromNavigationControl(value);
 		}
 		return this;
@@ -78,6 +87,7 @@ public class ServiceConsolePage extends SalesforceBase {
 		try {
 			WebElement col = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[@title='Last Modified Date']/parent::a"));
 			col.click();
+			reportStep("click on Last Modified Column", "Pass");
 			solidWait(2);
 			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[@title='Last Modified Date']/parent::a/following-sibling::span"));
 			String sort = ele.getText();
@@ -87,6 +97,7 @@ public class ServiceConsolePage extends SalesforceBase {
 				solidWait(2);
 			}
 		} catch (Exception e) {
+			reportStep("Unable to sort the records", "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -98,7 +109,9 @@ public class ServiceConsolePage extends SalesforceBase {
 			WebElement dd_time = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//select[@id='time']"));
 			Select time = new Select(dd_time);
 			time.selectByVisibleText(value);
+			reportStep("Select Time: "+value, "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to select Time: "+value, "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -108,7 +121,9 @@ public class ServiceConsolePage extends SalesforceBase {
 	{
 		try {
 			webDriverWait4ElementToBeClickable(driver.findElementByXPath("//button[@title='Save']")).click();
+			reportStep("Click on Save Button", "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to click on Save Button", "Fail");
 			e.printStackTrace();
 		}
 		return this;
@@ -124,8 +139,10 @@ public class ServiceConsolePage extends SalesforceBase {
 			if (!ConReqNum.isEmpty() == true)
 			{
 				System.out.println("Contact Request Number Created: "+ConReqNum);
+				reportStep("Contact Request Number: "+ConReqNum, "Pass");
 			}
 		} catch (Exception e) {
+			reportStep("Unable to get Contact Request Number", "Fail");
 			e.printStackTrace();
 		}
 		return ConReqNum;
@@ -139,7 +156,9 @@ public class ServiceConsolePage extends SalesforceBase {
 			downloadedFileName = getFileName.getText();
 			WebElement lastModifiedfile = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//table/tbody/tr[1]/th//a/following::td[3]//a[@role='button']"));
 			lastModifiedfile.click();
+			reportStep("Click on recent added record", "Pass");
 		} catch (Exception e) {
+			reportStep("Unable to click on recent added record", "Fail");
 			e.printStackTrace();
 		}
 		return downloadedFileName;
