@@ -2,12 +2,12 @@ package salesforce.testcases;
 
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import salesforce.base.SalesforceBase;
+import salesforce.base.PreAndPost;
 import salesforce.pages.LoginPage;
 import salesforce.pages.WorkTypeGroupsPage;
 import salesforce.utils.Logs;
 
-public class WorkTypeGroupSortingByName extends SalesforceBase {
+public class WorkTypeGroupSortingByName extends PreAndPost {
 	
 	@BeforeTest
 	public void setTestDetails() {
@@ -15,7 +15,7 @@ public class WorkTypeGroupSortingByName extends SalesforceBase {
 		testDescription = "WorkTypeGroups should be sorted by Name in ascending order";
 		testAuthor = "Praveen Raj A";
 		testCategory = "Regression";
-		browser = "chrome";
+//		browser = "chrome";
 		
 		Logs.startTestCase(testName);
 		Logs.info(testDescription);
@@ -28,11 +28,9 @@ public class WorkTypeGroupSortingByName extends SalesforceBase {
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()
-		.searchApp("Work Type Groups").clickOnWorkTypeGroups();
+		.searchApp("Work Type Groups").clickOnApp("Work Type Groups");
 		solidWait(3);
-		
-		WorkTypeGroupsPage WTG =new WorkTypeGroupsPage();
-		WTG.sortWorkTypeGroups();
+		new WorkTypeGroupsPage().sortWorkTypeGroups();
 	}
 
 }

@@ -1,13 +1,13 @@
 package salesforce.pages;
 
-import salesforce.base.SalesforceBase;
+import salesforce.base.PreAndPost;
 import java.util.Arrays;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
-public class AccountsPage extends SalesforceBase {
+public class AccountsPage extends PreAndPost {
 	
 	public AccountsPage()
 	{
@@ -18,11 +18,8 @@ public class AccountsPage extends SalesforceBase {
 	public AccountsPage searchAccount(String value)
 	{
 		try {
-			WebElement searchAcc = driver.findElementByXPath("//input[@name='Account-search-input']");
-			webDriverWait4ElementToBeClickable(searchAcc);
-			searchAcc.clear();
-			searchAcc.sendKeys(value);
-			searchAcc.sendKeys(Keys.ENTER);
+			WebElement searchAcc = locateElement("name", "Account-search-input");
+			typeAndEnter(searchAcc, value);
 			solidWait(2);
 			reportStep("Search Account: "+value, "Pass");
 		} catch (Exception e) {
@@ -35,7 +32,7 @@ public class AccountsPage extends SalesforceBase {
 	public AccountsPage clickOnCreateNewAccount()
 	{
 		try {
-			webDriverWait4ElementToBeClickable(driver.findElementByXPath("//div[text()='New']")).click();
+			click(locateElement("xpath", "//div[text()='New']"));
 			reportStep("Clicked on New Account button", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to clicked on New Account button", "Fail");
@@ -47,7 +44,7 @@ public class AccountsPage extends SalesforceBase {
 	public AccountsPage inputAccountName(String value)
 	{
 		try {
-			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//input[@name='Name']")).sendKeys(value);
+			type(locateElement("xpath", "//input[@name='Name']"), value);
 			reportStep("Enter Account Name as: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to Enter Account Name: "+value, "Fail");
@@ -59,9 +56,7 @@ public class AccountsPage extends SalesforceBase {
 	public AccountsPage inputPhoneNumber(String phoneNumber)
 	{
 		try {
-			WebElement ele = driver.findElementByXPath("//input[@name='Phone']");
-			webDriverWait4VisibilityOfEle(ele).clear();
-			ele.sendKeys(phoneNumber);
+			type(locateElement("xpath", "//input[@name='Phone']"), phoneNumber);
 			reportStep("Enter Phone Number as: "+phoneNumber, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to Enter Phone Number as: "+phoneNumber, "Fail");
@@ -73,7 +68,7 @@ public class AccountsPage extends SalesforceBase {
 	public AccountsPage inputBillingAddress(String value)
 	{
 		try {
-			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//label[text()='Billing Street']/following-sibling::div/textarea")).sendKeys(value);
+			type(locateElement("xpath", "//label[text()='Billing Street']/following-sibling::div/textarea"), value);
 			reportStep("Enter Billing Address as: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to Enter Billing Address: "+value, "Fail");
@@ -85,7 +80,7 @@ public class AccountsPage extends SalesforceBase {
 	public AccountsPage inputShippingAddress(String value)
 	{
 		try {
-			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//label[text()='Shipping Street']/following-sibling::div/textarea")).sendKeys(value);
+			type(locateElement("xpath", "//label[text()='Shipping Street']/following-sibling::div/textarea"), value);
 			reportStep("Enter Shipping Address as: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to Enter Shipping Address: "+value, "Fail");
@@ -97,7 +92,7 @@ public class AccountsPage extends SalesforceBase {
 	public AccountsPage inputDescription(String value)
 	{
 		try {
-			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//label[text()='Description']/following-sibling::div/textarea")).sendKeys(value);
+			type(locateElement("xpath", "//label[text()='Description']/following-sibling::div/textarea"), value);
 			reportStep("Enter Description as: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to Enter Description: "+value, "Fail");
@@ -109,13 +104,11 @@ public class AccountsPage extends SalesforceBase {
 	public AccountsPage selectType(String value)
 	{
 		try {
-			WebElement dd_type = driver.findElement(By.xpath("//label[text()='Type']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
-			webDriverWait4ElementToBeClickable(dd_type).click();
-//			dd_type.click();
+			click(locateElement("xpath", "//label[text()='Type']/following-sibling::div//input[@class='slds-input slds-combobox__input' and @type ='text']"));
 			solidWait(1);
-			WebElement ele = driver.findElementByXPath("(//label[text()='Type']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
+			WebElement ele = locateElement("xpath", "(//label[text()='Type']/following::input/parent::div/following-sibling::div//lightning-base-combobox-item//span[@class='slds-truncate' and text()='"+value+"'])[1]");
 			scrollToVisibleElement(ele);
-			ele.click();
+			click(ele);
 			reportStep("Click on Type dropdown and select value as: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on Type dropdown and select value as: "+value, "Fail");

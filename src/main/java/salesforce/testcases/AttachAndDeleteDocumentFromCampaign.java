@@ -2,12 +2,12 @@ package salesforce.testcases;
 
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import salesforce.base.SalesforceBase;
+import salesforce.base.PreAndPost;
 import salesforce.pages.LoginPage;
 import salesforce.pages.SalesPage;
 import salesforce.utils.Logs;
 
-public class AttachAndDeleteDocumentFromCampaign extends SalesforceBase {
+public class AttachAndDeleteDocumentFromCampaign extends PreAndPost {
 	
 	@BeforeTest
 	public void setTestDetails() {
@@ -17,7 +17,7 @@ public class AttachAndDeleteDocumentFromCampaign extends SalesforceBase {
 		testDescription = "Attach and Delete Document from Campaign";
 		testAuthor = "Praveen Raj A";
 		testCategory = "Regression";
-		browser = "chrome";
+//		browser = "chrome";
 		
 		Logs.startTestCase(testName);
 		Logs.info(testDescription);

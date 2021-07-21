@@ -10,7 +10,7 @@ import org.testng.annotations.ITestAnnotation;
 public class RetryListener implements IAnnotationTransformer, IRetryAnalyzer {
 	
 	public void transform(ITestAnnotation annotation, Class testClass, Constructor testConstructor, Method testMethod) {
-		annotation.setRetryAnalyzer(RetryListener.class);
+		annotation.setRetryAnalyzer(this.getClass());
 	}
 
 	int maxRetry = 3;

@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>SalesForce</groupId>
-  <artifactId>SalesForce</artifactId>
+  <groupId>ProjectSalesForce</groupId>
+  <artifactId>ProjectSalesForce</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   
     <dependencies>
@@ -85,7 +85,7 @@
 		  	<version>3.0.0-M5</version>
 		  	<configuration>
 		  		<suiteXmlFiles>
-		  			<suiteXmlFile>testngXMLfiles\testng_Accounts.xml</suiteXmlFile>
+		  			<suiteXmlFile>{xmlFiles}</suiteXmlFile>
 		  		</suiteXmlFiles>
 		  	</configuration>
 		  </plugin>

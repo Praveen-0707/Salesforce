@@ -1,18 +1,14 @@
 package salesforce.testcases;
 
-import salesforce.base.SalesforceBase;
+import salesforce.base.PreAndPost;
 import salesforce.pages.LoginPage;
 import salesforce.pages.NewDashboardPage;
 import salesforce.pages.ServiceConsolePage;
-import salesforce.utils.CustomListener;
 import salesforce.utils.Logs;
-
 import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-//@Listeners(CustomListener.class)
-public class TC_WorkoutSubscription extends SalesforceBase {
+public class TC_WorkoutSubscription extends PreAndPost {
 	
 	@BeforeTest
 	public void setTestDetails() {
@@ -20,7 +16,7 @@ public class TC_WorkoutSubscription extends SalesforceBase {
 		testDescription = "Create New Workout Subscribtion and perform delete and verify";
 		testAuthor = "Praveen Raj A";
 		testCategory = "Smoke";
-		browser = "chrome";
+//		browser = "chrome";
 		
 		Logs.startTestCase(testName);
 		Logs.info(testDescription);
@@ -38,7 +34,8 @@ public class TC_WorkoutSubscription extends SalesforceBase {
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()
-		.searchApp("Service Console").clickOnServiceConsole()
+		.searchApp("Service Console").clickOnApp("Service Console");
+		new ServiceConsolePage()
 		
 		.selectTask("Home")
 		.validateGoalPrice("10000")

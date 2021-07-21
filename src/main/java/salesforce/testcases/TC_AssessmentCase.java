@@ -1,16 +1,14 @@
 package salesforce.testcases;
 
-import salesforce.base.SalesforceBase;
+import salesforce.base.PreAndPost;
 import salesforce.pages.LoginPage;
 import salesforce.pages.ServiceConsolePage;
 import salesforce.utils.Logs;
-
 import java.io.IOException;
-
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class TC_AssessmentCase extends SalesforceBase {
+public class TC_AssessmentCase extends PreAndPost {
 	
 	public String fileName;
 	
@@ -22,7 +20,7 @@ public class TC_AssessmentCase extends SalesforceBase {
 		testDescription = "To perform view, modify, file upload & delete and verify";
 		testAuthor = "Praveen Raj A";
 		testCategory = "Smoke";
-		browser = "chrome";
+//		browser = "chrome";
 		
 		Logs.startTestCase(testName);
 		Logs.info(testDescription);
@@ -45,7 +43,8 @@ public class TC_AssessmentCase extends SalesforceBase {
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()
-		.searchApp("Service Console").clickOnServiceConsole()
+		.searchApp("Service Console").clickOnApp("Service Console");
+		new ServiceConsolePage()
 		.selectTask("Files").clickOnRecentFiles().clickonLastModifiedFilesColumn();
 		
 		ServiceConsolePage servObj = new ServiceConsolePage();

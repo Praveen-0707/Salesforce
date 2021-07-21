@@ -5,9 +5,9 @@ import org.testng.annotations.Test;
 import salesforce.pages.LoginPage;
 import salesforce.pages.WorkTypeGroupsPage;
 import salesforce.utils.Logs;
-import salesforce.base.SalesforceBase;
+import salesforce.base.PreAndPost;
 
-public class DeleteWorkTypeGroup extends SalesforceBase {
+public class DeleteWorkTypeGroup extends PreAndPost {
 	
 	@BeforeTest
 	public void setTestDetails() {
@@ -17,20 +17,21 @@ public class DeleteWorkTypeGroup extends SalesforceBase {
 		testDescription = "WorkTypeGroup should be deleted";
 		testAuthor = "Praveen Raj A";
 		testCategory = "Regression";
-		browser = "chrome";
+//		browser = "chrome";
 		
 		Logs.startTestCase(testName);
 		Logs.info(testDescription);
 	}
 	
-	@Test(dataProvider = "getData", groups= {"WorkTypeGroups"})
+	@Test(dataProvider = "fetchData", groups= {"WorkTypeGroups"})
 	public void deleteWorkTypeGroup(String workTypeGroup_Name) throws InterruptedException {
 
 		new LoginPage(prop)
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()
-		.searchApp("Work Type Groups").clickOnWorkTypeGroups()
+		.searchApp("Work Type Groups").clickOnApp("Work Type Groups");
+		new WorkTypeGroupsPage()
 		.searchWorkTypeGroup(workTypeGroup_Name);
 		
 		WorkTypeGroupsPage works = new WorkTypeGroupsPage();

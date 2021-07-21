@@ -108,7 +108,7 @@ public class WorkTypeGroupsPage extends SalesforceBase {
 	
 	public WorkTypeGroupsPage clickOnWorkTypeGroupHeader()
 	{
-		WebElement WTGSorting = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//span[@title='Work Type Group Name']/parent::a")));
+		WebElement WTGSorting = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[@title='Work Type Group Name']/parent::a"));
 		WTGSorting.click();
 		return this;
 	}
@@ -170,7 +170,7 @@ public class WorkTypeGroupsPage extends SalesforceBase {
 	public WorkTypeGroupsPage clickOnWorkTypeGroupsTabOptions()
 	{
 		try {
-			WebElement WTG = wait.until(ExpectedConditions.elementToBeClickable(driver.findElementByXPath("//a[contains(@title,'Work Type Groups')]/following::div[contains(@class,'context-bar')][1]")));
+			WebElement WTG = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//a[contains(@title,'Work Type Groups')]/following::div[contains(@class,'context-bar')][1]"));
 			webDriverWait4ElementToBeClickable(WTG);
 			js.executeScript("arguments[0].click();", WTG);
 			solidWait(2);

@@ -22,6 +22,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.NoSuchFrameException;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
@@ -36,6 +37,7 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.events.WebDriverEventListener;
@@ -45,6 +47,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import com.aventstack.extentreports.ExtentTest;
+
+import salesforce.design.BrowserActions;
 import salesforce.utils.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -55,42 +59,33 @@ public class SalesforceBase extends Reporter {
 //	public EventFiringWebDriver driver;
 	public ChromeOptions chromeOptions;
 	public FirefoxOptions firefoxOptions;
-	public InternetExplorerOptions ieOptions;
 	public EdgeOptions edgeOptions;
-	public static WebDriverWait wait;
 	public static JavascriptExecutor js;
 	public static Actions actions;
 	public static Robot robot;
 	public String excelFileName;
 	public String excelSheetName;
 	public Properties prop;
-//	public static ExtentHtmlReporter reporter;
-//	public static ExtentReports extent;
 	public ExtentTest testNode;
-//	public String testName, testDescription, testAuthor, testCategory;
-	public String browser;
+	public String browserName;
+	public String sUrl,sHubUrl,sHubPort;
 	
-//	@BeforeMethod(priority = 1)
-//	public void init_testNode()
-//	{
-//		testNode = test.createNode(testName);
-//		setTest(testNode);
-//	}
-	
-	@BeforeMethod
-	public void launchApp()
+	public void launchApp(String browser)
 	{
-//		killBrowserInstances();
-//		Properties File Load
 		testNode = test.createNode(testName);
 		setTest(testNode);
 		try {
 			FileInputStream fis = new FileInputStream("./src/main/resources/config.properties");
 			prop = new Properties();
 			prop.load(fis);
+			browserName = prop.getProperty("browser");
 			
-//			browser = prop.getProperty(browser);
-			if (browser.equalsIgnoreCase("Chrome"))
+			DesiredCapabilities dc = new DesiredCapabilities();
+			dc.setBrowserName(browserName);
+			dc.setPlatform(Platform.WINDOWS);
+
+			
+			if (browserName.equalsIgnoreCase("Chrome"))
 			  {
 				  WebDriverManager.chromedriver().setup();
 				  chromeOptions = new ChromeOptions();
@@ -104,7 +99,7 @@ public class SalesforceBase extends Reporter {
 				  setDriver(driver);
 			  }
   
-			  if (browser.equalsIgnoreCase("Firefox"))
+			  if (browserName.equalsIgnoreCase("Firefox"))
 			  {
 				  WebDriverManager.firefoxdriver().setup();
 				  FirefoxProfile profile = new FirefoxProfile();
@@ -122,19 +117,7 @@ public class SalesforceBase extends Reporter {
 				  setDriver(driver);
 			  }
 			  
-			  if (browser.equalsIgnoreCase("InternetExplorer"))
-			  {
-				  WebDriverManager.iedriver().setup();
-				  ieOptions = new InternetExplorerOptions();
-				  ieOptions.disableNativeEvents();
-				  ieOptions.requireWindowFocus();
-				  ieOptions.ignoreZoomSettings();
-				  ieOptions.introduceFlakinessByIgnoringSecurityDomains();
-				  driver = new InternetExplorerDriver(ieOptions);
-				  setDriver(driver);
-			  }
-  
-			  if (browser.equalsIgnoreCase("Edge"))
+			  if (browserName.equalsIgnoreCase("Edge"))
 			  {
 				  WebDriverManager.edgedriver().setup();
 				  edgeOptions = new EdgeOptions();
@@ -145,7 +128,6 @@ public class SalesforceBase extends Reporter {
 			  
 			getDriver().manage().deleteAllCookies();
 			getDriver().manage().window().maximize();
-			wait = new WebDriverWait(getDriver(),Duration.ofSeconds(20));
 			getDriver().manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
 			getDriver().manage().timeouts().pageLoadTimeout(20,TimeUnit.SECONDS);
 			
@@ -164,21 +146,6 @@ public class SalesforceBase extends Reporter {
 		}
 	}
 		
-	@AfterMethod(alwaysRun = true)
-	public void closeBrowser() throws InterruptedException
-	{
-		solidWait(2);
-		getDriver().close();
-	}
-	
-	 @DataProvider(name="getData")
-	  public String[][] sendData() throws IOException
-	  {
-		  System.out.println("Inside Base data: " +excelFileName);
-		  String[][] readData = ReadExcel.readData(excelFileName,excelSheetName);
-		  return readData;
-	  }
-	 
 	public void deletePopUpConfirmation()
 	{
 		try {

@@ -1,6 +1,6 @@
 package salesforce.testcases;
 
-import salesforce.base.SalesforceBase;
+import salesforce.base.PreAndPost;
 import salesforce.pages.LoginPage;
 import salesforce.pages.SalesPage;
 import salesforce.pages.ServiceConsolePage;
@@ -9,7 +9,7 @@ import salesforce.utils.Logs;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class CreateNewContactRequest extends SalesforceBase {
+public class CreateNewContactRequest extends PreAndPost {
 	
 	@BeforeTest
 	public void setTestDetails() {
@@ -19,7 +19,7 @@ public class CreateNewContactRequest extends SalesforceBase {
 		testDescription = "New contact request should be created";
 		testAuthor = "Praveen Raj A";
 		testCategory = "Regression";
-		browser = "chrome";
+//		browser = "chrome";
 		
 		Logs.startTestCase(testName);
 		Logs.info(testDescription);
@@ -36,7 +36,8 @@ public class CreateNewContactRequest extends SalesforceBase {
 		.enterUsername().enterPassword().clickLogin()
 		
 		.clickToggleButton().clickViewAll()
-		.searchApp("contact request").clickOnContactRequest()
+		.searchApp("contact request").clickOnApp("contact request");
+		new ServiceConsolePage()
 		.clickOnNewButton().clickOnNewContact("New Contact");
 		new SalesPage()
 		.selectSalutation("Mr.").inputFirstName(contactFirstname)

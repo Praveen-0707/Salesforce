@@ -2,12 +2,12 @@ package salesforce.testcases;
 
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import salesforce.base.SalesforceBase;
+import salesforce.base.PreAndPost;
 import salesforce.pages.LoginPage;
 import salesforce.pages.SalesPage;
 import salesforce.utils.Logs;
 
-public class CreateLeadforCampaign extends SalesforceBase {
+public class CreateLeadforCampaign extends PreAndPost {
 	
 	@BeforeTest
 	public void setTestDetails() {
@@ -17,13 +17,13 @@ public class CreateLeadforCampaign extends SalesforceBase {
 		testDescription = "Create New Lead for Campaign";
 		testAuthor = "Praveen Raj A";
 		testCategory = "Regression";
-		browser = "chrome";
+//		browser = "chrome";
 		
 		Logs.startTestCase(testName);
 		Logs.info(testDescription);
 	}
 	
-	@Test(dataProvider = "getData")
+	@Test(dataProvider = "fetchData")
 	public void createLeadforCampaign(String campName, String fName, String lName, String compName) throws InterruptedException {
 
 		String createLead = "";	// creating New Lead

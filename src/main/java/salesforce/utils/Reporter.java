@@ -3,10 +3,6 @@ package salesforce.utils;
 import java.io.IOException;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
@@ -44,7 +40,6 @@ public abstract class Reporter {
 		return localTest.get();
 	}
 	
-	@BeforeSuite
 	public void startReport()
 	{
 		reporter = new ExtentHtmlReporter("./reports/result.html");
@@ -61,7 +56,6 @@ public abstract class Reporter {
 		DOMConfigurator.configure("log4j.xml");
 	}
 	
-	@AfterSuite
 	public void endReport()
 	{
 		extent.flush();
@@ -69,7 +63,6 @@ public abstract class Reporter {
 		System.gc();
 	}
 	
-	@BeforeClass
 	public void testDetailedReport()
 	{
 		test = extent.createTest(testName, testDescription);
@@ -132,7 +125,6 @@ public abstract class Reporter {
 //		return snapNum;
 //	}
 	
-	@AfterTest
 	public void endTestDetails()
 	{
 		Logs.endTestCase(testName);
