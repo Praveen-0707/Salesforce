@@ -1,6 +1,6 @@
 package salesforce.pages;
 
-import salesforce.base.SalesforceBase;
+import salesforce.base.PreAndPost;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,15 +8,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.asserts.SoftAssert;
 
-public class WorkTypeGroupsPage extends SalesforceBase {
+public class WorkTypeGroupsPage extends PreAndPost {
 	
 	public WorkTypeGroupsPage()
 	{
 		this.driver = getDriver();
-		driver.switchTo().defaultContent();
+		switchToDefaultContent();
 	}
 	
 	public WorkTypeGroupsPage searchWorkTypeGroup(String value)

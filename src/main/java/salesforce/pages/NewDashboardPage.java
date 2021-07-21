@@ -14,13 +14,13 @@ public class NewDashboardPage extends PreAndPost {
 		{
 			solidWait(5);
 			WebElement iframe = locateElement("xpath","(//iframe[@title='dashboard'])[last()]");
-			webDriverWait4FrameToBeAvailableAndSwitchTo(iframe);
+			switchToFrame(iframe);
 			reportStep("Switched to Frame", "Pass");
 		}
 		catch(NoSuchFrameException e)
 		{
 			reportStep("NoSuchFrameExceptionCaptured", "Warn");
-			webDriverWait4FrameToBeAvailableAndSwitchTo(1);
+			switchToFrame(1);
 		}
 		catch(Exception e)
 		{

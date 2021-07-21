@@ -6,6 +6,8 @@ import java.util.Set;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.InvalidElementStateException;
+import org.openqa.selenium.JavascriptException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
@@ -107,7 +109,55 @@ public class BrowserActions extends SalesforceBase implements IBrowserActions{
 			reportStep("Unknown exception occured while clicking in the field :", "FAIL");
 		} 
 	}
-
+	
+	public void clickByJS(WebElement ele) {
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		try {
+			js.executeScript("arguments[0].click();", ele);
+			reportStep("The element is clicked", "PASS");
+		} catch (JavascriptException e) {
+			reportStep("The element could not be clicked", "FAIL");
+		} catch (WebDriverException e) {
+			reportStep("Unknown exception occured while clicking in the field :", "FAIL");
+		} 
+	}
+	
+	public void scrollToVisibleElement(WebElement ele)
+	{
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		try {
+			js.executeScript("arguments[0].scrollIntoView();", ele);
+		} catch (JavascriptException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void scrollToPageEnd()
+	{
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		try {
+			js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+		} catch (JavascriptException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void highlightElement(WebElement ele)
+	{
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		try {
+			js.executeScript("arguments[0].style.border='3px solid red'",ele);
+		} catch (JavascriptException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void clickWithNoSnap(WebElement ele) {
 		String text = "";
 		try {
@@ -278,8 +328,19 @@ public class BrowserActions extends SalesforceBase implements IBrowserActions{
 
 	public void switchToFrame(WebElement ele) {
 		try {
-			driver.switchTo().frame(ele);
+			webDriverWait4FrameToBeAvailableAndSwitchTo(ele);
 			reportStep("switch In to the Frame "+ele,"PASS");
+		} catch (NoSuchFrameException e) {
+			reportStep("WebDriverException : "+e.getMessage(), "FAIL");
+		} catch (WebDriverException e) {
+			reportStep("WebDriverException : "+e.getMessage(), "FAIL");
+		} 
+	}
+	
+	public void switchToFrame(int index) {
+		try {
+			webDriverWait4FrameToBeAvailableAndSwitchTo(index);
+			reportStep("switch In to the Frame "+index,"PASS");
 		} catch (NoSuchFrameException e) {
 			reportStep("WebDriverException : "+e.getMessage(), "FAIL");
 		} catch (WebDriverException e) {

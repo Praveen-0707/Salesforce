@@ -15,7 +15,6 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
-import org.apache.poi.util.SystemOutLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.JavascriptExecutor;
@@ -26,6 +25,7 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -34,21 +34,12 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import com.aventstack.extentreports.ExtentTest;
-
-import salesforce.design.BrowserActions;
 import salesforce.utils.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -133,7 +124,6 @@ public class SalesforceBase extends Reporter {
 			
 			actions = new Actions(getDriver());
 			robot = new Robot();
-			js = (JavascriptExecutor)getDriver();
 			
 			getDriver().get(prop.getProperty("url"));
 			
@@ -142,6 +132,8 @@ public class SalesforceBase extends Reporter {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (AWTException e) {
+			e.printStackTrace();
+		} catch (WebDriverException e) {
 			e.printStackTrace();
 		}
 	}
@@ -157,43 +149,10 @@ public class SalesforceBase extends Reporter {
 		}
 	}
 	
-	public void scrollToVisibleElement(WebElement ele)
-	{
-		try {
-			js.executeScript("arguments[0].scrollIntoView();", ele);
-		} catch (JavascriptException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void scrollToPageEnd()
-	{
-		try {
-			js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
-		} catch (JavascriptException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public void highlight(WebElement ele)
 	{
 		try {
 			js.executeScript("arguments[0].setAttribute('style','background: yellow; border: 2px solid red;');",ele);
-		} catch (JavascriptException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void highlightElement(WebElement ele)
-	{
-		try {
-			js.executeScript("arguments[0].style.border='3px solid red'",ele);
 		} catch (JavascriptException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -348,6 +307,7 @@ public class SalesforceBase extends Reporter {
 		try {
 			WebElement ele = getDriver().findElementByXPath("//a[@title='"+value+"']");
 			webDriverWait4ElementToBeClickable(ele);
+			
 			js.executeScript("arguments[0].click();", ele);
 		} catch (JavascriptException e) {
 			e.printStackTrace();

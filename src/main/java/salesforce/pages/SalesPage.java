@@ -1,6 +1,6 @@
 package salesforce.pages;
 
-import salesforce.base.SalesforceBase;
+import salesforce.base.PreAndPost;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import org.openqa.selenium.By;
@@ -8,12 +8,12 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.asserts.SoftAssert;
 
-public class SalesPage extends SalesforceBase {
+public class SalesPage extends PreAndPost {
 	
 	public SalesPage()
 	{
 		this.driver = getDriver();
-		driver.switchTo().defaultContent();
+		switchToDefaultContent();
 	}
 	
 	public SalesPage clickOnNewCase()
