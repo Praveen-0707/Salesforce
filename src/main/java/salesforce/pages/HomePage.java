@@ -1,8 +1,6 @@
 package salesforce.pages;
 
 import salesforce.base.PreAndPost;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class HomePage extends PreAndPost {

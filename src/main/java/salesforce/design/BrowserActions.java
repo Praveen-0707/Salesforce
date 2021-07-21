@@ -47,7 +47,22 @@ public class BrowserActions extends SalesforceBase implements IBrowserActions{
 		}
 		return null;
 	}
-
+	
+	public List<WebElement> locateElements(String type, String value) {
+		try {
+			switch(type.toLowerCase()) {
+			case "id": return driver.findElementsById(value);
+			case "name": return driver.findElementsByName(value);
+			case "class": return driver.findElementsByClassName(value);
+			case "link": return driver.findElementsByLinkText(value);
+			case "xpath": return driver.findElementsByXPath(value);
+			}
+		} catch (WebDriverException e) {
+			reportStep("Unknown exception occured while finding "+type+" with the value "+value, "FAIL");
+		}
+		return null;
+	}
+	
 	public WebElement locateElement(String locValue) {
 		return driver.findElement(By.id(locValue));
 	}
@@ -110,6 +125,7 @@ public class BrowserActions extends SalesforceBase implements IBrowserActions{
 	public String getText(WebElement ele) {	
 		String bReturn = "";
 		try {
+			webDriverWait4VisibilityOfEle(ele);
 			bReturn = ele.getText();
 		} catch (WebDriverException e) {
 			reportStep("The element: "+ele+" could not be found.", "FAIL");
@@ -130,6 +146,7 @@ public class BrowserActions extends SalesforceBase implements IBrowserActions{
 	public String getAttribute(WebElement ele, String attribute) {		
 		String bReturn = "";
 		try {
+			webDriverWait4VisibilityOfEle(ele);
 			bReturn=  ele.getAttribute(attribute);
 		} catch (WebDriverException e) {
 			reportStep("The element: "+ele+" could not be found.", "FAIL");

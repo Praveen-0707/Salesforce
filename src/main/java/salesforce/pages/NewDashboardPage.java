@@ -1,10 +1,11 @@
 package salesforce.pages;
 
-import salesforce.base.SalesforceBase;
+import salesforce.base.PreAndPost;
 import org.openqa.selenium.NoSuchFrameException;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 
-public class NewDashboardPage extends SalesforceBase {
+public class NewDashboardPage extends PreAndPost {
 	
 	public NewDashboardPage()
 	{
@@ -12,20 +13,17 @@ public class NewDashboardPage extends SalesforceBase {
 		try
 		{
 			solidWait(5);
-			WebElement iframe = driver.findElementByXPath("(//iframe[@title='dashboard'])[last()]");
+			WebElement iframe = locateElement("xpath","(//iframe[@title='dashboard'])[last()]");
 			webDriverWait4FrameToBeAvailableAndSwitchTo(iframe);
 			reportStep("Switched to Frame", "Pass");
 		}
 		catch(NoSuchFrameException e)
 		{
-			e.printStackTrace();
-			System.out.println("...Exception in Frames...");
+			reportStep("NoSuchFrameExceptionCaptured", "Warn");
 			webDriverWait4FrameToBeAvailableAndSwitchTo(1);
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
-			System.out.println("...Exception in Frames...");
 			reportStep("Unable to switched to Frame", "Fail");
 		}
 	}
@@ -33,13 +31,11 @@ public class NewDashboardPage extends SalesforceBase {
 	public NewDashboardPage inputDashboardDescr(String value)
 	{
 		try {
-			WebElement dashboardDescr = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//input[@id='dashboardDescriptionInput' and @type='text']"));
-			dashboardDescr.clear();
-			dashboardDescr.sendKeys(value);
+			WebElement dashboardDescr = locateElement("xpath","//input[@id='dashboardDescriptionInput' and @type='text']");
+			type(dashboardDescr, value);
 			reportStep("Enter Dashboard Description: "+value, "Pass");
-		} catch (Exception e) {
+		} catch (WebDriverException e) {
 			reportStep("Unable to enter Dashboard Description: "+value, "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -47,13 +43,11 @@ public class NewDashboardPage extends SalesforceBase {
 	public NewDashboardPage inputDashboardName(String value)
 	{
 		try {
-			WebElement dashboardName = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//label[text()='Name']/following::div//input[@id='dashboardNameInput']"));
-			dashboardName.clear();
-			dashboardName.sendKeys(value);
+			WebElement dashboardName = locateElement("xpath","//label[text()='Name']/following::div//input[@id='dashboardNameInput']");
+			type(dashboardName, value);
 			reportStep("Enter DashboardName: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to enter DashboardName: "+value, "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -61,13 +55,12 @@ public class NewDashboardPage extends SalesforceBase {
 	public NewDashboardPage clickOnCreateButton()
 	{
 		try {
-			webDriverWait4ElementToBeClickable(driver.findElementByXPath("//button[@id='submitBtn']")).click();
+			click(locateElement("xpath","//button[@id='submitBtn']"));
 			solidWait(3);
-			driver.switchTo().defaultContent();
+			switchToDefaultContent();
 			reportStep("Clicked on Create Button", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on Create Button", "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -75,13 +68,10 @@ public class NewDashboardPage extends SalesforceBase {
 	public NewDashboardPage clickonDoneButton()
 	{
 		try {
-			WebElement clkDone = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//button[contains(@class,'doneEditing') and text()='Done']"));
-			highlight(clkDone);
-			clkDone.click();
+			click(locateElement("xpath","//button[contains(@class,'doneEditing') and text()='Done']"));
 			reportStep("Clicked on Done Button", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on Done Button", "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -89,11 +79,10 @@ public class NewDashboardPage extends SalesforceBase {
 	public ServiceConsolePage clickOnSubscribeButton()
 	{
 		try {
-			webDriverWait4ElementToBeClickable(driver.findElementByXPath("//button[text()='Subscribe']")).click();
+			click(locateElement("xpath","//button[text()='Subscribe']"));
 			reportStep("Clicked on Subscribe Button", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on Subscribe Button", "Fail");
-			e.printStackTrace();
 		}
 		return new ServiceConsolePage();
 	}
@@ -101,10 +90,8 @@ public class NewDashboardPage extends SalesforceBase {
 	public NewDashboardPage verifyDashboardTitle(String value)
 	{
 		try {
-			WebElement TitleElement = driver.findElementByXPath("//div[@class='slds-page-header__name-title']//span[contains(text(),'Dashboard')]/following-sibling::span");
-			webDriverWait4VisibilityOfEle(TitleElement);
-			solidWait(1);
-			String TitleVerification = TitleElement.getText();					
+			WebElement TitleElement = locateElement("xpath","//div[@class='slds-page-header__name-title']//span[contains(text(),'Dashboard')]/following-sibling::span");
+			String TitleVerification = getText(TitleElement);					
 			if (TitleVerification.contains(value))
 			{
 				reportStep("Verified Dashboard title"+value, "Fail");
@@ -112,11 +99,9 @@ public class NewDashboardPage extends SalesforceBase {
 			else
 			{
 				reportStep("Unable to verify Dashboard title", "Fail");
-//				throw new RuntimeException();
 			}
 		} catch (Exception e) {
 			reportStep("Unable to verify Dashboard title", "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}

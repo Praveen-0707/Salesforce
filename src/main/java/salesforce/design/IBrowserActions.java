@@ -1,5 +1,7 @@
 package salesforce.design;
 
+import java.util.List;
+
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -15,7 +17,14 @@ public interface IBrowserActions {
 	 */
 	public WebElement locateElement(String locator, String locValue) ;	
 
-
+	/**
+	 * This method will locate the elements using any given locator
+	 * @param locator  - The locator by which the elements to be found
+	 * @param locValue - The locator value by which the elements to be found
+	 * @author Praveen Raj A
+	 * @return A list of all WebElements, or an empty list if nothing matches.
+	 */
+	public List<WebElement> locateElements(String type, String value);
 	/**
 	 * This method will enter the value in the given text field 
 	 * @param ele   - The WebElement (text field) in which the data to be entered
