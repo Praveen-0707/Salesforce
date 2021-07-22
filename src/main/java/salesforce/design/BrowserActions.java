@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.InvalidElementStateException;
 import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.JavascriptExecutor;
@@ -15,6 +17,7 @@ import org.openqa.selenium.NoSuchFrameException;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import salesforce.base.SalesforceBase;
 
@@ -114,8 +117,22 @@ public class BrowserActions extends SalesforceBase implements IBrowserActions{
 		JavascriptExecutor js = (JavascriptExecutor)driver;
 		try {
 			js.executeScript("arguments[0].click();", ele);
-			reportStep("The element is clicked", "PASS");
+			reportStep("The element is clicked by javascript click event", "PASS");
 		} catch (JavascriptException e) {
+			reportStep("The element could not be clicked", "FAIL");
+		} catch (WebDriverException e) {
+			reportStep("Unknown exception occured while clicking in the field :", "FAIL");
+		} 
+	}
+	
+	public void clickByActions(WebElement ele) {
+		Actions actions = new Actions(driver);
+		try {
+			actions.moveToElement(ele).click().perform();
+			reportStep("The element is clicked by actions", "PASS");
+		} catch (ElementClickInterceptedException e) {
+			reportStep("The element could not be clicked", "FAIL");
+		} catch (ElementNotInteractableException e) {
 			reportStep("The element could not be clicked", "FAIL");
 		} catch (WebDriverException e) {
 			reportStep("Unknown exception occured while clicking in the field :", "FAIL");
