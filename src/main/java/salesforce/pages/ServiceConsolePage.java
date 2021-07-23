@@ -18,11 +18,10 @@ public class ServiceConsolePage extends PreAndPost {
 	public NewDashboardPage clickOnNewDashboard()
 	{
 		try {
-			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[text()='New Dashboard']")).click();
+			click(locateElement("xpath", "//div[text()='New Dashboard']"));
 			reportStep("click on new Dashboard", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on new Dashboard", "Fail");
-			e.printStackTrace();
 		}
 		return new NewDashboardPage();
 	}
@@ -30,11 +29,10 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage clickOnNewButton()
 	{
 		try {
-			webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[text()='New']")).click();
+			click(locateElement("xpath","//div[text()='New']"));
 			reportStep("click on new Button", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on new Button", "Fail");
-			e.printStackTrace();
 		}
 		return new ServiceConsolePage();
 	}
@@ -42,12 +40,10 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage setSubscriptionFrequencyAs(String value)
 	{
 		try {
-			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//legend[text()='Frequency']/following::div//span[text()='"+value+"']"));
-			ele.click();
+			click(locateElement("xpath","//legend[text()='Frequency']/following::div//span[text()='"+value+"']"));
 			reportStep("Set Subscription Frequency as: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to set Subscription Frequency as: "+value, "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -55,13 +51,11 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage clickOnRecentFiles()
 	{
 		try {
-			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//a[@title='Recent']"));
-			ele.click();
+			click(locateElement("xpath","//a[@title='Recent']"));
 			reportStep("click on Recent files", "Pass");
 			solidWait(2);
 		} catch (Exception e) {
 			reportStep("Unable to click on Recent files", "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -77,6 +71,7 @@ public class ServiceConsolePage extends PreAndPost {
 		catch (Exception e)
 		{
 			e.printStackTrace();
+			reportStep("Unknown error occured: Method - selectTask recalled inside Catch block "+value, "Fail");
 			homepage.selectTaskFromNavigationControl(value);
 		}
 		return this;
@@ -85,20 +80,18 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage clickonLastModifiedFilesColumn() throws InterruptedException
 	{
 		try {
-			WebElement col = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[@title='Last Modified Date']/parent::a"));
-			col.click();
+			WebElement col = locateElement("xpath","//span[@title='Last Modified Date']/parent::a");
+			click(col);
 			reportStep("click on Last Modified Column", "Pass");
 			solidWait(2);
-			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[@title='Last Modified Date']/parent::a/following-sibling::span"));
-			String sort = ele.getText();
+			String sort = getText(locateElement("xpath","//span[@title='Last Modified Date']/parent::a/following-sibling::span"));
 			if (sort.contains("Sorted Ascending"))
 			{
-				col.click();
+				click(col);
 				solidWait(2);
 			}
 		} catch (Exception e) {
 			reportStep("Unable to sort the records", "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -106,13 +99,11 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage selectTime(String value)
 	{
 		try {
-			WebElement dd_time = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//select[@id='time']"));
-			Select time = new Select(dd_time);
-			time.selectByVisibleText(value);
+			WebElement dd_time = locateElement("xpath","//select[@id='time']");
+			selectDropDownUsingVisibleText(dd_time, value);
 			reportStep("Select Time: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to select Time: "+value, "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -120,11 +111,10 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage clickonSaveButton()
 	{
 		try {
-			webDriverWait4ElementToBeClickable(driver.findElementByXPath("//button[@title='Save']")).click();
+			click(locateElement("xpath","//button[@title='Save']"));
 			reportStep("Click on Save Button", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on Save Button", "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -134,16 +124,13 @@ public class ServiceConsolePage extends PreAndPost {
 		String ConReqNum = null;
 		solidWait(3);
 		try {
-			WebElement getConNum = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[text()='Contact Request Number']/parent::div/following-sibling::div//span[@class='uiOutputText']"));
-			ConReqNum = getConNum.getText();
+			ConReqNum = getText(locateElement("xpath","//span[text()='Contact Request Number']/parent::div/following-sibling::div//span[@class='uiOutputText']"));
 			if (!ConReqNum.isEmpty() == true)
 			{
-				System.out.println("Contact Request Number Created: "+ConReqNum);
 				reportStep("Contact Request Number: "+ConReqNum, "Pass");
 			}
 		} catch (Exception e) {
 			reportStep("Unable to get Contact Request Number", "Fail");
-			e.printStackTrace();
 		}
 		return ConReqNum;
 	}
@@ -152,14 +139,11 @@ public class ServiceConsolePage extends PreAndPost {
 	{
 		String downloadedFileName = null;
 		try {
-			WebElement getFileName = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//table/tbody/tr[1]/th//div//span[@data-aura-class='uiOutputText']"));
-			downloadedFileName = getFileName.getText();
-			WebElement lastModifiedfile = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//table/tbody/tr[1]/th//a/following::td[3]//a[@role='button']"));
-			lastModifiedfile.click();
+			downloadedFileName = getText(locateElement("xpath","//table/tbody/tr[1]/th//div//span[@data-aura-class='uiOutputText']"));
+			click(locateElement("xpath","//table/tbody/tr[1]/th//a/following::td[3]//a[@role='button']"));
 			reportStep("Click on recent added record", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on recent added record", "Fail");
-			e.printStackTrace();
 		}
 		return downloadedFileName;
 	}
@@ -167,10 +151,10 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage selectFileOptionAs(String value)
 	{
 		try {
-			WebElement selectoption = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[@role='button' and @title='"+value+"']/.."));
-			selectoption.click();
+			click(locateElement("xpath","//div[@role='button' and @title='"+value+"']/.."));
+			reportStep("File option selected as: "+value, "Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to select file option as: "+value, "Fail");
 		}
 		return this;
 	}
@@ -179,15 +163,15 @@ public class ServiceConsolePage extends PreAndPost {
 	{
 		try
 		{
-			List<WebElement> listofFiles = driver.findElementsByXPath("//table/tbody/tr");
+			List<WebElement> listofFiles = locateElements("xpath","//table/tbody/tr");
 			for (int i=1; i<listofFiles.size(); i++)
 			{
-				WebElement file = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//table/tbody/tr["+i+"]/th//a"));
-				String getFileName = file.getText();
+				String getFileName = getText(locateElement("xpath","//table/tbody/tr["+i+"]/th//a"));
 				if (getFileName.contains(fileName))
 				{
-					webDriverWait4ElementToBeClickable(driver.findElementByXPath("//table/tbody/tr["+i+"]/th//a/following::td[3]//a[@role='button']")).click();
+					click(locateElement("xpath","//table/tbody/tr["+i+"]/th//a/following::td[3]//a[@role='button']"));
 					selectFileOptionAs(fileOption);
+					reportStep("click on file "+fileName+ " with option as: "+fileOption, "Pass");
 					solidWait(3);
 					break;
 				}
@@ -195,7 +179,7 @@ public class ServiceConsolePage extends PreAndPost {
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			reportStep("Unable to click on file "+fileName+ " with option as: "+fileOption, "Fail");
 		}
 		return this;
 	}
@@ -203,15 +187,13 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage verifyNewDashboardCreation(String value)
 	{
 		try {
-			WebElement output = driver.findElement(By.xpath("//span[contains(text(),'subscription')]"));
-			webDriverWait4VisibilityOfEle(output);
-			String outputValue = output.getText();
+			String outputValue = getText(locateElement("xpath","//span[contains(text(),'subscription')]"));
 			if (outputValue.contains("You started a dashboard subscription"))
 			{
-				System.out.println("You started a dashboard subscription");
+				reportStep("New Dashboard successfully created: "+value, "Pass");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to validate New Dashboard: "+value, "Fail");
 		}
 		return this;
 	}
@@ -220,18 +202,17 @@ public class ServiceConsolePage extends PreAndPost {
 	{
 		try
 		{
-			WebElement TitleElement = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//div[text()='File']/following-sibling::div"));
+			WebElement TitleElement = locateElement("xpath","//div[text()='File']/following-sibling::div");
 			String TitleVerification = TitleElement.getAttribute("title");	
-			WebElement fileExt = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[@title='File Extension']/following-sibling::div//span[@class='uiOutputText']"));
-			String getFileExtension = fileExt.getText();
+			String getFileExtension = getText(locateElement("xpath","//span[@title='File Extension']/following-sibling::div//span[@class='uiOutputText']"));
 			if ((TitleVerification.contains(fileName)) && getFileExtension.equals(fileExtension))
 			{
-				System.out.println("...Uploaded file validation successful...");
+				reportStep("Uploaded file successfully validated: "+fileName, "Pass");
 			}
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			reportStep("Unable to validate the uploaded file: "+fileName, "Fail");
 		}
 		return this;
 	}
@@ -239,16 +220,16 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage verifyPublicLinkInputFieldIsDisabled()
 	{
 		try {
-			webDriverWait4ElementToBeClickable(driver.findElementByXPath("//table/tbody/tr[1]/th//a/following::td[3]//a[@role='button']")).click();
-			WebElement clkLink = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//input[@name='publicLinkURL']"));
+			click(locateElement("xpath","//table/tbody/tr[1]/th//a/following::td[3]//a[@role='button']"));
+			WebElement clkLink = locateElement("xpath","//input[@name='publicLinkURL']");
 			if (isDisabled(clkLink) == true)
 			{
-				driver.findElementByXPath("//button[@title='Close this window']").click();
-				System.out.println("Public Link is disabled for inputs");
+				click(locateElement("xpath","//button[@title='Close this window']"));
+				reportStep("Public Link is disabled for inputs","Pass");
 				solidWait(2);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to validate Public Link","Fail");
 		}
 		return this;
 	}
@@ -256,9 +237,10 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage clickonPrivateDashboard()
 	{
 		try {
-			webDriverWait4ElementToBeClickable(driver.findElementByXPath("(//a[@title='Private Dashboards'])[1]")).click();
+			click(locateElement("xpath","(//a[@title='Private Dashboards'])[1]"));
+			reportStep("Clicked on Private Dashboard","Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to click on Private Dashboard","Fail");
 		}
 		return this;
 	}
@@ -266,16 +248,16 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage inputShareWithUser(String userName)
 	{
 		try {
-			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[text()='Share With']/following::input[@role='combobox']"));
+			WebElement ele = locateElement("xpath","//span[text()='Share With']/following::input[@role='combobox']");
 			solidWait(1);
-			actions.moveToElement(ele).click().perform();
-			actions.sendKeys(Keys.ARROW_DOWN).perform();
-			Thread.sleep(2000);
-			ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[text()='Share With']/following::input[@role='combobox']/following::div[@class='listContent']/ul//a//div[contains(@title,'"+userName+"')]"));
-			ele.click();
+			clickByActions(ele);
+			sendkeysUsingActions(ele, Keys.ARROW_DOWN);
 			solidWait(2);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			click(locateElement("xpath","//span[text()='Share With']/following::input[@role='combobox']/following::div[@class='listContent']/ul//a//div[contains(@title,'"+userName+"')]"));
+			reportStep("Enter Share with User value: "+ userName,"Pass");
+			solidWait(2);
+		} catch (Exception e) {
+			reportStep("Unable to enter Share with User value: "+ userName,"Fail");
 		}
 		return this;
 	}
@@ -283,16 +265,16 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage clickOnNewContact(String contact)
 	{
 		try {
-			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//input[@title='Search Contacts']"));
+			WebElement ele = locateElement("xpath","//input[@title='Search Contacts']");
 			solidWait(1);
-			actions.moveToElement(ele).click().perform();
-			actions.sendKeys(Keys.ARROW_DOWN).perform();
+			clickByActions(ele);
+			sendkeysUsingActions(ele, Keys.ARROW_DOWN);
 			solidWait(2);
-			ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//input[@title='Search Contacts']/following-sibling::div//span[text()='"+contact+"']"));
-			ele.click();
+			click(locateElement("xpath","//input[@title='Search Contacts']/following-sibling::div//span[text()='"+contact+"']"));
+			reportStep("Clicked on New Contact","Pass");
 			solidWait(2);
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to click on New Contact","Fail");
 		}
 		return this;
 	}
@@ -300,10 +282,11 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage clearExistingRecordAndAddNewShareFileWith(String userName)
 	{
 		try {
-			webDriverWait4ElementToBeClickable(driver.findElementByXPath("(//span[@class='pillText']/following::a)[1]")).click();
+			click(locateElement("xpath","(//span[@class='pillText']/following::a)[1]"));
+			reportStep("Clicked on Share File With","Pass");
 			inputShareWithUser(userName);
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to click on Share File With","Fail");
 		}
 		return this;
 	}		
@@ -311,14 +294,13 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage verifyContactName(String contactName)
 	{
 		try {
-			WebElement ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[@class='pillText']"));
-			String contact = ele.getText();
+			String contact = getText(locateElement("xpath","//span[@class='pillText']"));
 			if (contact.contains(contactName))
 			{
-				System.out.println("Contact Created successfully: "+contact);
+				reportStep("Contact Created successfully: "+contactName,"Pass");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to create Contact: "+contactName,"Fail");
 		}
 		return this;
 	}
@@ -326,10 +308,10 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage inputShareAttachmentMessage(String value)
 	{
 		try {
-			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//textArea[@class='textArea textarea']"));
-			ele.sendKeys(value);
+			type(locateElement("xpath","//textArea[@class='textArea textarea']"), value);
+			reportStep("Enter share attachment message: "+value,"Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to enter share attachment message: "+value,"Fail");
 		}
 		return this;
 	}
@@ -337,10 +319,10 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage clickOnShareAttachment()
 	{
 		try {
-			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[text()='Share']/parent::button"));
-			ele.click();
+			click(locateElement("xpath","//span[text()='Share']/parent::button"));
+			reportStep("Clicked on Share Attachment","Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to click on Share Attachment","Fail");
 		}
 		return this;
 	}
@@ -348,14 +330,13 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage verifyErrorMessageInShareScreen()
 	{
 		try {
-			WebElement ele = driver.findElementByXPath("//ul[contains(@class,'has-error')]/li");
-			String errtext = ele.getText();
+			String errtext = getText(locateElement("xpath","//ul[contains(@class,'has-error')]/li"));
 			if (errtext.contains("Can't share file with the file owner"))
 			{
-				System.out.println("Error thrown in SHare Screen: Can't share file with the file owner");
+				reportStep("Error message in share screen validated","Pass");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to validate Error message in share screen","Fail");
 		}
 		return this;
 	}
@@ -363,13 +344,11 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage searchDashboardName(String value)
 	{
 		try {
-			WebElement searchDashboard = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//input[contains(@class,'search-text')]"));
-			searchDashboard.clear();
-			searchDashboard.sendKeys(value);
-			searchDashboard.sendKeys(Keys.ENTER);
+			typeAndEnter(locateElement("xpath","//input[contains(@class,'search-text')]"), value);
+			reportStep("Search Dashboard Name: "+value,"Pass");
 			solidWait(2);
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to Search Dashboard Name: "+value,"Fail");
 		}
 		return this;
 	}
@@ -377,13 +356,11 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage deleteSubscription(String dashboardName)
 	{
 		try {
-			WebElement ele = driver.findElementByXPath("(//a[@title='"+dashboardName+"'])[1]//following::td[6]//button");
-			webDriverWait4ElementToBeClickable(ele);
-			ele.click();
-			ele = webDriverWait4VisibilityOfEle(driver.findElementByXPath("//span[text()='Delete']/.."));
-			ele.click();
+			click(locateElement("xpath","(//a[@title='"+dashboardName+"'])[1]//following::td[6]//button"));
+			click(locateElement("xpath","//span[text()='Delete']/.."));
+			reportStep("Clicked on Delete subscription: "+dashboardName,"Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to click on Delete subscription: "+dashboardName,"Fail");
 		}
 		return this;
 	}
@@ -391,12 +368,11 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage clickOnUploadFiles()
 	{
 		try {
-			WebElement ele = driver.findElementByXPath("//a[@title='Upload Files']");
-			webDriverWait4ElementToBeClickable(ele);
-			ele.click();
+			click(locateElement("xpath","//a[@title='Upload Files']"));
+			reportStep("Clicked on Upload Files: ","Pass");
 			solidWait(3);
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to click on Upload Files: ","Fail");
 		}
 		return this;
 	}
@@ -405,18 +381,16 @@ public class ServiceConsolePage extends PreAndPost {
 	{
 		try
 		{
-			WebElement displayMsg = webDriverWait4VisibilityOfEle(driver.findElement(By.xpath("//span[contains(@class,'toastMessage')]")));
-			String displayMsgValue = displayMsg.getText();
-			System.out.println(displayMsgValue);
+			String displayMsgValue = getText(locateElement("xpath","//span[contains(@class,'toastMessage')]"));
 			String msgToValidate = "You shared "+ fileName + " with "+ userName;
 			if (displayMsgValue.contains(msgToValidate))
 			{
-				System.out.println("...File successfully shared...");
+				reportStep("File successfully shared: "+fileName,"Pass");
 			}
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			reportStep("Unable to validate the shared attachment: "+fileName,"Fail");
 		}
 		return this;
 	}
@@ -425,20 +399,18 @@ public class ServiceConsolePage extends PreAndPost {
 	{
 		try
 		{
-			WebElement displayMsg = webDriverWait4VisibilityOfEle(driver.findElement(By.xpath("//span[contains(@class,'toastMessage')]")));
-			String displayMsgValue = displayMsg.getText();
-			System.out.println(displayMsgValue);
+			String displayMsgValue = getText(locateElement("xpath","//span[contains(@class,'toastMessage')]"));
 			String msgToValidate1 = "Content Document ";
 			String msgToValidate2 = "was deleted";
 			
 			if (displayMsgValue.contains(msgToValidate1) && displayMsgValue.contains(fileName) && displayMsgValue.contains(msgToValidate2))
 			{
-				System.out.println("...File successfully deleted...");
+				reportStep("File successfully deleted: "+fileName,"Pass");
 			}
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			reportStep("Unable to validate file deletion: "+fileName,"Fail");
 		}
 		return this;
 	}
@@ -449,10 +421,7 @@ public class ServiceConsolePage extends PreAndPost {
 		String sortMsg;
 		try
 		{
-			WebElement displayMsg = webDriverWait4VisibilityOfEle(driver.findElement(By.xpath("//span[contains(@class,'toastMessage')]")));
-			String displayMsgValue = displayMsg.getText();
-			System.out.println(displayMsgValue);
-			
+			String displayMsgValue = getText(locateElement("xpath","//span[contains(@class,'toastMessage')]"));
 			if (displayMsgValue.contains("Dashboard was deleted"))
 			{
 				searchDashboardName(" ");
@@ -462,31 +431,26 @@ public class ServiceConsolePage extends PreAndPost {
 //			Sorting the Table records in descending order to get new records
 			if (flag_sort)
 			{
-				WebElement clkAccountsSort_1 = driver.findElementByXPath("//span[text()='Created On']/ancestor::a");
-				webDriverWait4ElementToBeClickable(clkAccountsSort_1);
-				clkAccountsSort_1.click();
-				WebElement AccountsSort = driver.findElementByXPath("//span[text()='Created On']/following::span[@aria-live='assertive' and contains(text(),'Sorted')][1]");
-				webDriverWait4VisibilityOfEle(AccountsSort);
-				sortMsg = AccountsSort.getText();
+				WebElement clkAccountsSort_1 = locateElement("xpath","//span[text()='Created On']/ancestor::a");
+				click(clkAccountsSort_1);
+				WebElement AccountsSort = locateElement("xpath","//span[text()='Created On']/following::span[@aria-live='assertive' and contains(text(),'Sorted')][1]");
+				sortMsg = getText(AccountsSort);
 				if (sortMsg.contains("Sorted Descending"))
 				{
+					reportStep("Accounts are sorted in order for validation","Pass");
 					flag_deleteValidation = true;
 				}
 				else
 				{
-					WebElement clkAccountsSort_2 = driver.findElementByXPath("//span[text()='Created On']/ancestor::a");
-					webDriverWait4ElementToBeClickable(clkAccountsSort_2);
-					clkAccountsSort_2.click();
-					WebElement AccountsSort_2 = driver.findElementByXPath("//span[text()='Created On']/following::span[@aria-live='assertive' and contains(text(),'Sorted')][1]");
-					webDriverWait4VisibilityOfEle(AccountsSort_2);
-					sortMsg = AccountsSort_2.getText();
+					click(clkAccountsSort_1);
+					sortMsg = getText(AccountsSort);
 					if (sortMsg.contains("Sorted Descending"))
 					{
 						flag_deleteValidation = true;
 					}
 					else
 					{
-						System.out.println("Accounts are not sorted in order for validation" + ", Failed");
+						reportStep("Accounts are not sorted in order for validation","Fail");
 					}	
 				}
 			}
@@ -494,23 +458,21 @@ public class ServiceConsolePage extends PreAndPost {
 //			Searching for Deleted Subscription - Output Validation
 			if (flag_deleteValidation)
 			{
-				List<WebElement> rows = driver.findElements(By.xpath("//table[contains(@class,'table_resizable-cols')]/tbody/tr"));
+				List<WebElement> rows = locateElements("xpath","//table[contains(@class,'table_resizable-cols')]/tbody/tr");
 				int size = rows.size();
 				for (int i = 1; i <= size; i++)
 				{
-					WebElement listofSubscriptions = driver.findElement(By.xpath("//table[contains(@class,'table_resizable-cols')]/tbody/tr["+i+"]/th//a"));
-					String subscriptionNames = listofSubscriptions.getText();
-				
+					String subscriptionNames = getText(locateElement("xpath","//table[contains(@class,'table_resizable-cols')]/tbody/tr["+i+"]/th//a"));
 					if (subscriptionNames.equals(dashboardName))
 					{
-						System.out.println("Unable to Delete Subscription, TC-Failed");
+						reportStep("Unable to Delete Subscription: "+dashboardName,"Fail");
 						break;
 					}
 					else
 					{
 						if (i == size)
 						{
-							System.out.println("Delete Subscription was successful, TC-Passed");
+							reportStep("Delete Subscription was successful"+dashboardName, "Pass");
 						}
 					}
 					
@@ -519,7 +481,7 @@ public class ServiceConsolePage extends PreAndPost {
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			reportStep("Unknown error occured while validating Delete Subscription", "Fail");
 		}
 		return this;
 	}
@@ -527,10 +489,10 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage clickOnEditGoal()
 	{
 		try {
-			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//button[@title='Edit Goal']"));
-			ele.click();
+			click(locateElement("xpath","//button[@title='Edit Goal']"));
+			reportStep("Clicked on Edit Goal", "Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to click on Edit Goal", "Fail");
 		}
 		return this;
 	}
@@ -538,11 +500,10 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage setGoalPrice(String value)
 	{
 		try {
-			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[@id='currencyCode']/following-sibling::input"));
-			ele.clear();
-			ele.sendKeys(value);
+			type(locateElement("xpath","//span[@id='currencyCode']/following-sibling::input"), value);
+			reportStep("Enter Goal Pice: "+value, "Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to enter Goal Pice: "+value, "Fail");
 		}
 		return this;
 	}
@@ -550,10 +511,10 @@ public class ServiceConsolePage extends PreAndPost {
 	public ServiceConsolePage clickonSaveGoalPrice()
 	{
 		try {
-			WebElement ele = webDriverWait4ElementToBeClickable(driver.findElementByXPath("(//span[text()='Save']/ancestor::button)[last()]"));
-			ele.click();
+			click(locateElement("xpath","(//span[text()='Save']/ancestor::button)[last()]"));
+			reportStep("Clicked on Save Goal Price", "Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to click on Save Goal Price", "Fail");
 		}
 		return this;
 	}
@@ -589,10 +550,10 @@ public class ServiceConsolePage extends PreAndPost {
 	{
 		String ClosePrice = null;
 		try {
-			WebElement ClosePriceTag = driver.findElementByXPath("//span[text()='Closed']/following-sibling::span[contains(text(),'$')]");
-			ClosePrice = ClosePriceTag.getText();
+			ClosePrice = getText(locateElement("xpath","//span[text()='Closed']/following-sibling::span[contains(text(),'$')]"));
+			reportStep("Retrieve and return Close Price: "+ClosePrice, "Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to Retrieve and return Close Price", "Fail");
 		}
 		return ClosePrice;
 	}
@@ -601,10 +562,10 @@ public class ServiceConsolePage extends PreAndPost {
 	{
 		String OpenPrice = null;
 		try {
-			WebElement OpenPriceTag = driver.findElementByXPath("//span[contains(text(),'Open')]/following-sibling::span[contains(text(),'$')]");
-			OpenPrice = OpenPriceTag.getText();
+			OpenPrice = getText(locateElement("xpath","//span[contains(text(),'Open')]/following-sibling::span[contains(text(),'$')]"));
+			reportStep("Retrieve and return Open Price: "+OpenPrice, "Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to Retrieve and return Open Price", "Fail");
 		}
 		return OpenPrice;
 	}

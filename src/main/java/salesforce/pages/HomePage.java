@@ -18,7 +18,6 @@ public class HomePage extends PreAndPost {
 			reportStep("Clicked on Application Launcher", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on Application Launcher", "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -30,7 +29,6 @@ public class HomePage extends PreAndPost {
 			reportStep("Clicked on View All from Application Launcher", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on View All from Application Launcher", "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -47,7 +45,6 @@ public class HomePage extends PreAndPost {
 			solidWait(3);
 		} catch (Exception e) {
 			reportStep("Unable to selected Task: "+ control +" from Navigation Menu on HomePage", "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -59,7 +56,6 @@ public class HomePage extends PreAndPost {
 			reportStep("Search for "+value+" application on HomePage", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to search for "+value+" application on HomePage", "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -77,7 +73,6 @@ public class HomePage extends PreAndPost {
 			reportStep("Clicked on "+appValue+" Link", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on "+appValue+" Link", "Fail");
-			e.printStackTrace();
 		}
 	}
 	
@@ -88,7 +83,6 @@ public class HomePage extends PreAndPost {
 			reportStep("Clicked on Sales Link", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on Sales Link", "Fail");
-			e.printStackTrace();
 		}
 		return new SalesPage();
 	}

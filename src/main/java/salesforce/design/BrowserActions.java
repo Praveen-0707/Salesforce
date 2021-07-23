@@ -98,6 +98,31 @@ public class BrowserActions extends SalesforceBase implements IBrowserActions{
 			reportStep("Unknown exception occured while entering "+data+" in the field :"+ele, "FAIL");
 		}
 	}
+	
+	public void sendkeysUsingActions(WebElement ele, Keys arrowDown) {
+		try {
+			Actions actions = new Actions(driver);
+			actions.sendKeys(arrowDown).perform();
+			reportStep("The data: "+arrowDown+" entered successfully in the field :"+ele, "PASS");
+		} catch (InvalidElementStateException e) {
+			reportStep("The data: "+arrowDown+" could not be entered in the field :"+ele,"FAIL");
+		} catch (WebDriverException e) {
+			reportStep("Unknown exception occured while entering "+arrowDown+" in the field :"+ele, "FAIL");
+		}
+	}
+	
+	public void typeUsingActions(WebElement ele, String data) {
+		try {
+			Actions actions = new Actions(driver);
+			ele.clear();
+			actions.sendKeys(data).perform();
+			reportStep("The data: "+data+" entered successfully in the field :"+ele, "PASS");
+		} catch (InvalidElementStateException e) {
+			reportStep("The data: "+data+" could not be entered in the field :"+ele,"FAIL");
+		} catch (WebDriverException e) {
+			reportStep("Unknown exception occured while entering "+data+" in the field :"+ele, "FAIL");
+		}
+	}
 
 	public void click(WebElement ele) {
 		String text = "";

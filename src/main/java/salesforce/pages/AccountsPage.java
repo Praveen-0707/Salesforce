@@ -23,7 +23,6 @@ public class AccountsPage extends PreAndPost {
 			reportStep("Search Account: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("unable yo Search Account: "+value, "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -35,7 +34,6 @@ public class AccountsPage extends PreAndPost {
 			reportStep("Clicked on New Account button", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to clicked on New Account button", "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -47,7 +45,6 @@ public class AccountsPage extends PreAndPost {
 			reportStep("Enter Account Name as: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to Enter Account Name: "+value, "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -59,7 +56,6 @@ public class AccountsPage extends PreAndPost {
 			reportStep("Enter Phone Number as: "+phoneNumber, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to Enter Phone Number as: "+phoneNumber, "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -71,7 +67,6 @@ public class AccountsPage extends PreAndPost {
 			reportStep("Enter Billing Address as: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to Enter Billing Address: "+value, "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -83,7 +78,6 @@ public class AccountsPage extends PreAndPost {
 			reportStep("Enter Shipping Address as: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to Enter Shipping Address: "+value, "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -95,7 +89,6 @@ public class AccountsPage extends PreAndPost {
 			reportStep("Enter Description as: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to Enter Description: "+value, "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -111,7 +104,6 @@ public class AccountsPage extends PreAndPost {
 			reportStep("Click on Type dropdown and select value as: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on Type dropdown and select value as: "+value, "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -127,7 +119,6 @@ public class AccountsPage extends PreAndPost {
 			click(ele);
 			reportStep("Click on Ownership dropdown and select value as: "+value, "Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
 			reportStep("Unable to click on Ownership dropdown and select value as: "+value, "Fail");
 		}
 		return this;
@@ -145,7 +136,6 @@ public class AccountsPage extends PreAndPost {
 			reportStep("Click on Industry dropdown and select value as: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on Industry dropdown and select value as: "+value, "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -162,7 +152,6 @@ public class AccountsPage extends PreAndPost {
 			reportStep("Click on UpsellOpportunity dropdown and select value as: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on UpsellOpportunity dropdown and select value as: "+value, "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -179,7 +168,6 @@ public class AccountsPage extends PreAndPost {
 			reportStep("Click on Active dropdown and select value as: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on Active dropdown and select value as: "+value, "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -198,7 +186,6 @@ public class AccountsPage extends PreAndPost {
 			reportStep("Click on CustomerPriority dropdown and select value as: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on CustomerPriority dropdown and select value as: "+value, "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -217,7 +204,6 @@ public class AccountsPage extends PreAndPost {
 			reportStep("Click on SLA dropdown and select value as: "+value, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on SLA dropdown and select value as: "+value, "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -229,7 +215,6 @@ public class AccountsPage extends PreAndPost {
 			reportStep("Clicked on refresh button", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on refresh button", "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -241,7 +226,6 @@ public class AccountsPage extends PreAndPost {
 			reportStep("Clicked on save button", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on save button", "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -253,7 +237,6 @@ public class AccountsPage extends PreAndPost {
 			reportStep("Clicked on Account Names Header for Sorting", "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to click on Account Names Header", "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -268,7 +251,6 @@ public class AccountsPage extends PreAndPost {
 			reportStep("Clicked Edit Option on Account: "+accName, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to Click Edit Option on Account: "+accName, "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -283,7 +265,6 @@ public class AccountsPage extends PreAndPost {
 			reportStep("Clicked Delete Option on Account: "+accName, "Pass");
 		} catch (Exception e) {
 			reportStep("Unable to Click Delete Option on Account: "+accName, "Fail");
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -297,19 +278,16 @@ public class AccountsPage extends PreAndPost {
 			
 			if (outputValue.contains(accName))
 			{
-				System.out.print("Account " + outputValue + " was created" + ", Passed");
 				reportStep("Account Created successfully: "+accName, "Pass");
 			}
 			else
 			{
-				System.out.print("Unable to create Account" + ", Failed");
 				reportStep("Unable to Create Account: "+accName, "Fail");
 			}
 		}
 		catch (Exception ex)
 		{
 			reportStep("Unable to Create Account: "+accName, "Fail");
-			ex.printStackTrace();
 		}
 		return this;
 	}
@@ -321,14 +299,12 @@ public class AccountsPage extends PreAndPost {
 		
 		try
 		{
-			WebElement output = locateElement("xpath","//span[contains(text(),'Account') and contains(@class,'toastMessage')]");
-			String outputValue = getText(output);
+			String outputValue = getText(locateElement("xpath","//span[contains(text(),'Account') and contains(@class,'toastMessage')]"));
 			if (outputValue.contains(accName))
 			{
 				reportStep("Account updated: "+accName, "Pass");
 				solidWait(3);
-				WebElement editedVal = locateElement("xpath","(//a[text()='"+accName+"'])[1]//following::td[2]//span[contains(@class,'forceOutputPhone')]");
-				String editedValue = getText(editedVal);
+				String editedValue = getText(locateElement("xpath","(//a[text()='"+accName+"'])[1]//following::td[2]//span[contains(@class,'forceOutputPhone')]"));
 				outputphno = editedValue;
 				if (editedValue.contains("-"))
 				{
@@ -355,7 +331,6 @@ public class AccountsPage extends PreAndPost {
 		}
 		catch (Exception ex)
 		{
-			ex.printStackTrace();
 			reportStep("Unable to validate Phone Number for Account: "+accName, "Fail");
 		}
 		return this;
@@ -365,8 +340,7 @@ public class AccountsPage extends PreAndPost {
 	{
 		try
 		{
-			WebElement output = locateElement("xpath","//span[contains(text(),'Account') and contains(@class,'toastMessage')]");
-			String outputValue = getText(output);
+			String outputValue = getText(locateElement("xpath","//span[contains(text(),'Account') and contains(@class,'toastMessage')]"));
 			if (outputValue.contains(accName))
 			{
 				outputValue = outputValue.split("\\.")[0];
@@ -380,7 +354,6 @@ public class AccountsPage extends PreAndPost {
 		catch (Exception ex)
 		{
 			reportStep("Unable to delete Account: "+accName, "Fail");
-			ex.printStackTrace();
 		}
 		return this;
 	}
@@ -453,7 +426,6 @@ public class AccountsPage extends PreAndPost {
 		catch (Exception ex)
 		{
 			reportStep("Unable to sort and verify accounts", "Fail");
-			ex.printStackTrace();
 		}
 		return this;
 	}
