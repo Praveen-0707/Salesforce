@@ -55,7 +55,7 @@ public class LoginPage extends PreAndPost {
 			boolean isDisplayed = pageLoad1.isDisplayed();
 			if (isDisplayed)
 			{
-				js.executeScript("arguments[0].click();", pageLoad1);
+				clickByJS(pageLoad1);
 				reportStep("Successfully Logged into Saleforce", "Pass", false);
 			}
 		} catch (NoSuchElementException e) {

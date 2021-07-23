@@ -1,6 +1,8 @@
 package salesforce.pages;
 
 import salesforce.base.PreAndPost;
+
+import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import org.openqa.selenium.Keys;
@@ -83,6 +85,7 @@ public class SalesPage extends PreAndPost {
 			solidWait(3);
 					
 //			Close File Preview
+			Robot robot = new Robot();
 			robot.keyPress(KeyEvent.VK_ESCAPE);
 			robot.keyRelease(KeyEvent.VK_ESCAPE);
 		}

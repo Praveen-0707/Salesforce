@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptException;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.asserts.SoftAssert;
 
@@ -21,14 +20,12 @@ public class WorkTypeGroupsPage extends PreAndPost {
 	public WorkTypeGroupsPage searchWorkTypeGroup(String value)
 	{
 		try {
-			WebElement searchWTG = driver.findElementByXPath("//input[contains(@name,'WorkTypeGroup-search-input')]");
-			webDriverWait4ElementToBeClickable(searchWTG);
-			searchWTG.clear();
-			searchWTG.sendKeys(value);
-			searchWTG.sendKeys(Keys.ENTER);
+			WebElement searchWTG = locateElement("xpath","//input[contains(@name,'WorkTypeGroup-search-input')]");
+			typeAndEnter(searchWTG, value);
+			reportStep("Search WorkTypeGroup: "+value, "Pass");
 			solidWait(2);
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to search WorkTypeGroup: "+value, "Fail");
 		}
 		return this;
 	}
@@ -36,9 +33,10 @@ public class WorkTypeGroupsPage extends PreAndPost {
 	public WorkTypeGroupsPage clickOnNewWorkTypeGroup()
 	{
 		try {
-			driver.findElementByXPath("//div[text()='New']").click();
+			click(locateElement("xpath","//div[text()='New']"));
+			reportStep("click on new WorkTypeGroup", "Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to click on new WorkTypeGroup", "Fail");
 		}
 		return this;
 	}
@@ -46,12 +44,11 @@ public class WorkTypeGroupsPage extends PreAndPost {
 	public WorkTypeGroupsPage inputWorkTypeGroupDescr(String value)
 	{
 		try {
-			WebElement worktypeGrpName = driver.findElementByXPath("//label/span[text()='Description']/following::textarea");
-			webDriverWait4ElementToBeClickable(worktypeGrpName);
-			worktypeGrpName.clear();
-			worktypeGrpName.sendKeys(value);
+			WebElement worktypeGrpName = locateElement("xpath","//label/span[text()='Description']/following::textarea");
+			type(worktypeGrpName, value);
+			reportStep("Enter WorkTypeGroup description: "+value, "Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to eEnter WorkTypeGroup description: "+value, "Fail");
 		}
 		return this;
 	}
@@ -59,12 +56,11 @@ public class WorkTypeGroupsPage extends PreAndPost {
 	public WorkTypeGroupsPage inputWorkTypeGroupName(String value)
 	{
 		try {
-			WebElement worktypeGrpName = driver.findElementByXPath("(//span[text()='Work Type Group Name'])[2]/../following-sibling::input");
-			webDriverWait4VisibilityOfEle(worktypeGrpName);
-			worktypeGrpName.clear();
-			worktypeGrpName.sendKeys(value);
+			WebElement worktypeGrpName = locateElement("xpath","(//span[text()='Work Type Group Name'])[2]/../following-sibling::input");
+			type(worktypeGrpName, value);
+			reportStep("Enter WorkTypeGroup Name: "+value, "Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to eEnter WorkTypeGroup Name: "+value, "Fail");
 		}
 		return this;
 	}
@@ -72,15 +68,14 @@ public class WorkTypeGroupsPage extends PreAndPost {
 	public WorkTypeGroupsPage selectGroupType(String value)
 	{
 		try {
-			WebElement dd_groupType = driver.findElement(By.xpath("//span[text()='Group Type']/following::a[@class='select' and @role='button']"));
-			webDriverWait4ElementToBeClickable(dd_groupType);
-			dd_groupType.click();
+			click(locateElement("xpath","//span[text()='Group Type']/following::a[@class='select' and @role='button']"));
 			solidWait(1);
-			WebElement ele = driver.findElementByXPath("(//div[@class='select-options' and @role='menu']/ul//a[contains(@title,'"+value+"')])[1]");
+			WebElement ele = locateElement("xpath","(//div[@class='select-options' and @role='menu']/ul//a[contains(@title,'"+value+"')])[1]");
 			scrollToVisibleElement(ele);
-			ele.click();
+			click(ele);
+			reportStep("Select Group Type: "+value, "Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to select Group Type: "+value, "Fail");
 		}
 		return this;
 	}
@@ -88,9 +83,10 @@ public class WorkTypeGroupsPage extends PreAndPost {
 	public WorkTypeGroupsPage clickOnSaveButton()
 	{
 		try {
-			driver.findElementByXPath("(//button/span[text()='Save'])[last()]").click();
+			click(locateElement("xpath","(//button/span[text()='Save'])[last()]"));
+			reportStep("click on Save button", "Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to click on Save button", "Fail");
 		}
 		return this;
 	}
@@ -98,17 +94,22 @@ public class WorkTypeGroupsPage extends PreAndPost {
 	public WorkTypeGroupsPage clickRefreshButton()
 	{
 		try {
-			driver.findElementByName("refreshButton").click();
+			click(locateElement("name","refreshButton"));
+			reportStep("click on Refresh button", "Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to click on Refresh button", "Fail");
 		}
 		return this;
 	}
 	
 	public WorkTypeGroupsPage clickOnWorkTypeGroupHeader()
 	{
-		WebElement WTGSorting = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//span[@title='Work Type Group Name']/parent::a"));
-		WTGSorting.click();
+		try {
+			click(locateElement("xpath","//span[@title='Work Type Group Name']/parent::a"));
+			reportStep("click on WorkTypeGroupHeader", "Pass");
+		} catch (Exception e) {
+			reportStep("Unable to click on WorkTypeGroupHeader", "Fail");
+		}
 		return this;
 	}
 	
@@ -116,22 +117,19 @@ public class WorkTypeGroupsPage extends PreAndPost {
 	{
 		try
 		{
-			WebElement output = driver.findElement(By.xpath("(//span[text()='Description'])[1]/following::div//span[@class='uiOutputText']"));
-			webDriverWait4VisibilityOfEle(output);
-			String outputValue = output.getText();
-			
+			String outputValue = getText(locateElement("xpath","(//span[text()='Description'])[1]/following::div//span[@class='uiOutputText']"));	
 			if (outputValue.contains(wtgName))
 			{
-				System.out.println("Work Type Group - " + outputValue + " was created" + ", Passed");
+				reportStep("Work Type Group - " + outputValue + " was created", "Pass");
 			}
 			else
 			{
-				System.out.println("Unable to create Work Type Group" + ", Failed");
+				reportStep("Unable to create Work Type Group", "Fail");
 			}
 		}
 		catch (Exception ex)
 		{
-			ex.printStackTrace();
+			reportStep("Unknown Webdriver exception occured", "Fail");
 		}
 		return this;
 	}
@@ -139,14 +137,11 @@ public class WorkTypeGroupsPage extends PreAndPost {
 	public WorkTypeGroupsPage editWorkTypeGroup(String wtgName)
 	{
 		try {
-			WebElement editWTG = driver.findElementByXPath("(//a[text()='" + wtgName + "'])[1]//following::td//a[@role='button']");
-			webDriverWait4VisibilityOfEle(editWTG);
-			editWTG.click();
-			editWTG = driver.findElementByXPath("//div[@role='button' and @title='Edit']/..");
-			webDriverWait4VisibilityOfEle(editWTG);
-			editWTG.click();
+			click(locateElement("xpath","(//a[text()='" + wtgName + "'])[1]//following::td//a[@role='button']"));
+			click(locateElement("xpath","//div[@role='button' and @title='Edit']/.."));
+			reportStep("Click on edit Work Type Group: " + wtgName, "Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to click on edit Work Type Group: " + wtgName, "Fail");
 		}
 		return this;
 	}
@@ -170,8 +165,7 @@ public class WorkTypeGroupsPage extends PreAndPost {
 	{
 		try {
 			WebElement WTG = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//a[contains(@title,'Work Type Groups')]/following::div[contains(@class,'context-bar')][1]"));
-			webDriverWait4ElementToBeClickable(WTG);
-			js.executeScript("arguments[0].click();", WTG);
+			clickByJS(WTG);
 			solidWait(2);
 		} catch (JavascriptException e) {
 			e.printStackTrace();
@@ -185,8 +179,7 @@ public class WorkTypeGroupsPage extends PreAndPost {
 	{
 		try {
 			WebElement WTG = driver.findElementByXPath("//span[text()='New Work Type Group']/ancestor::a[@role='menuitemcheckbox']");
-			webDriverWait4ElementToBeClickable(WTG);
-			js.executeScript("arguments[0].click();", WTG);
+			clickByJS(WTG);
 			solidWait(2);
 		} catch (JavascriptException e) {
 			e.printStackTrace();

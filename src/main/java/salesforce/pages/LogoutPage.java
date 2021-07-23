@@ -1,9 +1,8 @@
 package salesforce.pages;
 
-import salesforce.base.SalesforceBase;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import salesforce.base.PreAndPost;
 
-public class LogoutPage extends SalesforceBase {
+public class LogoutPage extends PreAndPost {
 	
 	public LogoutPage()
 	{
@@ -13,8 +12,13 @@ public class LogoutPage extends SalesforceBase {
 	
 	public LoginPage clickLogout()
 	{
-		driver.findElementByXPath("//img[@alt='User' and @title='User']/ancestor::button").click();
-		webDriverWait4VisibilityOfEle(driver.findElementByLinkText("Log Out")).click();
+		try {
+			click(locateElement("xpath", "//img[@alt='User' and @title='User']/ancestor::button"));
+			click(locateElement("link", "Log Out"));
+			reportStep("Logged out from Application", "Pass");
+		} catch (Exception e) {
+			reportStep("Unable to click on Log out", "Fail");
+		}
 		return new LoginPage(prop);
 	}
 }

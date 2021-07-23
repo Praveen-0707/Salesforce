@@ -34,7 +34,6 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -51,9 +50,6 @@ public class SalesforceBase extends Reporter {
 	public ChromeOptions chromeOptions;
 	public FirefoxOptions firefoxOptions;
 	public EdgeOptions edgeOptions;
-	public static JavascriptExecutor js;
-	public static Actions actions;
-	public static Robot robot;
 	public String excelFileName;
 	public String excelSheetName;
 	public Properties prop;
@@ -122,16 +118,11 @@ public class SalesforceBase extends Reporter {
 			getDriver().manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
 			getDriver().manage().timeouts().pageLoadTimeout(20,TimeUnit.SECONDS);
 			
-			actions = new Actions(getDriver());
-			robot = new Robot();
-			
 			getDriver().get(prop.getProperty("url"));
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (AWTException e) {
 			e.printStackTrace();
 		} catch (WebDriverException e) {
 			e.printStackTrace();
@@ -151,6 +142,7 @@ public class SalesforceBase extends Reporter {
 	
 	public void highlight(WebElement ele)
 	{
+		JavascriptExecutor js = (JavascriptExecutor)driver;
 		try {
 			js.executeScript("arguments[0].setAttribute('style','background: yellow; border: 2px solid red;');",ele);
 		} catch (JavascriptException e) {
@@ -304,10 +296,10 @@ public class SalesforceBase extends Reporter {
 	
 	public void clickOnTab(String value)
 	{
+		JavascriptExecutor js = (JavascriptExecutor)driver;
 		try {
 			WebElement ele = getDriver().findElementByXPath("//a[@title='"+value+"']");
 			webDriverWait4ElementToBeClickable(ele);
-			
 			js.executeScript("arguments[0].click();", ele);
 		} catch (JavascriptException e) {
 			e.printStackTrace();
@@ -315,8 +307,9 @@ public class SalesforceBase extends Reporter {
 	}
 	
 	public void uploadAttachment(String fileLocation)
-	{
+	{	
 		try {
+			Robot robot = new Robot();
 			StringSelection up = new StringSelection(fileLocation);
 			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(up, null);
 			
@@ -329,11 +322,13 @@ public class SalesforceBase extends Reporter {
 			robot.keyPress(KeyEvent.VK_ENTER);
 			robot.keyRelease(KeyEvent.VK_ENTER);
 			solidWait(3);
-//			click on the Done button to dismiss the alert
+
 			WebElement ele = getDriver().findElement(By.xpath("//button[@type='button']//span[text()='Done']"));
 			webDriverWait4VisibilityOfEle(ele);
 			ele.click();
 		} catch (HeadlessException e) {
+			e.printStackTrace();
+		} catch (AWTException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
