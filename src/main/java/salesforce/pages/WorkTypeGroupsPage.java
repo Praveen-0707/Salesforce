@@ -4,7 +4,6 @@ import salesforce.base.PreAndPost;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.WebElement;
 import org.testng.asserts.SoftAssert;
@@ -149,14 +148,11 @@ public class WorkTypeGroupsPage extends PreAndPost {
 	public WorkTypeGroupsPage deleteWorkTypeGroup(String wtgName)
 	{
 		try {
-			WebElement delWTG = driver.findElementByXPath("(//a[text()='" + wtgName + "'])[1]//following::td//a[@role='button']");
-			webDriverWait4VisibilityOfEle(delWTG);
-			delWTG.click();
-			delWTG = driver.findElementByXPath("//div[@role='button' and @title='Delete']/..");
-			webDriverWait4VisibilityOfEle(delWTG);
-			delWTG.click();
+			click(locateElement("xpath","(//a[text()='" + wtgName + "'])[1]//following::td//a[@role='button']"));
+			click(locateElement("xpath","//div[@role='button' and @title='Delete']/.."));
+			reportStep("Click on delete Work Type Group: " + wtgName, "Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to click on delete Work Type Group: " + wtgName, "Fail");
 		}
 		return this;
 	}
@@ -164,13 +160,14 @@ public class WorkTypeGroupsPage extends PreAndPost {
 	public WorkTypeGroupsPage clickOnWorkTypeGroupsTabOptions()
 	{
 		try {
-			WebElement WTG = webDriverWait4ElementToBeClickable(driver.findElementByXPath("//a[contains(@title,'Work Type Groups')]/following::div[contains(@class,'context-bar')][1]"));
+			WebElement WTG = locateElement("xpath","//a[contains(@title,'Work Type Groups')]/following::div[contains(@class,'context-bar')][1]");
 			clickByJS(WTG);
 			solidWait(2);
+			reportStep("Clicked on Work Type Group Tab", "Pass");
 		} catch (JavascriptException e) {
-			e.printStackTrace();
+			reportStep("Unable to click on Work Type Group Tab", "Fail");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unknown Error - Unable to click on Work Type Group Tab", "Fail");
 		}
 		return this;
 	}
@@ -178,13 +175,14 @@ public class WorkTypeGroupsPage extends PreAndPost {
 	public WorkTypeGroupsPage SelectNewWorkTypeGroup()
 	{
 		try {
-			WebElement WTG = driver.findElementByXPath("//span[text()='New Work Type Group']/ancestor::a[@role='menuitemcheckbox']");
+			WebElement WTG = locateElement("xpath","//span[text()='New Work Type Group']/ancestor::a[@role='menuitemcheckbox']");
 			clickByJS(WTG);
+			reportStep("Clicked on New Work Type Group", "Pass");
 			solidWait(2);
 		} catch (JavascriptException e) {
-			e.printStackTrace();
+			reportStep("Unable to click on New Work Type Group", "Fail");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unknown Error - Unable to click on New Work Type Group", "Fail");
 		}
 		return this;
 	}
@@ -193,10 +191,10 @@ public class WorkTypeGroupsPage extends PreAndPost {
 	{
 		try {
 			searchWorkTypeGroup(wtgName);
-			WebElement searchWTG = driver.findElementByXPath("(//a[text()='" + wtgName + "'])[1]");
-			searchWTG.click();
+			click(locateElement("xpath","(//a[text()='" + wtgName + "'])[1]"));
+			reportStep("Search for Work Type Group: "+wtgName + ". Clicked on it", "Pass");
 		} catch (Exception e) {
-			e.printStackTrace();
+			reportStep("Unable to Search for Work Type Group: "+wtgName, "Fail");
 		}
 		return this;
 	}
@@ -205,23 +203,20 @@ public class WorkTypeGroupsPage extends PreAndPost {
 	{
 		try
 		{
-			WebElement output = driver.findElement(By.xpath("(//span[text()='Description'])/following::div//span[text()='Description']/following::span[@class='uiOutputTextArea']"));
-			webDriverWait4VisibilityOfEle(output);
-			String outputValue = output.getText();
+			String outputValue = getText(locateElement("xpath","(//span[text()='Description'])/following::div//span[text()='Description']/following::span[@class='uiOutputTextArea']"));
 			
 			if (outputValue.contains(value))
 			{
-				System.out.println("Description updated as: "+value);
-				System.out.println("Work Type Group - " + outputValue + " was updated successfully" + ", Passed");
+				reportStep("Work Type Group - " + outputValue + " was updated successfully", "Pass");
 			}
 			else
 			{
-				System.out.println("Unable to update Work Type Group" + ", Failed");
+				reportStep("Unable to update Work Type Group", "Fail");
 			}
 		}
 		catch (Exception ex)
 		{
-			ex.printStackTrace();
+			reportStep("Unknown Error - Unable to update Work Type Group", "Fail");
 		}
 		return this;
 	}
@@ -230,30 +225,30 @@ public class WorkTypeGroupsPage extends PreAndPost {
 	{
 		try
 		{
-		List<WebElement> rows = driver.findElements(By.xpath("//table[contains(@class,'uiVirtualDataTable')]/tbody/tr"));
+		List<WebElement> rows = locateElements("xpath","//table[contains(@class,'uiVirtualDataTable')]/tbody/tr");
 		int size = rows.size();
 		for (int i = 1; i <= size; i++)
 		{
-			WebElement listofWTG_Names = driver.findElement(By.xpath("//table[contains(@class,'uiVirtualDataTable')]/tbody/tr["+i+"]/th//a"));
-			String WTG_Names = listofWTG_Names.getText();
+			WebElement listofWTG_Names = locateElement("xpath","//table[contains(@class,'uiVirtualDataTable')]/tbody/tr["+i+"]/th//a");
+			String WTG_Names = getText(listofWTG_Names);
 		
 			if (WTG_Names.equals(value))
 			{
-				System.out.println("Unable to Delete WorkTypeGroup or Duplicate entry exist, TC-Failed");
+				reportStep("Unable to Delete WorkTypeGroup or Duplicate entry exist", "Fail");
 				break;
 			}
 			else
 			{
 				if (i == size)
 				{
-					System.out.println("Delete WorkTypeGroup was successful, TC-Passed");
+					reportStep("Delete WorkTypeGroup was successful","Pass");
 				}
 			}
 		}
 		}
 		catch (Exception ex)
 		{
-			ex.printStackTrace();
+			reportStep("Unknown Error - Unable to Delete WorkTypeGroup or Duplicate entry exist", "Fail");
 		}
 		return this;
 	}
@@ -263,48 +258,43 @@ public class WorkTypeGroupsPage extends PreAndPost {
 		try
 		{
 			List<String> namesSet1 = new ArrayList<String>();
-			List<WebElement> elements = driver.findElementsByXPath("//table[contains(@class,'slds-table forceRecordLayout')]/tbody/tr");
+			List<WebElement> elements = locateElements("xpath","//table[contains(@class,'slds-table forceRecordLayout')]/tbody/tr");
 			int size = elements.size();
 			for (int i=1; i<=size; i++)
 			{
-				WebElement workGroupNames = driver.findElementByXPath("//table[contains(@class,'slds-table forceRecordLayout')]/tbody/tr["+i+"]/th//a");
-				String workGroupNamesBeforeSort = workGroupNames.getText();
+				WebElement workGroupNames = locateElement("xpath","//table[contains(@class,'slds-table forceRecordLayout')]/tbody/tr["+i+"]/th//a");
+				String workGroupNamesBeforeSort = getText(workGroupNames);
 				namesSet1.add(workGroupNamesBeforeSort);
 			}
 			Collections.sort(namesSet1);
-//			System.out.println("Set1 names after sort: " + namesSet1);
-			
+
 //			clicks on Name Sort
-			WebElement ele = driver.findElementByXPath("//span[@title='Work Type Group Name']/parent::a");
-			webDriverWait4ElementToBeClickable(ele);
-			ele.click();
+			click(locateElement("xpath","//span[@title='Work Type Group Name']/parent::a"));
 			solidWait(3);
 			
 			List<String> namesSet2 = new ArrayList<String>(); 
-			List<WebElement> wtgToSort = driver.findElementsByXPath("//table[contains(@class,'slds-table forceRecordLayout')]/tbody/tr");
+			List<WebElement> wtgToSort = locateElements("xpath","//table[contains(@class,'slds-table forceRecordLayout')]/tbody/tr");
 			int cnt = wtgToSort.size();
 			for (int j=1; j<=cnt; j++)
 			{
-				WebElement workGroupNamesToSort = driver.findElementByXPath("//table[contains(@class,'slds-table forceRecordLayout')]/tbody/tr["+j+"]/th//a");
-				String workGroupNamesAfterSort = workGroupNamesToSort.getText();
+				WebElement workGroupNamesToSort = locateElement("xpath","//table[contains(@class,'slds-table forceRecordLayout')]/tbody/tr["+j+"]/th//a");
+				String workGroupNamesAfterSort = getText(workGroupNamesToSort);
 				namesSet2.add(workGroupNamesAfterSort);
 			}
-			System.out.println("Set2 name without sort: " + namesSet2);
 			
 			boolean isEqual = namesSet1.equals(namesSet2);
-			System.out.println(isEqual);
 			if (isEqual)
 			{
-				System.out.println("Names are sorted in order." + namesSet2);
+				reportStep("Names are sorted in order." + namesSet2, "Pass");
 			}
 			else
 			{
-				System.out.println("Unable to sorted the names");
+				reportStep("Unable to sorted the names","Fail");
 			}
 		}
 		catch (Exception ex)
 		{
-			ex.printStackTrace();
+			reportStep("Unknown Error - Unable to sorted the names","Fail");
 		}
 		return this;
 	}
@@ -313,18 +303,15 @@ public class WorkTypeGroupsPage extends PreAndPost {
 	{
 		try
 		{
-			WebElement errTag = driver.findElementByClassName("form-element__help");
-			webDriverWait4VisibilityOfEle(errTag);
-			String errMsgValue = errTag.getText();
-			System.out.println(errMsgValue);
+			String errMsgValue = getText(locateElement("class","form-element__help"));
 			SoftAssert softAssert = new SoftAssert();
 			softAssert.assertEquals(errMsg, errMsgValue);
-			System.out.println(softAssert);
 			softAssert.assertAll();
+			reportStep("Error validation successful for New WTG creation: "+errMsg, "Pass");
 		}
 		catch (Exception ex)
 		{
-			ex.printStackTrace();
+			reportStep("Unable to validate error validation for New WTG creation", "Fail");
 		}
 		return this;
 	}
