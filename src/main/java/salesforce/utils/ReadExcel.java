@@ -7,13 +7,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ReadExcel {
 		public static String[][] readData(String fileName, String sheetName) throws IOException
 		{
-			System.out.println("Inside Read data: " +fileName);
 			XSSFWorkbook wb = new XSSFWorkbook("./data/" + fileName + ".xlsx");
 			XSSFSheet ws = wb.getSheet(sheetName);
 			int rowCnt = ws.getLastRowNum();
 			int cellCnt = ws.getRow(0).getLastCellNum();
 			
-			System.out.println(cellCnt);
 			String [][] data = new String[rowCnt][cellCnt];
 			
 			try {
